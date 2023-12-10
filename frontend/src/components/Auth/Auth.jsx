@@ -6,7 +6,7 @@ function handleSubmit(res){
     if(!res){
         console.log("FAILED")
     }
-    // window.location.href = '/dashboard'
+    window.location.href = '/dashboard'
 }
 
 export function Login(props){

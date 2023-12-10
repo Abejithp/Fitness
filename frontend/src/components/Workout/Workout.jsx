@@ -2,7 +2,6 @@
 import { addWorkout, getWorkout} from "@/api/workout.mjs";
 import { useEffect, useRef, useState } from "react"
 import { Logout } from "../Auth/Auth";
-import { test } from "@/api/auth.mjs";
 
 export function Workout(){
     
@@ -26,7 +25,7 @@ export function Workout(){
             reps: repRef.current.value,
         }
 
-        test(user.name, user.muscle, user.weight, user.sets, user.reps).then((res) => console.log(res))
+        addWorkout(user.name, user.muscle, user.weight, user.sets, user.reps).then((res) => setWorkout([...workouts, res]))
     }
 
     useEffect(()=>{
@@ -45,8 +44,6 @@ export function Workout(){
 
             <button type="submit">add</button>
         </form>
-
-        <button onClick={() => getWorkout().then((res) => console.log(res))}>Click</button>
 
         {workouts.map((item) => <div key={key++}>{item.name}</div>)}
 

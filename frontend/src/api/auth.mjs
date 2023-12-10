@@ -4,7 +4,7 @@ export function login(username, password){
     return send("POST", "/api/login/", {username,password});
 }
 
-export function logout(username, password){
+export function logout(){
     return send("DELETE", "/api/login/", null);
 }
 

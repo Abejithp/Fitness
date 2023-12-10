@@ -132,20 +132,6 @@ app.post("/api/workout/", isAuthenticated, async function (req, res, next) {
     return res.status(200).json(workout);
 })
 
-app.post("/api/test/", async function (req, res, next) {
-
-    const workout = await WorkOut.create({
-        muscleGroup: req.body.muscle,
-        weight: req.body.weight,
-        repetitions: req.body.reps,
-        sets: req.body.sets,
-        name: req.body.name,
-        userRef: req.session.user._id
-    })
-
-    return res.status(200).json(workout);
-})
-
 
 app.get("/api/workout/", isAuthenticated, async function (req, res) {
     const workout = await WorkOut.find({ userRef: req.session.user._id })
