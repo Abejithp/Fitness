@@ -112,20 +112,44 @@ app.post("/api/login/", body(['username', 'password']).notEmpty(), async functio
 app.delete("/api/login/", isAuthenticated, async function (req, res, next) {
     req.session.user = null;
     setUserCookie(req, res);
-    res.status(200).json({});
+    res.status(200).json({}).end();
 });
 
 
 // Workouts
 
-app.post("/api/workout/", isAuthenticated, async function(req, res, next){
-    const workout = await WorkOut.create({muscleGroup: "chest", weight: 120, repetitions:10, sets:3, name:"Bench Press", userRef: req.session.user._id})
-    return res.json(workout)
+app.post("/api/workout/", isAuthenticated, async function (req, res, next) {
+
+    const workout = await WorkOut.create({
+        muscleGroup: req.body.muscle,
+        weight: req.body.weight,
+        repetitions: req.body.reps,
+        sets: req.body.sets,
+        name: req.body.name,
+        userRef: req.session.user._id
+    })
+
+    return res.status(200).json(workout);
 })
 
-app.get("/api/workout/", isAuthenticated, async function (req, res, next) {
-    const workout = await WorkOut.find({userRef: req.session.user._id}).limit(10)
-    res.json(workout);
+app.post("/api/test/", async function (req, res, next) {
+
+    const workout = await WorkOut.create({
+        muscleGroup: req.body.muscle,
+        weight: req.body.weight,
+        repetitions: req.body.reps,
+        sets: req.body.sets,
+        name: req.body.name,
+        userRef: req.session.user._id
+    })
+
+    return res.status(200).json(workout);
+})
+
+
+app.get("/api/workout/", isAuthenticated, async function (req, res) {
+    const workout = await WorkOut.find({ userRef: req.session.user._id })
+    return res.status(200).json(workout);
 });
 
 

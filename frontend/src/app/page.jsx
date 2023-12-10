@@ -1,5 +1,7 @@
 'use client'
 
+import { test } from "@/api/auth.mjs";
+import { getWorkout } from "@/api/workout.mjs";
 import { Login , Logout, Register} from "@/components/Auth/Auth";
 import { useState } from "react";
 
@@ -15,6 +17,7 @@ export default function Home() {
 		< Login user={user} password={password}/>
 
 		<Register user={user} password={password}/>
-		<Logout />
+
+		<button onClick={()=> test("asd", "1123", 2, 1, 3).then((res)=>console.log(res))}>CLICK</button>
 	</>)
 }

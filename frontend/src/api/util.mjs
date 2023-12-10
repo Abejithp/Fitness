@@ -22,6 +22,7 @@ export function send(method, url, data) {
                 }
                 return null;
             }
+
             return response.json();
         })
 }

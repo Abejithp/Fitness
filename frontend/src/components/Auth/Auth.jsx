@@ -6,7 +6,7 @@ function handleSubmit(res){
     if(!res){
         console.log("FAILED")
     }
-    window.location.href = '/dashboard'
+    // window.location.href = '/dashboard'
 }
 
 export function Login(props){
@@ -30,7 +30,7 @@ export function Register(props){
 
 export function Logout(){
     return(<>
-        <button onClick={()=> logout()}>
+        <button onClick={()=> logout().then(()=>{window.location.href = '/'})}>
             Logout
         </button>
     </>)

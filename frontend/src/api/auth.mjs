@@ -19,3 +19,7 @@ export function resetUser() {
     localStorage.removeItem('user_id');
     localStorage.removeItem('username');
 }
+
+export function test(name, muscle, weight, sets, reps){
+    send("POST", "/api/test/", { name, muscle, weight, sets, reps } )
+}
