@@ -111,6 +111,7 @@ app.post("/api/login/", body(['username', 'password']).notEmpty(), async functio
 
 app.delete("/api/login/", isAuthenticated, async function (req, res, next) {
     req.session.user = null;
+    req.session.destroy
     setUserCookie(req, res);
     res.status(200).json({}).end();
 });

@@ -1,0 +1,11 @@
+body{
+    margin: 0;
+    width: auto;
+    height: 100vh;
+}
+
+.main{
+    display: flex;
+    width: auto;
+    height: 100%;
+}

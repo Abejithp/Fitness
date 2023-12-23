@@ -9,8 +9,8 @@ export default function Home() {
 
 	return (<>
 
-		<input type="text" value={user} onChange={e => setUser(e.target.value)} />
-		<input type="password" value={password} onChange={e => setPassword(e.target.value)} />
+		<input type="text" value={user} onChange={e => setUser(e.target.value)} required = {true} />
+		<input type="password" value={password} onChange={e => setPassword(e.target.value)}  required = {true} />
 
 		<Login user={user} password={password} />
 
