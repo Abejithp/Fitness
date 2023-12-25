@@ -1,5 +1,6 @@
 'use client'
 
+import './auth.css'
 import { login, register, logout } from "@/api/auth.mjs"
 
 function handleSubmit(res) {
@@ -17,7 +18,7 @@ export function Login(props) {
             if (user != '' && password != '') {
                 login(user, password).then((res) => handleSubmit(res))
             }
-        }}>
+        }} className="btn">
             Login
         </button>
     </>)
@@ -30,7 +31,7 @@ export function Register(props) {
             if (user != '' && password != '') {
                 register(user, password).then((res) => handleSubmit(res))
             }
-        }}>
+        }} className='btn'>
             Register
         </button>
     </>)

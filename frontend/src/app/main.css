@@ -1,0 +1,110 @@
+:root{
+    --bg-primary: #2b2b2b;
+    --bg-taskbar: #0F0F0F;
+}
+
+.main{
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    height: auto;
+
+}
+
+.taskbar{
+    position: sticky;
+    top: 0;
+    padding: 2rem;
+    display: flex;
+    width: auto;
+    height: fit-content;
+    justify-content: center;
+    background: transparent;
+}
+
+.container{
+    display: flex;
+    background-color: var(--bg-taskbar);
+    width: 350px;
+    height: 50px;
+    border-radius: 30px;
+    justify-content: space-evenly;
+    align-items: center;
+
+}
+
+.scroll{
+    cursor: pointer;
+    color: white;
+    text-decoration: none;
+}
+
+.intro{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+
+}
+
+.title{
+    margin-top: 200px;
+    color: black;
+    font-size: 15rem;
+    height: fit-content;
+}
+
+.card{
+    margin-top: 150px;
+    width: 1000px;
+    height: 1000px;
+    background-color: #2b2b2b;
+    border-radius: 12px;
+}
+
+.join{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+}
+
+.left{
+    font-size: 6rem;
+    width: 300px;
+}
+
+.form{
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+}
+
+.input-container{
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.input-container input{
+    height: fit-content;
+    border-radius: 12px;
+    padding: .3rem 1rem;
+    box-sizing: border-box;
+    border: 2px solid grey;
+    font-size: 1.5rem;
+}
+
+.btn-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+
+}

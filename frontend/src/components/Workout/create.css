@@ -1,0 +1,8 @@
+.create-btn{
+    width: fit-content;
+    padding: 1rem;
+    box-sizing: border-box;
+    border-radius: 12px;
+    font-weight: 500;
+    cursor: pointer;
+}
