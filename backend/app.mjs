@@ -4,7 +4,7 @@ import "./load.mjs"
 import cors from "cors";
 import session from "express-session";
 import bcrypt from "bcrypt";
-import { User, WorkOut, getClient } from "./model.mjs";
+import { Exercise, User, WorkOut, getClient } from "./model.mjs";
 import { body, validationResult } from "express-validator";
 import { serialize } from "cookie";
 import MongoStore from "connect-mongo";
@@ -115,6 +115,18 @@ app.delete("/api/login/", isAuthenticated, async function (req, res, next) {
     setUserCookie(req, res);
     res.status(200).json({}).end();
 });
+
+//Exercise
+
+app.post("/api/exercise/", isAuthenticated, async function (req, res, next) {
+    const exercise = await Exercise.create({
+        userRef: req.session.user._id,
+        name: req.body.name,
+        muscleGroup: req.body.muscleGroup
+    });
+
+    return res.status(200).json(exercise)
+})
 
 
 // Workouts

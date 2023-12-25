@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 
 async function main() {
@@ -26,7 +26,11 @@ let exerciseSchema = new mongoose.Schema({
     },
 
     muscleGroup: String,
-    name:String
+    name:String,
+    repetitions: Number,
+    sets: Number,
+    weight: Number,
+
 })
 
 
@@ -35,16 +39,26 @@ let workoutSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     },
-    muscleGroup: String,
-    name: String,
-    repetitions: Number,
-    sets: Number,
-    weight: Number,
+    workoutName: String,
+    exercises: [{type: Schema.ObjectId, ref: 'Exercise'}]
+
+})
+
+let progressSchema = new mongoose.Schema({
+    userRef:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    },
+
+    day: {type: Date, default: Date.now()},
+    workout: {type: Schema.ObjectId, ref: 'Workout'}
+
 })
 
 export const User = mongoose.model('User', userSchema);
 export const WorkOut = mongoose.model('Workout', workoutSchema);
 export const Exercise = mongoose.model('Exercise', exerciseSchema);
+export const Progress = mongoose.model('Progress', progressSchema);
 
 
 export function getClient() {

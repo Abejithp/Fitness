@@ -1,18 +1,23 @@
 import { useRef, useState } from 'react'
 import './create.css'
+import { addExercise } from '../../../api/exercise.mjs'
 
 
 
-export default function Create() {
+export default function Create(props) {
+
+    const {setExercise} = props
 
     const modalRef = useRef(null)
     const [name, updateName] = useState("")
     const [muscle, updateMuscle] = useState("")
 
     function handleSubmit(){
+        addExercise(name, muscle).then((res) => setExercise(res))
+
         updateName("");
-        updateMuscle("")
-        modal(false)
+        updateMuscle("");
+        modal(false);
     }
 
     function modal(option) {
