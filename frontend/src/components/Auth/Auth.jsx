@@ -1,7 +1,7 @@
 'use client'
 
 import './auth.css'
-import { login, register, logout } from "@/api/auth.mjs"
+import { login, register, logout } from "../../api/auth.mjs"
 
 function handleSubmit(res) {
     if (!res) {

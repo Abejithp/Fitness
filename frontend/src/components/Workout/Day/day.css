@@ -1,0 +1,11 @@
+.day{
+    display: flex;
+    background-color: rgb(44, 90, 240);
+    color: white;
+    padding: 1rem;
+    width: 100px;
+}
+
+.list{
+    color: black;
+}

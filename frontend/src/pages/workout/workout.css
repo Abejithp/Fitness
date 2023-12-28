@@ -1,8 +1,17 @@
-.content{
+.content-work{
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
     width: auto;
     height: 100%;
+}
+
+.list-work{
+    width: 100%;
+}
+
+.create .container{
+    display: flex;
+    gap: 1rem;
 }

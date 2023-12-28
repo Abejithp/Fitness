@@ -2,7 +2,7 @@
 import './main.css'
 
 import Link from 'next/link';
-import { Login, Register } from "@/components/Auth/Auth";
+import {Login, Register} from '../components/Auth/Auth'
 import { useState } from "react";
 
 export default function Home() {

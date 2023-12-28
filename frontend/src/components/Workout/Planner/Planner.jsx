@@ -1,28 +1,34 @@
 'use client'
-import { addWorkout, getWorkout } from "@/api/workout.mjs";
-import { useEffect, useRef, useState } from "react"
+
+import Modal from '@/components/Modal/Modal'
 import './planner.css'
+import Day from '../Day/Day'
+import { useEffect, useState } from 'react'
+import { addWorkout } from '@/api/workout.mjs'
 
-export function Planner() {
+export function Planner(props) {
 
-    const [workouts, setWorkout] = useState([]);
+    const { exercises } = props
 
-    useEffect(() => {
-        getWorkout().then((res) => setWorkout(res))
-    }, [])
+    const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    const workout = {}
+    days.map((day) => workout[day] = []) 
 
-    let key = 0;
+    let key = 0
+
+    useEffect(() =>{
+        console.log(workout)
+       
+    },[]);
+
+
     return (<>
-    
-        <div className="content">
-            <div className="workout-section">
-                <div className="title">My Workout Plans</div>
-            </div>
+        <div className="container-plan">
 
-            <div className="workout-section">
-                <div className="title">Community Workouts</div>
-            </div>
+            {days.map((item) => <Day key={key++} day={item} exercises={exercises} updateWorkout={(exercises) => {workout[item] = exercises;}}/>)}
+            
         </div>
 
+        <button onClick={() => addWorkout(workout)}>Submit</button>
     </>)
 }
