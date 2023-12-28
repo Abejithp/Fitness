@@ -2,6 +2,7 @@
     width: auto;
     display: flex;
     flex-direction: column;
+    background-color: var(--bg-primary);
 }
 
 .content{

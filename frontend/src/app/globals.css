@@ -1,6 +1,15 @@
 :root{
-    --bg-primary: #2b2b2b;
-    --bg-taskbar: #0F0F0F;
+    /* --bg-primary: #1A1A1D;
+    --bg-seconday: #4E4E50;
+    --bg-100: #C3073F;
+    --bg-200: #950740;
+    --bg-300: #6f2232; */
+
+    --bg-primary: #0C0032;
+    --bg-seconday: #282828;
+    --bg-100: #3500D3;
+    --bg-200: #240090;
+    --bg-300: #190061;
 }
 
 body{

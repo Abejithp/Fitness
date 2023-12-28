@@ -5,30 +5,25 @@ import './planner.css'
 import Day from '../Day/Day'
 import { useEffect, useState } from 'react'
 import { addWorkout } from '@/api/workout.mjs'
+import Workout from '@/pages/workout/Workout'
 
-export function Planner(props) {
+export default function Planner(props) {
 
-    const { exercises } = props
+    const { exercises , name, updateWorkout} = props
 
     const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+
     const workout = {}
     days.map((day) => workout[day] = []) 
 
     let key = 0
 
-    useEffect(() =>{
-        console.log(workout)
-       
-    },[]);
-
-
     return (<>
         <div className="container-plan">
 
-            {days.map((item) => <Day key={key++} day={item} exercises={exercises} updateWorkout={(exercises) => {workout[item] = exercises;}}/>)}
+            {days.map((day) => <Day key={key++} day={day} exercises={exercises} updateWorkout={(exercises) => {workout[day] = exercises; console.log(workout)}}/>)}
             
         </div>
-
-        <button onClick={() => addWorkout(workout)}>Submit</button>
+        <button onClick={() => {addWorkout(workout, name)}}>Submit</button>
     </>)
 }

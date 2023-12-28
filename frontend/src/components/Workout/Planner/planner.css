@@ -1,6 +1,5 @@
 .container-plan{
     display: flex;
-    flex-direction: column;
-    align-self: left;
+    justify-content: space-evenly;
     width: 100%;
 }

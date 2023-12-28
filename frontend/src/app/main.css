@@ -8,7 +8,7 @@
     flex-direction: column;
     width: auto;
     height: auto;
-
+    background-color: blue;
 }
 
 .taskbar{

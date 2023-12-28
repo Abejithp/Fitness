@@ -146,7 +146,7 @@ app.post("/api/workout/", isAuthenticated, async function (req, res, next) {
 
     const workout = await WorkOut.create({
         userRef: req.session.user._id,
-        workoutName: "A",
+        workoutName: req.body.name,
         workout: filter
     });
 
@@ -155,11 +155,23 @@ app.post("/api/workout/", isAuthenticated, async function (req, res, next) {
     return res.status(200).json(workout);
 })
 
-
-app.get("/api/workout/", isAuthenticated, async function (req, res) {
+app.get("/api/workout/", isAuthenticated, async function (req, res){
     try {
-        const workout = await WorkOut.findOne({ userRef: req.session.user._id }).populate('workout.exercise');
+        const workout = await WorkOut.find({ userRef: req.session.user._id }, {workoutName:1});
         res.status(200).json({ data: workout, success: true });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ success: false, msg: err.message });
+    }
+})
+
+
+app.get("/api/workout/:id/", isAuthenticated, async function (req, res) {
+    try {
+        const workout = await WorkOut.findOne({ _id: req.params.id }).populate('workout.exercise');
+        console.log(workout);
+        res.status(200).json({ data: workout, success: true });
+
     } catch (err) {
         console.log(err);
         res.status(500).json({ success: false, msg: err.message });

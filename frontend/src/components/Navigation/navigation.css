@@ -1,12 +1,15 @@
 .navigation{
     display: flex;
+    flex-direction: column;
     padding: 1rem;
     gap: 1.5rem;
-    border-bottom: 2px solid black;
+    width: 200px;
+    height: 500px;
+    border-radius: 12px;
+    background-color: var(--bg-100);
 }
 
-.title{
-    font-weight: 500;
-    font-size: 1rem;
-    cursor: pointer;
+.card.create-btn{
+    background-color: var(--bg-300);
+    color: var(--bg-100);
 }

@@ -9,7 +9,7 @@
 
 .link-container{
     display: flex;
-    background-color: var(--bg-taskbar);
+    background-color: var(--bg-seconday);
     width: 350px;
     height: 50px;
     border-radius: 30px;
