@@ -4,7 +4,7 @@ import "./load.mjs"
 import cors from "cors";
 import session from "express-session";
 import bcrypt from "bcrypt";
-import { Exercise, User, WorkOut, getClient } from "./model.mjs";
+import { Exercise, Muscle, User, WorkOut, getClient } from "./model.mjs";
 import { body, validationResult } from "express-validator";
 import { serialize } from "cookie";
 import MongoStore from "connect-mongo";
@@ -118,11 +118,24 @@ app.delete("/api/login/", isAuthenticated, async function (req, res, next) {
 
 //Exercise
 
+
 app.post("/api/exercise/", isAuthenticated, async function (req, res, next) {
+
+    const existing = await Muscle.findOne({ group: req.body.muscleGroup })
+    let muscle = null;
+
+    if (!existing) {
+        muscle = await Muscle.create({
+            group: req.body.muscleGroup
+        });
+    } else {
+        muscle = existing
+    }
+
     const exercise = await Exercise.create({
         userRef: req.session.user._id,
         name: req.body.name,
-        muscleGroup: req.body.muscleGroup
+        muscleGroup: muscle._id
     });
 
     return res.status(200).json(exercise)
@@ -133,6 +146,21 @@ app.get("/api/exercise/", isAuthenticated, async function (req, res) {
     return res.status(200).json(exercise);
 });
 
+app.get("/api/muscles/", isAuthenticated, async function (req, res) {
+    const muscles = await Muscle.find({}).limit(6)
+    return res.status(200).json({ data: muscles })
+});
+
+app.get("/api/muscles/:id/", isAuthenticated, async function (req, res) {
+
+    try {
+        const muscles = await Exercise.find({ userRef: req.session.user._id, muscleGroup: req.params.id }).populate('muscleGroup')
+        return res.status(200).json({ data: muscles })
+    } catch (err) {
+        return res.status(200).json({ data: [] })
+    }
+
+})
 // Workouts
 
 app.post("/api/workout/", isAuthenticated, async function (req, res, next) {
@@ -155,9 +183,9 @@ app.post("/api/workout/", isAuthenticated, async function (req, res, next) {
     return res.status(200).json(workout);
 })
 
-app.get("/api/workout/", isAuthenticated, async function (req, res){
+app.get("/api/workout/", isAuthenticated, async function (req, res) {
     try {
-        const workout = await WorkOut.find({ userRef: req.session.user._id }, {workoutName:1});
+        const workout = await WorkOut.find({ userRef: req.session.user._id }, { workoutName: 1 });
         res.status(200).json({ data: workout, success: true });
     } catch (err) {
         console.log(err);

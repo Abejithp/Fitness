@@ -7,3 +7,11 @@ export function addExercise(name, muscleGroup) {
 export function getExercise() {
     return send("GET", "/api/exercise/", null);
 }
+
+export function getMuscles(){
+    return send("GET", "/api/muscles/", null);
+}
+
+export function getActiveMuscle(id){
+    return send("GET", `/api/muscles/${id}`, null);
+}

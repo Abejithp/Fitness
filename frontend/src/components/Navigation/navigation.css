@@ -6,10 +6,10 @@
     width: 200px;
     height: 500px;
     border-radius: 12px;
-    background-color: var(--bg-100);
+    background-color: var(--bg-200);
 }
 
 .card.create-btn{
-    background-color: var(--bg-300);
-    color: var(--bg-100);
+    background-color: var(--bg-100);
+    color: white;
 }

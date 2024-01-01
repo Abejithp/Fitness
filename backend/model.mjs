@@ -19,13 +19,21 @@ let userSchema = new mongoose.Schema({
     }
 });
 
+let muscleSchema = new mongoose.Schema({
+    group: String
+})
+
 let exerciseSchema = new mongoose.Schema({
     userRef:{
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     },
 
-    muscleGroup: String,
+    muscleGroup: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Muscle"
+    },
+
     name:String,
     repetitions: Number,
     sets: Number,
@@ -59,6 +67,7 @@ export const User = mongoose.model('User', userSchema);
 export const WorkOut = mongoose.model('Workout', workoutSchema);
 export const Exercise = mongoose.model('Exercise', exerciseSchema);
 export const Progress = mongoose.model('Progress', progressSchema);
+export const Muscle =mongoose.model('Muscle', muscleSchema );
 
 
 export function getClient() {

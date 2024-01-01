@@ -1,24 +1,33 @@
 import { useEffect, useState } from 'react'
 
 import './workout.css'
-import Create from "@/components/Workout/Create/Create"
-import Card from '@/components/Workout/Card/Card'
-import { getExercise } from '../../api/exercise.mjs'
-import Planner from '@/components/Workout/Planner/Planner'
+import { getExercise, getMuscles } from '../../api/exercise.mjs'
 import { getActiveWorkout, getWorkout } from '@/api/workout.mjs'
 import Display from '@/components/Workout/Display/Display'
 import Navi from '@/components/Navigation/Navigation'
 import Build from '@/components/Workout/Build/Build'
+import Exdisplay from '@/components/Workout/ExerciseDisplay/Exdisplay'
 export default function Workout() {
 
     const [exercises, setExercise] = useState([])
+    const [muscle, setMuscle] = useState([])
     const [currentWorkout, updateWorkout] = useState([])
     const [workout, setWorkout] = useState([])
     const [build, setBuild] = useState(false);
 
     useEffect(() => {
         getExercise().then((res) => setExercise(res))
-        getWorkout().then((res) => { setWorkout(res.data) })
+        getMuscles().then((res) => setMuscle(res.data))
+        getWorkout().then((res) => {
+            setWorkout(res.data)
+
+            if (res.data.length != 0) {
+                getActiveWorkout(res.data[0]._id).then((res) => updateWorkout(res.data))
+            }
+
+        })
+
+
     }, []);
 
     // useEffect(()=>{
@@ -29,12 +38,18 @@ export default function Workout() {
         <div className="content-work">
 
             <div className="main-display">
-                <Navi workouts={workout} update={(res) => updateWorkout(res)} build={() => setBuild(!build)}/>
-                {!build ? <Display name={currentWorkout.workoutName} workout={currentWorkout.workout} />:
-                <Build exercises={exercises}/>}
-                
-            </div>
+                <Navi workouts={workout} update={(res) => updateWorkout(res)} build={() => setBuild(!build)} />
 
+                {!build ?
+                    <Display name={currentWorkout.workoutName} workout={currentWorkout.workout} /> :
+                    <Build exercises={exercises} />
+                }
+
+            </div>
+            
+            <div className="exercise-display">
+                <Exdisplay muscle={muscle} setExercise={(name) => setExercise([...exercises, name])}/>
+            </div>
 
             {/* <div className="list-work">
                 <div className="title">Active Workout</div>

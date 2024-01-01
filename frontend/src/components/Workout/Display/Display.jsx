@@ -8,7 +8,6 @@ export default function Display(props) {
         workout = []
     }
 
-    console.log(workout)
     return (<>
         <div className="container-display">
 
