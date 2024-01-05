@@ -1,5 +1,6 @@
 'use client'
 
+import DayDisplay from '@/components/Dashboard/DayDisplay';
 import './dashboard.css'
 export default function Dashboard() {
 
@@ -10,8 +11,9 @@ export default function Dashboard() {
             <div className="date">
                 {date.toUTCString().slice(0, 16)+" :"}
             </div>
-            <div className="display">
 
+            <div className="display">
+                <DayDisplay />
             </div>
         </div>
 

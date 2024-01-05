@@ -16,6 +16,11 @@ let userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true
+    },
+
+    active: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Workout"
     }
 });
 
@@ -24,7 +29,7 @@ let muscleSchema = new mongoose.Schema({
 })
 
 let exerciseSchema = new mongoose.Schema({
-    userRef:{
+    userRef: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     },
@@ -34,7 +39,7 @@ let exerciseSchema = new mongoose.Schema({
         ref: "Muscle"
     },
 
-    name:String,
+    name: String,
     repetitions: Number,
     sets: Number,
     weight: Number,
@@ -43,23 +48,24 @@ let exerciseSchema = new mongoose.Schema({
 
 
 let workoutSchema = new mongoose.Schema({
-    userRef:{
+    userRef: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     },
     workoutName: String,
-    
-    workout: [{day:String, exercise:[{type: Schema.ObjectId, ref: 'Exercise'}]}]
+
+    workout: [{ day: String, exercise: [{ type: Schema.ObjectId, ref: 'Exercise' }] }]
 })
 
 let progressSchema = new mongoose.Schema({
-    userRef:{
+    userRef: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     },
 
-    day: {type: Date, default: Date.now()},
-    workout: {type: Schema.ObjectId, ref: 'Workout'}
+    date: String,
+
+    workout: [{name: String, sets: Number, repetitions: Number}]
 
 })
 
@@ -67,7 +73,7 @@ export const User = mongoose.model('User', userSchema);
 export const WorkOut = mongoose.model('Workout', workoutSchema);
 export const Exercise = mongoose.model('Exercise', exerciseSchema);
 export const Progress = mongoose.model('Progress', progressSchema);
-export const Muscle =mongoose.model('Muscle', muscleSchema );
+export const Muscle = mongoose.model('Muscle', muscleSchema);
 
 
 export function getClient() {

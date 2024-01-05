@@ -6,7 +6,7 @@ export default function Build(props) {
     const { exercises } = props
     const nameRef = useRef(null)
 
-    const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
     const workout = {}
     days.map((day) => workout[day] = [])
 

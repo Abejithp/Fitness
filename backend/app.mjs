@@ -4,7 +4,7 @@ import "./load.mjs"
 import cors from "cors";
 import session from "express-session";
 import bcrypt from "bcrypt";
-import { Exercise, Muscle, User, WorkOut, getClient } from "./model.mjs";
+import { Exercise, Muscle, Progress, User, WorkOut, getClient } from "./model.mjs";
 import { body, validationResult } from "express-validator";
 import { serialize } from "cookie";
 import MongoStore from "connect-mongo";
@@ -84,7 +84,7 @@ app.post("/api/register/", body(['username', 'password']).notEmpty(), async func
     }
 
     const hash = bcrypt.hashSync(req.body.password, 10);
-    user = await User.create({ username: req.body.username, password: hash })
+    user = await User.create({ username: req.body.username, password: hash, active: null })
 
     const project = req.session.user = { _id: user._id.toString(), username: user.username };
     setUserCookie(req, res);
@@ -135,7 +135,10 @@ app.post("/api/exercise/", isAuthenticated, async function (req, res, next) {
     const exercise = await Exercise.create({
         userRef: req.session.user._id,
         name: req.body.name,
-        muscleGroup: muscle._id
+        muscleGroup: muscle._id,
+        repetitions: 0,
+        sets: 0,
+        weight: 0
     });
 
     return res.status(200).json(exercise)
@@ -160,7 +163,9 @@ app.get("/api/muscles/:id/", isAuthenticated, async function (req, res) {
         return res.status(200).json({ data: [] })
     }
 
-})
+});
+
+
 // Workouts
 
 app.post("/api/workout/", isAuthenticated, async function (req, res, next) {
@@ -178,7 +183,7 @@ app.post("/api/workout/", isAuthenticated, async function (req, res, next) {
         workout: filter
     });
 
-    console.log(workout)
+    await User.updateOne({ _id: req.session.user._id }, { $set: { active: workout._id } })
 
     return res.status(200).json(workout);
 })
@@ -197,7 +202,6 @@ app.get("/api/workout/", isAuthenticated, async function (req, res) {
 app.get("/api/workout/:id/", isAuthenticated, async function (req, res) {
     try {
         const workout = await WorkOut.findOne({ _id: req.params.id }).populate('workout.exercise');
-        console.log(workout);
         res.status(200).json({ data: workout, success: true });
 
     } catch (err) {
@@ -205,6 +209,71 @@ app.get("/api/workout/:id/", isAuthenticated, async function (req, res) {
         res.status(500).json({ success: false, msg: err.message });
     }
 });
+
+//Progression
+
+app.get("/api/active/", isAuthenticated, async function (req, res) {
+    const user = await User.findOne({ _id: req.session.user._id })
+    const workout = await WorkOut.findOne({ _id: user.active }).populate('workout.exercise')
+    if (!workout) {
+        return res.status(200).json({ data: null })
+    }
+
+    const day = new Date().getDay();
+
+    return res.status(200).json({ data: workout.workout[day] })
+
+});
+
+
+app.patch("/api/active/", isAuthenticated, async function (req, res) {
+    const date = new Date();
+    const today = date.toUTCString().slice(0, 16)
+
+    const progress = await Progress.findOne({ date: today })
+
+    if (!progress) {
+
+        const user = await User.findOne({ _id: req.session.user._id });
+        const data = await WorkOut.findOne({ _id: user.active }).populate('workout.exercise')
+
+        const workout = data.workout[date.getDay()]
+        const filter = []
+
+        workout.exercise.forEach((exercise) => {
+            console.log(exercise)
+            if (req.body.name == exercise.name) {
+                filter.push({
+                    name: exercise.name,
+                    repetitions: req.body.reps,
+                    sets: req.body.sets
+                })
+            } else {
+                filter.push({
+                    name: exercise.name,
+                    repetitions: 0,
+                    sets: 0
+                })
+            }
+
+        })
+
+        const progress = await Progress.create({
+            userRef: req.session.user._id,
+            date: today,
+            workout: filter
+        })
+
+        return res.status(200).json({ data: progress })
+    }
+
+    const index = progress.workout.findIndex((exercise) => exercise.name == req.body.name)
+    progress.workout[index] = { name: req.body.name, repetitions: req.body.reps, sets: req.body.sets }
+
+    await Progress.updateOne({ date: today }, { $set: { workout: progress.workout } })
+
+    return res.status(200).json({ data: progress })
+})
 
 
 const server = createServer(app).listen(PORT, function (err) {
