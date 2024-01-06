@@ -15,6 +15,9 @@ export default function Workout() {
     const [workout, setWorkout] = useState([])
     const [build, setBuild] = useState(false);
 
+
+
+
     const text = build ? "My Workout" : "Create Workout"
 
     useEffect(() => {
