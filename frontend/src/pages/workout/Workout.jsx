@@ -15,6 +15,8 @@ export default function Workout() {
     const [workout, setWorkout] = useState([])
     const [build, setBuild] = useState(false);
 
+    const text = build ? "My Workout" : "Create Workout"
+
     useEffect(() => {
         getExercise().then((res) => setExercise(res))
         getMuscles().then((res) => setMuscle(res.data))
@@ -26,52 +28,24 @@ export default function Workout() {
             }
 
         })
-
-
     }, []);
 
-    // useEffect(()=>{
-    //     console.log(currentWorkout)
-    // }, [currentWorkout])
 
     return (<>
         <div className="content-work">
-
             <div className="main-display">
-                <Navi workouts={workout} update={(res) => updateWorkout(res)} build={() => setBuild(!build)} />
-
-                {!build ?
-                    <Display name={currentWorkout.workoutName} workout={currentWorkout.workout} /> :
-                    <Build exercises={exercises} />
-                }
-
-            </div>
-            
-            <div className="exercise-display">
-                <Exdisplay muscle={muscle} setExercise={(name) => setExercise([...exercises, name])}/>
-            </div>
-
-            {/* <div className="list-work">
-                <div className="title">Active Workout</div>
-
-            </div> */}
-
-
-            {/* <div className="list-work">
-                <div className="title">Create Workouts</div>
-                <Planner exercises={exercises} />
-            </div>
-
-            <div className="create">
-                <div className="title">Create Exercise</div>
-
-                <div className="container">
-                    {exercises.map((item, index) => <Card key={index} name={item.name} muscle={item.muscleGroup} />)}
+                <div className="workout-display">
+                    <Navi workouts={workout} update={(res) => updateWorkout(res)} build={() => setBuild(!build)} text={text}/>
+                    {!build ?
+                        <Display name={currentWorkout.workoutName} workout={currentWorkout.workout} /> :
+                        <Build exercises={exercises} />
+                    }
                 </div>
+            </div>
 
-                <Create setExercise={(res) => setExercise([...exercises, res])} />
-            </div> */}
-
+            <div className="exercise-display">
+                <Exdisplay muscle={muscle} setExercise={(name) => setExercise([...exercises, name])} />
+            </div>
         </div>
     </>)
 }

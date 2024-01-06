@@ -17,6 +17,13 @@
     gap: 2rem;
 }
 
+.workout-display{
+    display: flex;
+    gap: 1rem;
+    height: 500px;
+    justify-content: center;
+}
+
 .exercise-display{
     display: flex;
     justify-content: center;

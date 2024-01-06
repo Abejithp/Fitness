@@ -19,8 +19,9 @@ export default function Day(props){
                 <div className="label">{day}</div>
                 <div className="exercises">
                     {card.map((name, index) => <div key={index} className='card-work'> {name} </div>)}
+                    <Modal day={"add"} exercises={exercises} update={(id,name) => {updateExercise([...exercise, id]); updateCard([...card, name])}}/>
                 </div>
-                <Modal day={"add"} exercises={exercises} update={(id,name) => {updateExercise([...exercise, id]); updateCard([...card, name])}}/>
+                
       
             </div>
     </>)

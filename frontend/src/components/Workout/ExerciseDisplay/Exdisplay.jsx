@@ -13,7 +13,11 @@ export default function Exdisplay(props) {
 
     return (<>
         <div className="exercise-container">
-
+        <div className="section">
+                <div className="remaining">
+                    <Create setExercise={setExercise} list={muscle}/>
+                </div>
+            </div>
             <div className="section">
                 <div className="title">My Exercises</div>
                 <div className={style}>
@@ -29,11 +33,7 @@ export default function Exdisplay(props) {
                 </div>
             </div>
 
-            <div className="section">
-                <div className="remaining">
-                    <Create setExercise={setExercise} list={muscle}/>
-                </div>
-            </div>
+
 
 
         </div>

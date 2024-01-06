@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { addWorkout } from "@/api/workout.mjs";
 import Day from "../Day/Day";
+
 export default function Build(props) {
 
     const { exercises } = props
@@ -19,14 +20,17 @@ export default function Build(props) {
     return (<>
         <div className="container-display">
             <div className="name">
-                Workout:
-                <input type="text" placeholder="name" ref={nameRef} />
-                <button onClick={handleSubmit}>Submit</button>
+                <div className="name-container">
+                    Workout:
+                    <input type="text" placeholder="name" ref={nameRef} />
+                </div>
 
-
+                <div onClick={handleSubmit} className="submit">
+                    <img src="./interface.png" alt="" srcset="" />
+                </div>
             </div>
             <div className="display-workout">
-                {days.map((day, index) => <Day key={index} day={day} exercises={exercises} updateWorkout={(exercises) =>  workout[day] = exercises} />)}
+                {days.map((day, index) => <Day key={index} day={day} exercises={exercises} updateWorkout={(exercises) => workout[day] = exercises} />)}
             </div>
         </div>
     </>)

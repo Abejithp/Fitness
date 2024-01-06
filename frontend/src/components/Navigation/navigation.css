@@ -4,7 +4,7 @@
     padding: 1rem;
     gap: 1.5rem;
     width: 200px;
-    height: 500px;
+    height: calc(100%-1rem);
     border-radius: 12px;
     background-color: var(--bg-200);
 }

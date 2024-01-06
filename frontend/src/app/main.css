@@ -1,20 +1,15 @@
-:root{
-    --bg-primary: #2b2b2b;
-    --bg-taskbar: #0F0F0F;
-}
-
 .main{
     display: flex;
     flex-direction: column;
     width: auto;
     height: auto;
-    background-color: blue;
+    background-color: var(--bg-primary);
 }
 
 .taskbar{
     position: sticky;
     top: 0;
-    padding: 2rem;
+    padding: 3rem;
     display: flex;
     width: auto;
     height: fit-content;
@@ -24,7 +19,7 @@
 
 .container{
     display: flex;
-    background-color: var(--bg-taskbar);
+    background-color: var(--bg-100);
     width: 350px;
     height: 50px;
     border-radius: 30px;
@@ -49,20 +44,86 @@
 
 }
 
+
+.title,
+.about,
+.feature{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+    background-color: var(--bg-primary);
+    color: white;
+}
+
+
+.section-title{
+    font-size: 2rem;
+    text-align: center;
+    width: 100%;
+}
+
 .title{
-    margin-top: 200px;
-    color: black;
-    font-size: 15rem;
-    height: fit-content;
+    height: calc(100vh - 145px);
+    font-size: 13rem;
 }
 
 .card{
-    margin-top: 150px;
-    width: 1000px;
-    height: 1000px;
-    background-color: #2b2b2b;
-    border-radius: 12px;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    gap: 3.5rem;
 }
+.card .left{
+    width: auto;
+    font-size: 1rem;
+}
+
+.card .right{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    width: 450px;
+    text-align: center;
+}
+
+.card .display{
+    display: flex;
+    padding: 1rem;
+    box-sizing: border-box;
+    width: fit-content;
+    height: fit-content;
+    border-radius: 10px;
+    background-color: var(--bg-100);
+}
+
+.display .column{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 80px;
+    height: 200px;
+    gap: 1rem;
+}
+
+.workout{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .5rem;
+    width: 100%;
+}
+
+.exercise{
+    background-color: var(--bg-200);
+    border-radius: 5px;
+    width: 80%;
+    height: 25px;
+}
+
 
 .join{
     display: flex;
@@ -75,6 +136,7 @@
 .left{
     font-size: 6rem;
     width: 300px;
+    color: white;
 }
 
 .form{
