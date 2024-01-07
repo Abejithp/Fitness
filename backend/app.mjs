@@ -198,6 +198,16 @@ app.get("/api/workout/", isAuthenticated, async function (req, res) {
     }
 })
 
+app.patch("/api/workout/", isAuthenticated, async function(req, res){
+    const workout = await WorkOut.findOne({_id:req.body.id})
+    if(!workout){
+        return res.sendStatus(404);
+    }
+
+    await User.updateOne({_id:req.session.user._id}, {active: req.body.id });
+
+    return res.status(200).json({success: true})
+});
 
 app.get("/api/workout/:id/", isAuthenticated, async function (req, res) {
     try {

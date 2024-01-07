@@ -3,6 +3,7 @@ import './tracker.css'
 import { update } from '@/api/progression.mjs'
 
 export default function Tracker(props) {
+
     const { exercise } = props
 
     const [set, updateSet] = useState(0)

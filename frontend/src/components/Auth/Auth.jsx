@@ -3,10 +3,11 @@
 import './auth.css'
 import { login, register, logout } from "../../api/auth.mjs"
 
-function handleSubmit(res) {
+function handleSubmit(res,err) {
     if (!res) {
-        console.log("FAILED")
+       return console.log("FAILED")
     }
+
     window.location.href = '/dashboard'
 }
 
@@ -16,7 +17,7 @@ export function Login(props) {
     return (<>
           <button onClick={function () {
             if (user != '' && password != '') {
-                login(user, password).then((res) => handleSubmit(res))
+                login(user, password).then((res, err) => handleSubmit(res,err))
             }
         }} className="btn">
             Login

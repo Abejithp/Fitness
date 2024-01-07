@@ -40,7 +40,7 @@ export default function Workout() {
                 <div className="workout-display">
                     <Navi workouts={workout} update={(res) => updateWorkout(res)} build={() => setBuild(!build)} text={text}/>
                     {!build ?
-                        <Display name={currentWorkout.workoutName} workout={currentWorkout.workout} /> :
+                        <Display name={currentWorkout.workoutName} workout={currentWorkout.workout} id={currentWorkout._id}/> :
                         <Build exercises={exercises} />
                     }
                 </div>

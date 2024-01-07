@@ -12,3 +12,7 @@ export function getWorkout() {
 export function getActiveWorkout(id) {
     return send("GET", `/api/workout/${id}/`, null);
 }
+
+export function updateActiveWorkout(id){
+    return send("PATCH", `/api/workout/`, {id})
+}

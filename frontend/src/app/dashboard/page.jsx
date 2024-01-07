@@ -18,7 +18,7 @@ export default function dashboard() {
             <Taskbar updateTab={updateTab} />
 
             <div className="content">
-                {(tab=="Dashboard" ? <Dashboard /> : tab =="Workout"? <Workout />: <Progression />)}
+                {(tab=="Dashboard" ? <Dashboard /> : tab =="Workout"? <Workout /> : <Progression />)}
             </div>
         </div>
     </>)
