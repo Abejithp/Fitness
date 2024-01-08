@@ -75,7 +75,9 @@ let weightSchema = new mongoose.Schema({
         ref: "User"
     },
 
-    weight: Number
+    weight: Number,
+    
+    createdAt: Date
 
 });
 

@@ -7,3 +7,11 @@ export function getActive() {
 export function update(name, reps, sets){
     return send("PATCH", "/api/active/", {name,reps,sets})
 }
+
+export function addWeight(weight){
+    return send("POST", "/api/weight/", {weight})
+}
+
+export function getWeight(){
+    return send("GET", "/api/weight/", null);
+}

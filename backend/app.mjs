@@ -4,7 +4,7 @@ import "./load.mjs"
 import cors from "cors";
 import session from "express-session";
 import bcrypt from "bcrypt";
-import { Exercise, Muscle, Progress, User, WorkOut, getClient } from "./model.mjs";
+import { Exercise, Muscle, Progress, User, Weight, WorkOut, getClient } from "./model.mjs";
 import { body, validationResult } from "express-validator";
 import { serialize } from "cookie";
 import MongoStore from "connect-mongo";
@@ -285,7 +285,22 @@ app.patch("/api/active/", isAuthenticated, async function (req, res) {
     return res.status(200).json({ data: progress })
 })
 
+//Weight
 
+app.post("/api/weight/", isAuthenticated, async function(req,res){
+    const weight = await Weight.create({
+        userRef: req.session.user._id,
+        weight: req.body.weight,
+        createdAt: Date.now()
+    })
+
+    return res.status(200).json({data: weight})
+})
+
+app.get("/api/weight/", isAuthenticated, async function(req, res){
+    const weight = await Weight.find({userRef: req.session.user._id}).sort({createdAt: 1})
+    return res.status(200).json({data: weight})
+})
 const server = createServer(app).listen(PORT, function (err) {
     if (err) console.log(err);
     else console.log("HTTP server on http://localhost:%s", PORT);
