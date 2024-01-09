@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 100%;
+    height: calc(100% - 114px);
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
@@ -12,23 +12,28 @@
 
 .date{
     width: 100%;
-    font-weight: 600;
-    font-size: 3rem;
+    font-weight: 500;
+    font-size: 2rem;
     color: white;
 }
 
 .display{
     display: grid;
-    grid-template-columns: repeat(3,1fr);
-    grid-template-rows: repeat(3,1fr);
+    grid-template-columns: repeat(2,1fr);
+    grid-template-rows: repeat(2,1fr);
     gap: 1rem;
     width: 100%;
-    height: 100%;
-    min-height: 600px;
-    background-color: var(--bg-200);
+    height: 500px;
+    background-color: var(--bg-300);
     border-radius: 12px;
     padding: 1rem;
     box-sizing: border-box;
+}
+
+.display.flex{
+    display: flex;
+    width: 100%;
+    height: 500px;
 }
 
 .container-dash{
@@ -40,4 +45,33 @@
     min-height: 400px;
     gap: 2rem;
     width: 1000px;
+}
+
+.pagination.dash{
+    justify-content: flex-start;
+    gap: 1.5rem;
+}
+
+.btn{
+    display: flex;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--bg-100);
+    cursor: pointer;
+    color: white;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+    justify-self: flex-end;
+}
+
+.btn img{
+    width: 50%;
+    height: auto;
+    filter: invert(99%) sepia(0%) saturate(2484%) hue-rotate(37deg) brightness(121%) contrast(100%);
+}
+
+.btn .left{
+    transform: scaleX(-1);
 }

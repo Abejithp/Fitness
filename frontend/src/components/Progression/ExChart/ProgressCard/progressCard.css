@@ -43,7 +43,8 @@
     cursor: pointer;
 }
 
-.empty {
+
+.card-progress.empty {
     background-color: var(--bg-300);
     color: var(--bg-primary);
     cursor: default;
