@@ -1,12 +1,21 @@
 import { useState } from 'react'
 import './weight.css'
 import { addWeight } from '@/api/progression.mjs'
+import Chart from '../Chart/Chart'
 
-export default function Weight(){
+import './weight.css'
+export default function Weight() {
     const [weight, setWeight] = useState(0)
 
     return (<>
-        <input type="number" value={weight} onChange={(e) => setWeight(e.target.value) } />
-        <button onClick={() => addWeight(weight)}>Submit</button>
+        <div className="weight-container">
+            <div className="title">Weight Progress</div>
+            <Chart />
+            <div className="btn-container">
+                <input type="number" value={weight} onChange={(e) => setWeight(e.target.value)} />
+                <button onClick={() => addWeight(weight)}>Add Weight</button>
+            </div>
+        </div>
+
     </>)
 }

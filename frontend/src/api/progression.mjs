@@ -4,8 +4,12 @@ export function getActive() {
     return send("GET", "/api/active/", null);
 }
 
-export function update(name, reps, sets){
-    return send("PATCH", "/api/active/", {name,reps,sets})
+export function update(name, reps, sets, weight){
+    return send("PATCH", "/api/active/", {name, reps, sets, weight})
+}
+
+export function getExProgress(name){
+    return send("GET", `/api/active/${name}/`, null)
 }
 
 export function addWeight(weight){
@@ -15,3 +19,4 @@ export function addWeight(weight){
 export function getWeight(){
     return send("GET", "/api/weight/", null);
 }
+

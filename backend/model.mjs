@@ -63,9 +63,10 @@ let progressSchema = new mongoose.Schema({
         ref: "User"
     },
 
+
     date: String,
 
-    workout: [{name: String, sets: Number, repetitions: Number}]
+    workout: [{name: String, sets: Number, repetitions: Number, weight: Number}]
 
 });
 

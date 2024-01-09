@@ -8,6 +8,7 @@ export default function Tracker(props) {
 
     const [set, updateSet] = useState(0)
     const [rep, updateRep] = useState(0)
+    const [weight, updateWeight] = useState(0)
 
     return (<>
         <div className="tracker">
@@ -19,7 +20,7 @@ export default function Tracker(props) {
                     value={set}
                     onChange={(e) => {
                         updateSet(e.target.value);
-                        update(exercise.name, Number(rep), e.target.value);
+                        update(exercise.name, Number(rep), e.target.value, Number(weight));
                     }}
                 />
             </div>
@@ -30,7 +31,18 @@ export default function Tracker(props) {
                     value={rep}
                     onChange={(e) => {
                         updateRep(e.target.value);
-                        update(exercise.name, e.target.value, Number(set));
+                        update(exercise.name, e.target.value, Number(set), Number(weight));
+                    }}
+                />
+            </div>
+            <div className="button-container">
+                <div className="title">Weight: </div>
+                <input type="number"
+                    min={0}
+                    value={weight}
+                    onChange={(e) => {
+                        updateWeight(e.target.value);
+                        update(exercise.name, Number(rep), Number(set), e.target.value);
                     }}
                 />
             </div>

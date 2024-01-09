@@ -236,10 +236,23 @@ app.get("/api/active/", isAuthenticated, async function (req, res) {
 });
 
 
+app.get("/api/active/:name/", isAuthenticated, async function (req, res){
+    const progress = await Progress.find({userRef: req.session.user._id})
+    const data = []
+
+    Array.from(progress).forEach((item) => {
+        item.workout.forEach((exercise) =>{
+            if(exercise.name == req.params.name){
+                data.push(exercise.repetitions * exercise.sets * exercise.weight)
+            }
+        })
+    })
+
+    return res.status(200).json({data: data})
+})
+
 app.patch("/api/active/", isAuthenticated, async function (req, res) {
     const date = new Date();
-    const today = date.toUTCString().slice(0, 16)
-
     const progress = await Progress.findOne({ date: today })
 
     if (!progress) {
@@ -256,13 +269,15 @@ app.patch("/api/active/", isAuthenticated, async function (req, res) {
                 filter.push({
                     name: exercise.name,
                     repetitions: req.body.reps,
-                    sets: req.body.sets
+                    sets: req.body.sets,
+                    weight: req.body.weight
                 })
             } else {
                 filter.push({
                     name: exercise.name,
                     repetitions: 0,
-                    sets: 0
+                    sets: 0,
+                    weight: 0
                 })
             }
 
@@ -278,7 +293,7 @@ app.patch("/api/active/", isAuthenticated, async function (req, res) {
     }
 
     const index = progress.workout.findIndex((exercise) => exercise.name == req.body.name)
-    progress.workout[index] = { name: req.body.name, repetitions: req.body.reps, sets: req.body.sets }
+    progress.workout[index] = { name: req.body.name, repetitions: req.body.reps, sets: req.body.sets, weight: req.body.weight}
 
     await Progress.updateOne({ date: today }, { $set: { workout: progress.workout } })
 

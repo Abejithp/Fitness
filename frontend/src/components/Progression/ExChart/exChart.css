@@ -1,0 +1,16 @@
+.chart-container{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.chart-display{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    width: 600px;
+    height: 400px;
+    gap: 1rem;
+    border-radius: 12px;
+}
+

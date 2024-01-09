@@ -2,6 +2,7 @@ import { getWeight } from '@/api/progression.mjs'
 import { useEffect, useState } from 'react'
 import { LineChart } from '@mui/x-charts'
 
+import './chart.css'
 export default function Chart() {
     const [weight, setWeight] = useState([])
 
@@ -14,15 +15,20 @@ export default function Chart() {
 
     console.log(weight)
     return (<>
-        <LineChart
-      
-            series={[
-                {
-                    data: weight,
-                },
-            ]}
-            width={500}
-            height={300}
-        />
+        <div className="chart">
+            <LineChart
+        
+                series={[
+                    {
+                        data: weight,
+                        color: "#3F704D",
+
+                    },
+                ]}
+                width={600}
+                height={400}
+            />
+        </div>
+
     </>)
 }

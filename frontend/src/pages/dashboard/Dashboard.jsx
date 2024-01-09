@@ -24,7 +24,7 @@ export default function Dashboard() {
 
             <div className="container-dash">
                 <div className="date">
-                    {date.toUTCString().slice(0, 16)}
+                    {date.toDateString()}
                 </div>
                 
                 <div className="display">

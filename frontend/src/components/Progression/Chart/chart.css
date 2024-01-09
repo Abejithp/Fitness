@@ -1,0 +1,6 @@
+.chart{
+    height: fit-content;
+    width: fit-content;
+    background-color: var(--bg-100);
+    border-radius: 12px;
+}
