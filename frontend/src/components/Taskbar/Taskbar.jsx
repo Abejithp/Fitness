@@ -1,3 +1,4 @@
+import { Logout } from '../Auth/Auth';
 import './taskbar.css'
 
 export default function Taskbar(props) {
@@ -10,6 +11,7 @@ export default function Taskbar(props) {
                 <div className="link" onClick={() => updateTab("Workout")}>Workout</div>
                 <div className="link" onClick={() => updateTab("Progression")}>Progression</div>
             </div>
+            <Logout />
         </div>
     </>)
 }

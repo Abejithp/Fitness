@@ -29,7 +29,7 @@ app.use(session({
     cookie: {
         maxAge: SESSION_TIME * 1000,
         secure: false,
-        sameSite: 'none',
+        sameSite: 'lax',
         httpOnly: true
     },
     saveUninitialized: true,
@@ -49,6 +49,7 @@ app.use(function (req, res, next) {
 });
 
 function isAuthenticated(req, res, next) {
+    console.log("isAuthenticated", req.session.user)
     if (!req.session.user) {
         return res.status(401).end("Access denied!");
     }
@@ -108,7 +109,7 @@ app.post("/api/login/", body(['username', 'password']).notEmpty(), async functio
     }
 
     const project = req.session.user = { _id: user._id.toString(), username: user.username };
-    setUserCookie(req, res);
+    // setUserCookie(req, res);
     res.status(200).json(project);
 
 });
