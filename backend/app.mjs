@@ -13,6 +13,8 @@ const PORT = 5000;
 const app = express();
 const SESSION_TIME = 60 * 60 * 24;
 
+app.enable('trust proxy')
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
