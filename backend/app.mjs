@@ -90,7 +90,8 @@ app.post("/api/register/", body(['username', 'password']).notEmpty(), async func
     user = await User.create({ username: req.body.username, password: hash, active: null })
 
     const project = req.session.user = { _id: user._id.toString(), username: user.username };
-    setUserCookie(req, res);
+    console.log(req.session.user)
+    // setUserCookie(req, res);
 
     res.status(201).json(project);
 });
