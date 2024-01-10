@@ -23,6 +23,7 @@ app.use(cors({
 
 app.use(session({
     secret: process.env.SESSION_SECRET,
+    proxy: true,
     cookie: {
         maxAge: SESSION_TIME * 1000,
         secure: false,
