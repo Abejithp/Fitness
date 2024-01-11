@@ -92,9 +92,15 @@ app.post("/api/register/", body(['username', 'password']).notEmpty(), async func
 
     const project = req.session.user = { _id: user._id.toString(), username: user.username };
     console.log(req.session.user)
-    // setUserCookie(req, res);
+    setUserCookie(req, res);
 
-    res.status(201).json(project);
+    req.session.save((err) => {
+        if(err){
+            console.log(err)
+        }else{
+            res.status(201).json(project);
+        }
+    })
 });
 
 app.post("/api/login/", body(['username', 'password']).notEmpty(), async function (req, res, next) {
@@ -109,8 +115,15 @@ app.post("/api/login/", body(['username', 'password']).notEmpty(), async functio
     }
 
     const project = req.session.user = { _id: user._id.toString(), username: user.username };
-    // setUserCookie(req, res);
-    res.status(200).json(project);
+    setUserCookie(req, res);
+    
+    req.session.save((err) => {
+        if(err){
+            console.log(err)
+        }else{
+            res.status(201).json(project);
+        }
+    })
 
 });
 
