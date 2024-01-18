@@ -1,4 +1,4 @@
-.btn{
+.auth-btn{
     background-color: var(--bg-100);
     border: none;
     font-size: 1.2rem;
@@ -7,4 +7,24 @@
     padding: 1rem 2rem;
     border-radius: 30px;
     cursor: pointer;
+}
+
+.logout{
+    display: flex;
+    flex-shrink: 0;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--bg-100);
+    border: none;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.logout img{
+    margin-left: .3rem;
+    width: 50%;
+    height: auto;
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(288deg) brightness(102%) contrast(102%);
 }

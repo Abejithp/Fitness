@@ -41,10 +41,10 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    height: fit-content;
+    height: 100%;
     min-height: 400px;
     gap: 2rem;
-    width: 1000px;
+    width: min(1000px, 80vw) ;
 }
 
 .pagination.dash{
@@ -52,7 +52,7 @@
     gap: 1.5rem;
 }
 
-.btn{
+.pagination.dash .button{
     display: flex;
     width: 40px;
     height: 40px;
@@ -66,12 +66,23 @@
     justify-self: flex-end;
 }
 
-.btn img{
+.button img{
     width: 50%;
     height: auto;
     filter: invert(99%) sepia(0%) saturate(2484%) hue-rotate(37deg) brightness(121%) contrast(100%);
 }
 
-.btn .left{
+.button .left{
     transform: scaleX(-1);
+    
+}
+
+@media screen and (max-width: 500px){
+    .display{
+       width: 100%
+    }
+
+    .container-dash{
+        width: 80vw;
+    }
 }

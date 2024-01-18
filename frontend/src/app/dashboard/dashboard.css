@@ -9,3 +9,10 @@
     width: auto;
     height: 100%;
 }
+
+@media screen and (max-width: 500px){
+    .content{
+        display: flex;
+        align-items: center;
+    }
+}

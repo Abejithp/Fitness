@@ -34,7 +34,6 @@ export default function Dashboard() {
 
     return (<>
         <div className="content-dash">
-
             <div className="container-dash">
                 <div className="date">
                     {date.toDateString()}
@@ -51,13 +50,13 @@ export default function Dashboard() {
                     {Array.from({ length: 4 - filter.length }, (_, i) => <Tracker key={i} exercise={"empty"} active={active} update={updateActive} />)}
                 </div>
                 <div className="pagination dash">
-                    <div className="btn" onClick={() => {
+                    <div className="button" onClick={() => {
                         if (pageNum - 1 >= 0) {
                             updatePage(pageNum - 1)
                         }
 
                     }}><img src='./arrow.png' className='left' /></div>
-                    <div className="btn" onClick={() => {
+                    <div className="button" onClick={() => {
                         console.log(arr)
                         if ((pageNum + 1) * 4 < arr.length) {
                             updatePage(pageNum + 1)

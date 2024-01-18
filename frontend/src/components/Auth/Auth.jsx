@@ -19,7 +19,7 @@ export function Login(props) {
             if (user != '' && password != '') {
                 login(user, password).then((res, err) => handleSubmit(res,err))
             }
-        }} className="btn">
+        }} className="auth-btn">
             Login
         </button>
     </>)
@@ -32,7 +32,7 @@ export function Register(props) {
             if (user != '' && password != '') {
                 register(user, password).then((res) => handleSubmit(res))
             }
-        }} className='btn'>
+        }} className='auth-btn'>
             Register
         </button>
     </>)
@@ -40,8 +40,8 @@ export function Register(props) {
 
 export function Logout() {
     return (<>
-        <button onClick={() => logout().then(() => { window.location.href = '/' })}>
-            Logout
+        <button className='logout' onClick={() => logout().then(() => { window.location.href = '/' })}>
+            <img src="./logout.png" />
         </button>
     </>)
 }

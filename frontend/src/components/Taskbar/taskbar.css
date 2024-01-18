@@ -5,6 +5,8 @@
     height: fit-content;
     justify-content: center;
     background: transparent;
+    gap: 1rem;
+  
 }
 
 .link-container{
@@ -22,4 +24,10 @@
     cursor: pointer;
     color: white;
     text-decoration: none;
+}
+
+@media screen and (max-width: 500px){
+    .taskbar{
+        font-size: .85rem;
+    }
 }
