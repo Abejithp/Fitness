@@ -170,3 +170,75 @@
     gap: 2rem;
 
 }
+
+
+@media screen and (max-width: 500px){
+    .main{
+      overflow-x: hidden;
+    }
+
+    .main .title{
+
+        font-size: 6rem;
+        height: 100vh;
+    }
+    .main .taskbar{
+        position: fixed;
+        padding: 1.5rem;
+    }
+
+    .main .about{
+        text-align: center;
+        font-size: 1.3rem;
+        padding: 2rem;
+        width: 100vw;
+        box-sizing: border-box;
+    }
+
+    .feature .card{
+        flex-direction: column;
+        width: 100vw;
+        align-items: center;
+    }
+
+    .card .left{
+        width: fit-content;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .card .display{
+        width: 80vw;
+        aspect-ratio: 1/.5;
+    }
+
+    .card .right{
+        font-size: 1.3rem;
+        width: 80vw
+    }
+
+    .join{
+        flex-direction: column;
+        justify-content: center;
+        gap: 2rem;
+    }
+
+    .join .left{
+        font-size: 3rem;
+        width: fit-content;
+        text-align: center;
+    }
+
+    .join .right .form{
+        margin-top: 1rem;
+        width: 80vw;
+    }
+
+    .form .input-container{
+        width: 100%;
+    }
+
+    .form input{
+        font-size: 1.3rem;
+    }
+}

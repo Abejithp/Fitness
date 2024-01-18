@@ -23,8 +23,6 @@ export default function Home() {
 
 	return (<>
 		<div className="main">
-
-
 			<div className="intro">
 
 				<div className="taskbar">
@@ -51,8 +49,6 @@ export default function Home() {
 					<div className="card">
 						<div className="left">
 							<div className="display">
-								
-
 								<div className="column">
 									<div className="day">S</div>
 									<div className="workout">
@@ -116,8 +112,8 @@ export default function Home() {
 					<div className="right">
 						<div className="form">
 							<div className="input-container">
-								<input type="text" value={user} onChange={e => setUser(e.target.value)} required={true} />
-								<input type="password" value={password} onChange={e => setPassword(e.target.value)} required={true} />
+								<input type="text" placeholder='Username' value={user} onChange={e => setUser(e.target.value)} required={true} />
+								<input type="password" placeholder='Password' value={password} onChange={e => setPassword(e.target.value)} required={true} />
 							</div>
 
 							<div className="btn-container">
