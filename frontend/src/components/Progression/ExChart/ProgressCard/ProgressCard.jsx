@@ -11,7 +11,7 @@ export default function ProgressCard(props) {
     const modalRef = useRef(null)
 
     const [data, setData] = useState([])
-    const [width, setWidth] = useState(Math.max(window.innerWidth * .5, 350))
+    const [width, setWidth] = typeof(window) !== "undefined" ? useState(Math.max(window.innerWidth * .5, 350)) : useState(350)
 
 
     function modal(option) {
@@ -25,6 +25,10 @@ export default function ProgressCard(props) {
     }
     
     useEffect(() => {
+        if(typeof(window) === "undefined"){
+            return;
+        }
+
         function handleResize() {
             setWidth(Math.max(window.innerWidth * .5, 300))
         }

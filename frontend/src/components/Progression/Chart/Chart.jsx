@@ -5,7 +5,7 @@ import { LineChart } from '@mui/x-charts'
 import './chart.css'
 export default function Chart() {
     const [weight, setWeight] = useState([])
-    const [width, setWidth] = useState(Math.max(window.innerWidth*.4, 350))
+    const [width, setWidth] = typeof(window) !== "undefined" ? useState(Math.max(window.innerWidth * .4, 350)) : useState(350)
 
 
     useEffect(() => {
@@ -15,7 +15,12 @@ export default function Chart() {
         })
     }, [])
 
-    useEffect(() => {
+    useEffect(() => { 
+
+        if(typeof(window) === "undefined"){
+            return
+        }
+
         function handleResize() {
             setWidth(Math.max(window.innerWidth*.4, 350))
         }
