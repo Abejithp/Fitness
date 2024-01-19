@@ -1,4 +1,4 @@
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { LineChart } from "@mui/x-charts";
 import { getExProgress } from "@/api/progression.mjs";
 import "./progressCard.css"
@@ -9,7 +9,10 @@ export default function ProgressCard(props) {
     const style = name == "empty" ? "card-progress empty": "card-progress"
 
     const modalRef = useRef(null)
+
     const [data, setData] = useState([])
+    const [width, setWidth] = useState(Math.max(window.innerWidth * .5, 350))
+
 
     function modal(option) {
         const modal = modalRef.current;
@@ -20,7 +23,17 @@ export default function ProgressCard(props) {
 
         return modal.close()
     }
+    
+    useEffect(() => {
+        function handleResize() {
+            setWidth(Math.max(window.innerWidth * .5, 300))
+        }
 
+        window.addEventListener('resize', handleResize)
+        return () => window.removeEventListener('resize', handleResize)
+    }, [])
+
+    
     return (<>
         <div className={style} onClick={() => {
             modal(true && name != "empty");
@@ -35,8 +48,8 @@ export default function ProgressCard(props) {
         <dialog className="modal progressCard" ref={modalRef}>
             <div className="line-chart">
                 <LineChart
-                    width={1000}
-                    height={600}
+                    width={width}
+                    height={width * (3 / 5)}
                     series={[
                         { data: data, label: 'Preformance' },
                     ]}

@@ -5,6 +5,8 @@ import { LineChart } from '@mui/x-charts'
 import './chart.css'
 export default function Chart() {
     const [weight, setWeight] = useState([])
+    const [width, setWidth] = useState(Math.max(window.innerWidth*.4, 350))
+
 
     useEffect(() => {
         getWeight().then((res) => {
@@ -13,7 +15,16 @@ export default function Chart() {
         })
     }, [])
 
-    console.log(weight)
+    useEffect(() => {
+        function handleResize() {
+            setWidth(Math.max(window.innerWidth*.4, 350))
+        }
+
+        window.addEventListener('resize', handleResize)
+        return () => window.removeEventListener('resize', handleResize)
+    }, [])
+
+
     return (<>
         <div className="chart">
             <LineChart
@@ -25,8 +36,8 @@ export default function Chart() {
 
                     },
                 ]}
-                width={600}
-                height={400}
+                width={width}
+                height={width*(2/3)}
             />
         </div>
 

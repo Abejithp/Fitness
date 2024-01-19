@@ -1,3 +1,8 @@
+body,
+html{
+    background-color: var(--bg-primary);
+}
+
 .main{
     display: flex;
     flex-direction: column;

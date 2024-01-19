@@ -6,10 +6,8 @@
 
 .line-chart {
     margin: auto;
-
     width: fit-content;
     height: fit-content;
-    padding: 1rem;
 }
 
 .modal.progressCard button {

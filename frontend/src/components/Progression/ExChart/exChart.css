@@ -8,9 +8,16 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr);
-    width: 600px;
-    height: 400px;
+    width: max(350px, calc(100vw*.4));
+    aspect-ratio: 1/calc(2/3);
     gap: 1rem;
     border-radius: 12px;
 }
 
+@media screen and (max-width: 500px){
+    .progress{
+        flex-direction: column;
+        font-size: .85rem;
+        
+    }
+}
