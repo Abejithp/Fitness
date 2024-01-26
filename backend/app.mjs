@@ -29,7 +29,7 @@ app.use(session({
     cookie: {
         maxAge: SESSION_TIME * 1000,
         secure: true,
-        sameSite: 'lax',
+        sameSite: 'none',
         httpOnly: true
     },
     saveUninitialized: true,
