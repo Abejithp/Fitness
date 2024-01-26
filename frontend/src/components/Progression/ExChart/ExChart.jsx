@@ -8,7 +8,7 @@ export default function Exchart() {
 
     const [exercises, setExercise] = useState([])
     const [search, updateSearch] = useState("");
-    cosnt [filter, udpateFilter] = useState
+    const [filter, udpateFilter] = useState([])
 
 
     useEffect(() => {
