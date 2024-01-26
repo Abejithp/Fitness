@@ -1,22 +1,4 @@
 :root{
-    /* --bg-primary: #1A1A1D;
-    --bg-seconday: #4E4E50;
-    --bg-100: #C3073F;
-    --bg-200: #950740;
-    --bg-300: #6f2232; */
-
-    /* --bg-primary: #0C0032;
-    --bg-seconday: #282828;
-    --bg-100: #3500D3;
-    --bg-200: #240090;
-    --bg-300: #190061; */
-
-    /* --bg-primary: #C1C8E4;
-    --bg-secondary: #8860D0;
-    --bg-100: #84CEEB;
-    --bg-200: #5AB9EA;
-    --bg-300: #5680E9; */
-
     --bg-primary: #0F0F0F;
     --bg-seconday: #282828;
     --bg-100: #3500D3;
@@ -34,4 +16,16 @@ body{
     display: flex;
     width: auto;
     height: 100%;
+}
+
+.main input{
+    font-weight: 500;
+    font-size: 1rem;
+    padding: .3rem 0;
+    padding-left: 1rem;
+    box-sizing: border-box;
+    border-radius: 15px;
+    border: none;
+    background-color: var(--bg-300);
+    color: white;
 }

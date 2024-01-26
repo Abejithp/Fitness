@@ -56,5 +56,16 @@
     gap: 1rem;
 }
 
-@media screen and (max-width: 500px){
+.container-display .display-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-display .display-btn .btn{
+    font-size: 1rem;
+    font-weight: 500;
+    width: fit-content;
+    border-radius: 12px;
+    padding: 0 1rem;
 }

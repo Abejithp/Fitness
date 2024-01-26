@@ -5,6 +5,7 @@ import Chart from '../Chart/Chart'
 
 import './weight.css'
 export default function Weight() {
+    
     const [weight, setWeight] = useState(0)
 
     return (<>

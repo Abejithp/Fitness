@@ -33,6 +33,7 @@ export default function Create(props) {
     return (<>
         <div className="content">
             <div className='create' onClick={() => modal(true)}>Create Exercise</div>
+
             <dialog className="modal" ref={modalRef}>
                 <input type="text" placeholder='Name of Exercise' value={name} onChange={(e) => updateName(e.target.value)} />
                 <input type="text" placeholder='Muscle Group' value={muscle} onChange={(e) => updateMuscle(e.target.value)} />
@@ -42,7 +43,9 @@ export default function Create(props) {
                 <button onClick={handleSubmit}>Create!</button>
                 <button className='create-btn' onClick={() => modal(false)}>Close</button>
             </dialog>
-
+            <div className="all-exercise">
+                
+            </div>
         </div>
     </>)
 }

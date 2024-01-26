@@ -38,6 +38,8 @@
 .column .exercises .card-work{
     display: flex;
     flex-shrink: 2;
+    font-size: .8rem;
+    font-weight: 500;
     width: 100%;
     height: 50px;
     border-radius: 10px;

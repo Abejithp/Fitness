@@ -19,7 +19,7 @@ export default function Display(props) {
                 <div className="display-btn">
                     <div className="btn" onClick={()=>{
                         updateActiveWorkout(id)
-                    }}>A</div>
+                    }}>Activate</div>
                 </div>
             </div>
 

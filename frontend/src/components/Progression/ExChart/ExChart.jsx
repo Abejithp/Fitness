@@ -7,7 +7,9 @@ import "./exChart.css"
 export default function Exchart() {
 
     const [exercises, setExercise] = useState([])
-    const [filter, updateFilter] = useState("");
+    const [search, updateSearch] = useState("");
+    cosnt [filter, udpateFilter] = useState
+
 
     useEffect(() => {
         getExercise().then((res) => setExercise(res))
@@ -22,7 +24,7 @@ export default function Exchart() {
                 {Array.from({ length: 4 - exercises.length }, (_, i) => <ProgressCard key={i} name={"empty"}/>)}
             </div>
             <div className="navi-container">
-                <input type="text" value={filter} onChange={(e) => updateFilter(e.target.value)} />
+                <input type="text" value={search} onChange={(e) => updateSearch(e.target.value)} />
                 <div className="pagination">
                     <div className="left"></div>
                     <div className="right"></div>
