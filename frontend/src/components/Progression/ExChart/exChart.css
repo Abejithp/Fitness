@@ -21,3 +21,28 @@
         
     }
 }
+
+.pagination{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    width: fit-content;
+
+}
+
+.pagination img{
+    width: 1.5rem;
+    height: 1.5rem;
+    cursor: pointer;
+}
+
+.navi-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+
+
