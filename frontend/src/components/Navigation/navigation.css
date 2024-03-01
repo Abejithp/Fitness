@@ -28,7 +28,7 @@
 }
 
 
-.pagination{
+.navigation .pagination{
     display: flex;
     width: 100%;
     justify-content: space-around;

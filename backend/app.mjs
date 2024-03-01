@@ -9,7 +9,7 @@ import { body, validationResult } from "express-validator";
 import { serialize } from "cookie";
 import MongoStore from "connect-mongo";
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 const app = express();
 const SESSION_TIME = 60 * 60 * 24;
 
@@ -28,8 +28,8 @@ app.use(session({
     proxy: true,
     cookie: {
         maxAge: SESSION_TIME * 1000,
-        secure: true,
-        sameSite: 'none',
+        secure: false,
+        sameSite: 'lax',
         httpOnly: true
     },
     saveUninitialized: true,
@@ -168,8 +168,10 @@ app.get("/api/exercise/", isAuthenticated, async function (req, res) {
 });
 
 app.get("/api/muscles/", isAuthenticated, async function (req, res) {
-    const muscles = await Muscle.find({}).limit(6)
-    return res.status(200).json({ data: muscles })
+    const muscles = await Muscle.find({})
+    const data = muscles.slice(0, 6);
+    const rest = muscles.slice(6, muscles.length);
+    return res.status(200).json({ data: data, rest: rest})
 });
 
 app.get("/api/muscles/:id/", isAuthenticated, async function (req, res) {

@@ -11,6 +11,7 @@ export default function Workout() {
 
     const [exercises, setExercise] = useState([])
     const [muscle, setMuscle] = useState([])
+    const [rest, updateRest] = useState([])
     const [currentWorkout, updateWorkout] = useState([])
     const [workout, setWorkout] = useState([])
     const [build, setBuild] = useState(false);
@@ -22,7 +23,7 @@ export default function Workout() {
 
     useEffect(() => {
         getExercise().then((res) => setExercise(res))
-        getMuscles().then((res) => setMuscle(res.data))
+        getMuscles().then((res) => {setMuscle(res.data); updateRest(res.rest)})
         getWorkout().then((res) => {
             setWorkout(res.data)
 
@@ -47,7 +48,7 @@ export default function Workout() {
             </div>
 
             <div className="exercise-display">
-                <Exdisplay muscle={muscle} setExercise={(name) => setExercise([...exercises, name])} />
+                <Exdisplay muscle={muscle} rest={rest} setExercise={(name) => setExercise([...exercises, name])} />
             </div>
         </div>
     </>)
