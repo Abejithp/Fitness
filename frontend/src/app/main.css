@@ -1,4 +1,4 @@
-body,
+/* body,
 html{
     background-color: var(--bg-primary);
 }
@@ -20,6 +20,7 @@ html{
     height: fit-content;
     justify-content: center;
     background: transparent;
+    z-index: 100;
 }
 
 .container{
@@ -73,6 +74,37 @@ html{
 .title{
     height: calc(100vh - 145px);
     font-size: 13rem;
+}
+
+.blob-container{
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    z-index: 0;
+}
+
+.circle{
+    position: absolute;
+    background-color: var(--bg-100);
+    height: 30vw;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    z-index: 0;
+    filter: blur(200px);
+    opacity: .7;
+}
+
+.circle.second{
+    bottom: 0;
+    right: 0;
+}
+
+.title .name{
+    font-size: 13rem;
+    color: white;
+    z-index: 1;
+
 }
 
 .card{
@@ -183,10 +215,13 @@ html{
     }
 
     .main .title{
-
-        font-size: 6rem;
         height: 100vh;
     }
+
+    .title .name{
+        font-size: 6rem;
+    }
+
     .main .taskbar{
         position: fixed;
         padding: 1.5rem;
@@ -246,4 +281,4 @@ html{
     .form input{
         font-size: 1.3rem;
     }
-}
+} */
