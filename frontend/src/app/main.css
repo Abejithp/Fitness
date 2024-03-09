@@ -1,4 +1,4 @@
-/* body,
+body,
 html{
     background-color: var(--bg-primary);
 }
@@ -281,4 +281,4 @@ html{
     .form input{
         font-size: 1.3rem;
     }
-} */
+}
