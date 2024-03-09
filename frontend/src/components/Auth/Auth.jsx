@@ -62,7 +62,7 @@ export function Login() {
                         </FormItem>
                     )}
                 />
-                <Button type="submit">Submit</Button>
+                <Button type="submit" className=" bg-slate-600">Submit</Button>
             </form>
         </Form>
     </>)
