@@ -13,6 +13,7 @@
     "@emotion/styled": "^11.11.0",
     "@hookform/resolvers": "^3.3.4",
     "@mui/x-charts": "^6.18.7",
+    "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-slot": "^1.0.2",
     "class-variance-authority": "^0.7.0",
@@ -25,14 +26,12 @@
     "react-icons": "^5.0.1",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
+    "vaul": "^0.9.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@types/node": "20.10.5",
-    "@types/react": "18.2.45",
     "autoprefixer": "^10.4.18",
     "postcss": "^8.4.35",
-    "tailwindcss": "^3.4.1",
-    "typescript": "^5.3.3"
+    "tailwindcss": "^3.4.1"
   }
 }
