@@ -20,6 +20,8 @@ export default function Home() {
 		});
 	}
 
+	const [login, setLogin] = useState(true)
+
 	return (
 		<div className=" flex-col bg-neutral-900 h-auto font-satoshi overflow-hidden">
 			<div className="flex w-full py-[2rem] fixed top-0 justify-center z-[100]">
@@ -63,8 +65,13 @@ export default function Home() {
 			</div>
 
 			<div className="flex h-screen justify-center items-center pt-[6rem] relative" ref={loginRef}>
-				<div className="flex bg-slate-400 p-16 rounded-2xl shadow-2xl z-10">
-					<Login />
+				<div className="flex flex-col gap-6 items-center bg-white p-16 w-[50vw] max-w-[400px] rounded-2xl shadow-2xl z-10 shadow-black">
+					{login ?  <Login /> : <Register />}
+					<div className="flex gap-2"> 
+						{login ? <span>Don't have an account?</span> : <span>Already have an account?</span>}
+						
+						<span className="text-blue-500 cursor-pointer" onClick={() => setLogin(!login)}> {login ? ' Register' : ' Login'}</span>
+					</div>
 				</div>
 				<img src="/abstract/spiral.png" alt="" className='absolute scale-90 max-tablet:scale-[1.7]'/>
 				<div className="flex absolute bg-blue-400 h-[40%] aspect-square left-10 rounded-full blur-[200px] opacity-30"></div>

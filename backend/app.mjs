@@ -9,7 +9,7 @@ import { body, validationResult } from "express-validator";
 import { serialize } from "cookie";
 import MongoStore from "connect-mongo";
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
 const app = express();
 const SESSION_TIME = 60 * 60 * 24;
 
@@ -28,8 +28,8 @@ app.use(session({
     proxy: true,
     cookie: {
         maxAge: SESSION_TIME * 1000,
-        secure: false,
-        sameSite: 'lax',
+        secure: process.env.NODE_ENV === 'production' ? true : false,
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
         httpOnly: true
     },
     saveUninitialized: true,
@@ -49,7 +49,7 @@ app.use(function (req, res, next) {
 });
 
 function isAuthenticated(req, res, next) {
-    console.log("isAuthenticated", req.session.user)
+    
     if (!req.session.user) {
         return res.status(401).end("Access denied!");
     }
