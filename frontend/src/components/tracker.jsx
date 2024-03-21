@@ -30,7 +30,7 @@ export function Tracker() {
 
   console.log(data)
   return (<>
-    {data.length == 0 ? <div className="flex flex-col flex-shrink-0 gap-4 w-full h-[70%] pt-8">
+    {data.length == 0 ? <div className="flex flex-col flex-shrink-0 gap-4 w-full  pt-8">
       <Skeleton className={" flex flex-shrink-0 h-[60px] w-full bg-neutral-800"} />
       <div className="flex flex-col gap-3">
         {Array(4).fill(0).map((_, index) => {

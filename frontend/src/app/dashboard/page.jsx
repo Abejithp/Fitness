@@ -1,10 +1,14 @@
+'use client'
+
 import Sidebar from "@/components/Sidebar/Sidebar";
 import Popup from "../../components/popup";
 import { Tracker } from "../../components/tracker";
-
+import { Calendar } from "@/components/ui/calendar";
+import {useState} from "react";
 function Dashboard() {
 
     const date = new Date().toISOString().split('T')[0];
+    const [calendar, setDate] = useState(new Date());
     
     return (
         <div className="flex min-h-screen bg-neutral-900 max-laptop:flex-col w-full">
@@ -18,7 +22,15 @@ function Dashboard() {
                         {date}
                     </div>
                 </div>
-      
+                <div className="flex">
+                    <Calendar 
+                        mode="single"
+                        selected={calendar}
+                        onSelect={(date) => setDate(date)}
+                        className={"bg-neutral-300 rounded-lg"}
+                        
+                    />
+                </div>
                 <Tracker />
             </div>
         </div>
