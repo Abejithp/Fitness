@@ -22,7 +22,10 @@ export function Tracker() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    getActive().then((res) => res.json()).then((data) => setData(data))
+    getActive().then((res) => {
+      setData(res.data.exercise)
+      console.log(res.data.exercise)
+    })
   }, [])
 
   console.log(data)
@@ -46,20 +49,19 @@ export function Tracker() {
       <Table className="mt-8 z-0">
         <TableHeader>
           <TableRow>
-            <TableHead className="max-tablet:hidden">Muscle Group</TableHead>
             <TableHead>Exercise</TableHead>
             <TableHead className="max-tablet:hidden">Status</TableHead>
             <TableHead>Popup</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {invoices.map((invoice) => (
-            <TableRow key={invoice.invoice} className="text-white">
-              <TableCell className="font-medium max-tablet:hidden">{invoice.invoice}</TableCell>
-              <TableCell className="max-tablet:hidden">{invoice.paymentStatus}</TableCell>
-              <TableCell>{invoice.paymentMethod}</TableCell>
+          {data.map((data, i) => (
+            <TableRow key={i} className="text-white">
+   
+              <TableCell className="max-tablet:hidden">{data.name}</TableCell>
+              <TableCell className=" text-orange-400">In Progress</TableCell>
               <TableCell >
-                <Popup />
+                <Popup data = {data} />
               </TableCell>
             </TableRow>
           ))}

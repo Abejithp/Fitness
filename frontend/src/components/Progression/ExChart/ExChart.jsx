@@ -1,3 +1,5 @@
+'use client'
+
 import { getExercise } from "@/api/exercise.mjs"
 import { useEffect, useState } from "react"
 import ProgressCard from "./ProgressCard/ProgressCard"
