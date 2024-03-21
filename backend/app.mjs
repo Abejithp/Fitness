@@ -9,7 +9,7 @@ import { body, validationResult } from "express-validator";
 import { serialize } from "cookie";
 import MongoStore from "connect-mongo";
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5000;
 const app = express();
 const SESSION_TIME = 60 * 60 * 24;
 
