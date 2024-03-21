@@ -11,7 +11,7 @@ function Sidebar() {
     const [isOpened, setIsOpened] = useState(false);
 
     return (
-        <div className="flex flex-col gap-4 w-[400px] h-screen p-8 sticky top-0 max-laptop:h-[150px] max-laptop:w-full max-tablet:h-[120px] flex-shrink-0">
+        <div className="flex flex-col gap-4 w-[400px] h-screen p-8 sticky top-0 max-laptop:h-[150px] max-laptop:w-full max-tablet:h-[120px] flex-shrink-0 z-50">
             <div className="flex flex-col h-full w-full bg-slate-500 rounded-2xl p-8 max-laptop:w-full max-laptop:flex-row
                             max-laptop:items-center max-laptop:justify-between">
                 <div className="flex text-white font-satoshi font-medium text-[2.5rem] ml-4 w-fit max-laptop:m-0
