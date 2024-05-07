@@ -11,9 +11,10 @@ export default function WorkoutCard({ muscle, bg }) {
     return (
         <Dialog>
             <DialogTrigger>
-                <div className='min-w-[300px] w-[300px] bg-white  rounded-xl hover:cursor-pointer relative hover:scale-105 transition-transform ease-in-out duration-300'>
-                    <img src={`/card/${bg}.png`} alt="background" className=' rounded-lg w-full' />
-                    <p className=' absolute z-10 top-0 flex w-full justify-center items-center h-full text-black font-medium text-[2rem] uppercase'>{muscle}</p>
+                <div className='min-w-[300px] w-[300px] hover:cursor-pointer relative hover:scale-105 
+                                transition-transform ease-in-out duration-300 max-tablet:w-fit max-tablet:h-[60px] '>
+                    <img src={`/card/${bg}.png`} alt="background" className=' rounded-lg w-full h-full max-tablet:rounded-sm' />
+                    <p className=' absolute z-10 top-0 flex w-full justify-center items-center h-full text-black font-bold text-[2rem] uppercase'>{muscle}</p>
                 </div>
             </DialogTrigger>
 
@@ -23,9 +24,9 @@ export default function WorkoutCard({ muscle, bg }) {
                     <p className='absolute top-0 uppercase font-medium text-[5rem] ml-12 flex h-full items-center max-tablet:ml-6 max-tablet:text-[3rem] text-ellipsis w-[50%]'>{muscle}</p>
                 </div>
 
-                <div className="flex p-8 w-full h-full gap-4">
+                <div className="flex p-8 w-full h-full gap-4" >
                     <div className="flex flex-col w-[50%]">
-                        <input type="text" placeholder='Search for Exercise' className='px-2 p-1 bg-gray-300 rounded-sm font-satoshi h-fit w-fit' />
+                        <input type="text" placeholder='Search for Exercise' className='px-2 p-1 bg-gray-300 rounded-sm font-satoshi h-fit w-fit' autoFocus={false} />
                     </div>
                     <div className="flex flex-col w-[50%] items-center gap-4 justify-center max-tablet:hidden">
                         <p>Favourite Exercise</p>
