@@ -2,15 +2,10 @@
 
 import {
     Drawer,
-    DrawerClose,
     DrawerContent,
-    DrawerDescription,
-    DrawerFooter,
-    DrawerHeader,
-    DrawerTitle,
     DrawerTrigger,
 } from "@/components/ui/drawer"
-import { Button } from "@/components/ui/button"
+
 import { LineChart } from "@mui/x-charts";
 import Input from "./input";
 
@@ -36,7 +31,7 @@ function Popup({ data }) {
                     </div>
 
                     <div className="flex w-[50vw] h-full">
-                            <Input />
+                        <Input />
                     </div>
 
                 </div>

@@ -19,8 +19,6 @@ function handleSubmit(res, err) {
     if (!res) {
         return toast.error("Incorrect credentials")
     }
-
-    toast.success("Welcome to Inspire")
     window.location.href = '/dashboard'
 }
 
