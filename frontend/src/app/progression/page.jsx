@@ -1,5 +1,5 @@
-import Menu from "@/components/Menu";
-import Sidebar from "@/components/Sidebar/Sidebar";
+import Menu from "@/components/custom/Menu";
+
 
 function Progression() {
     return (
