@@ -1,4 +1,4 @@
-import { Logout } from '../Auth/Auth';
+import { Logout } from '../Auth';
 import './taskbar.css'
 
 export default function Taskbar(props) {
