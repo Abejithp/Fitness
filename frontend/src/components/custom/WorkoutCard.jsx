@@ -17,7 +17,7 @@ export default function WorkoutCard({ muscle, bg }) {
                 </div>
             </DialogTrigger>
 
-            <DialogContent className='w-[75vw] h-[60vh] rounded-lg p-0 border-0 bg-white flex flex-col gap-0 max-tablet:h-screen max-tablet:w-screen max-tablet:rounded-none'>
+            <DialogContent className='w-[75vw] h-[60vh] rounded-lg p-0 border-0 bg-white flex flex-col gap-0 max-tablet:h-svh max-tablet:w-svw max-tablet:rounded-none'>
                 <div className='flex relative h-fit w-full'>
                     <img src={`/card/${bg}.png`} alt="background" className='h-32 rounded-t-lg object-cover w-full max-tablet:rounded-none' />
                     <p className='absolute top-0 uppercase font-medium text-[5rem] ml-12 flex h-full items-center max-tablet:ml-6 max-tablet:text-[3rem] text-ellipsis w-[50%]'>{muscle}</p>

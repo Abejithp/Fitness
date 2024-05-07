@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 
 const variants = {
     open: {
-        width: 430,
+        width: 400,
         height: 550,
         top: "-20px",
         right: "-20px",
