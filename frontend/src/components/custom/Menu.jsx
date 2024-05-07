@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 
 const variants = {
     open: {
-        width: 400,
+        width: 430,
         height: 550,
         top: "-20px",
         right: "-20px",
@@ -43,9 +43,10 @@ export default function Menu() {
     return (
         <div className='flex fixed top-0 min-h-16 h-fit w-full items-center p-12 px-12  font-satoshi justify-end z-50 max-tablet:px-5 max-tablet:p-5'>
             <div className="flex relative">
-                <div className={`flex text-lg p-2 px-4 bg-black border-2 border-indigo-600 font-medium rounded-md  cursor-pointer text-white`}
+                <div className={`flex text-lg p-2 px-4 min-w-[83px] bg-black border-2 border-indigo-600 font-medium rounded-md  cursor-pointer text-white`}
                     onClick={() => setOpen(!open)}>
-                    menu
+                    {open ? <>
+                    close</>: <>menu</>}
                 </div>
 
 
