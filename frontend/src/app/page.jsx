@@ -29,10 +29,6 @@ export default function Home() {
 					</div>
 				</div>
 			</div>
-			<a href='https://www.abejith.dev/' className="text-white absolute bottom-0 w-full flex justify-center p-8">
-				developed by
-				<span className=' font-bold ml-2 text-blue-600'>ABE</span>
-			</a>
 		</div>
 	)
 }

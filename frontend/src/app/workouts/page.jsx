@@ -42,7 +42,7 @@ function Workout() {
     }, [])
 
     return (
-        <div className="flex min-h-svh bg-neutral-950 w-full font-satoshi flex-col">
+        <div className="flex min-h-dvh bg-neutral-950 w-full font-satoshi flex-col">
             <Menu />
             <div className="flex p-16 flex-col max-tablet:p-8">
                 <div className="flex text-white mb-8 gap-2 items-center">
@@ -98,7 +98,6 @@ function Workout() {
                     })}
                 </div>
             </div>
-
 
         </div>
     );
