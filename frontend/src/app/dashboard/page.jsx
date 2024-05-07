@@ -3,6 +3,7 @@
 import Sidebar from "@/components/Sidebar/Sidebar";
 import { Tracker } from "../../components/tracker";
 import { useEffect, useState } from "react";
+import Menu from "@/components/Menu";
 
 function Dashboard() {
 
@@ -16,7 +17,7 @@ function Dashboard() {
     
     return (
         <div className="flex min-h-screen bg-neutral-950 max-laptop:flex-col w-full h-fit ">
-            <Sidebar />
+            <Menu/>
             <div className="flex flex-col mt-8 mx-8 max-laptop:m-0 max-laptop:px-8 w-full h-full">
                 <div className="flex flex-col justify-between w-full ">
                     <div className="flex text-neutral-500 gap-5 text-[5rem] font-satoshi font-light max-tablet:text-[1.8rem] max-tablet:gap-2 h-auto break-words">
