@@ -169,7 +169,7 @@ app.get("/api/exercise/", isAuthenticated, async function (req, res) {
 
 app.get("/api/muscles/", isAuthenticated, async function (req, res) {
     const muscles = await Muscle.find({})
-    const data = muscles.slice(0, 6);
+    const data = muscles.slice(0, 5);
     const rest = muscles.slice(6, muscles.length);
     return res.status(200).json({ data: data, rest: rest})
 });
