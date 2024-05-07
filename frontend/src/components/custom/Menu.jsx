@@ -71,7 +71,7 @@ export default function Menu() {
                             <div className="flex flex-col gap-3 text-[2rem]">
                                 <a href="dashboard">DASHBOARD</a>
                                 <a href="workouts">WORKOUTS</a>
-                                <a href="progression">PROGRESSION</a>
+                                {/* <a href="progression">PROGRESSION</a> */}
                                 <button onClick={() => logout().then(()=> window.location.href = '/')} className='w-full text-left'>LOGOUT</button>
                             </div>
                         </div>
