@@ -1,8 +1,7 @@
 'use client'
-import './main.css'
 
-import { Login, Register } from '../components/Auth'
-import { useRef, useState } from "react";
+import { Login, Register } from '../components/custom/Auth'
+import { useState } from "react";
 
 
 

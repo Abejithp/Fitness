@@ -1,9 +1,8 @@
 'use client'
 
-import Sidebar from "@/components/Sidebar/Sidebar";
-import { Tracker } from "../../components/tracker";
+import { Tracker } from "../../components/custom/tracker";
 import { useEffect, useState } from "react";
-import Menu from "@/components/Menu";
+import Menu from "@/components/custom/Menu";
 
 function Dashboard() {
 

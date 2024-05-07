@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/table"
 import Popup from "./popup"
 import { getActive } from "@/api/progression.mjs"
-import { Skeleton } from "./ui/skeleton"
+import { Skeleton } from "../ui/skeleton"
 import { useEffect, useState } from "react";
 
 

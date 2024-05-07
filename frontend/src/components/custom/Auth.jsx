@@ -1,5 +1,5 @@
 'use client'
-import { login, register, logout } from "../api/auth.mjs"
+import { login, register, logout } from "../../api/auth.mjs"
 import { toast } from "sonner"
 
 import { Button } from "@/components/ui/button"
