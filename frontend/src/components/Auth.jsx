@@ -1,27 +1,26 @@
 'use client'
-
-import './auth.css'
-import { login, register, logout } from "../../api/auth.mjs"
+import { login, register, logout } from "../api/auth.mjs"
+import { toast } from "sonner"
 
 import { Button } from "@/components/ui/button"
 
 import {
     Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
-    FormLabel,
-    FormMessage,
 } from "@/components/ui/form"
+
 import { Input } from "@/components/ui/input"
 import { useForm } from 'react-hook-form';
 
 function handleSubmit(res, err) {
+
     if (!res) {
-        return console.log("FAILED")
+        return toast.error("Incorrect credentials")
     }
 
+    toast.success("Welcome to Inspire")
     window.location.href = '/dashboard'
 }
 
