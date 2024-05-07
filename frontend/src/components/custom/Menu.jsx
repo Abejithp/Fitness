@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import { logout } from '@/api/auth.mjs'
 
 const variants = {
     open: {
@@ -64,13 +65,14 @@ export default function Menu() {
                         exit={"exit"}
                         initial="initial">
                         <div className="flex flex-col gap-2">
-                            <div className="flex text-lg">
+                            <div className="flex text-lg border-b-2 border-white pb-1 w-full mb-4">
                                 navigation
                             </div>
                             <div className="flex flex-col gap-3 text-[2rem]">
                                 <a href="dashboard">DASHBOARD</a>
                                 <a href="workouts">WORKOUTS</a>
                                 <a href="progression">PROGRESSION</a>
+                                <button onClick={() => logout().then(()=> window.location.href = '/')} className='w-full text-left'>LOGOUT</button>
                             </div>
                         </div>
                     </motion.div>

@@ -1,5 +1,5 @@
 'use client'
-import { login, register, logout } from "../../api/auth.mjs"
+import { login, register } from "../../api/auth.mjs"
 import { toast } from "sonner"
 
 import { Button } from "@/components/ui/button"
@@ -102,11 +102,5 @@ export function Register() {
     </>)
 }
 
-export function Logout() {
-    return (<>
-        <button className='logout' onClick={() => logout().then(() => { window.location.href = '/' })}>
-            <img src="./logout.png" />
-        </button>
-    </>)
-}
+
 
