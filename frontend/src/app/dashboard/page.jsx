@@ -2,7 +2,8 @@
 
 import { Tracker } from "../../components/custom/tracker";
 import { useEffect, useState } from "react";
-import Menu from "@/components/custom/Menu";
+
+import Navbar from "@/components/custom/Navbar";
 
 function Dashboard() {
 
@@ -16,8 +17,8 @@ function Dashboard() {
     
     return (
         <div className="flex min-h-screen bg-neutral-950 max-laptop:flex-col w-full h-fit ">
-            <Menu/>
-            <div className="flex flex-col mt-8 mx-8 max-laptop:m-0 max-laptop:px-8 w-full h-full">
+            <Navbar />
+            <div className="flex flex-col mt-8 mx-8 max-laptop:m-0 max-laptop:px-8 w-full h-full pt-28">
                 <div className="flex flex-col justify-between w-full ">
                     <div className="flex text-neutral-500 gap-5 text-[5rem] font-satoshi font-light max-tablet:text-[1.8rem] max-tablet:gap-2 h-auto break-words">
                         Welcome, <span className="text-white font-normal">{name}</span>

@@ -42,8 +42,8 @@ export default function Menu() {
     const [open, setOpen] = useState(false)
 
     return (
-        <div className='flex fixed top-0 min-h-16 h-fit w-full items-center p-12 px-12  font-satoshi justify-end z-50 max-tablet:px-8 max-tablet:p-8'>
-            <div className="flex relative">
+  
+            <div className="flex relative h-fit items-center z-50">
                 <div className={`flex text-lg p-2 px-4 min-w-[83px] bg-black border-2 border-indigo-600 font-medium rounded-md  cursor-pointer text-white`}
                     onClick={() => setOpen(!open)}>
                     {open ? <>
@@ -89,7 +89,7 @@ export default function Menu() {
                     </motion.div>
                 </motion.div>
             </div>
-        </div>
+      
 
 
     )

@@ -1,7 +1,6 @@
 'use client'
 
 import ActiveWorkout from "@/components/custom/ActiveWorkout";
-import Menu from "@/components/custom/Menu";
 import WorkoutCard from "@/components/custom/WorkoutCard";
 
 import { HiLightningBolt } from "react-icons/hi";
@@ -21,6 +20,7 @@ import {
 import { useEffect, useState } from "react";
 import { getMuscles } from "@/api/exercise.mjs";
 import { getWorkout } from "@/api/workout.mjs";
+import Navbar from "@/components/custom/Navbar";
 
 
 
@@ -43,13 +43,8 @@ function Workout() {
 
     return (
         <div className="flex min-h-dvh bg-neutral-950 w-full font-satoshi flex-col z-20 relative">
-            <Menu />
-            <div className="flex p-16 flex-col max-tablet:p-8">
-                <div className="flex text-white mb-8 gap-2 items-center">
-                    <img src="logo.png" alt="logo" className="h-8" />
-                    <p className="text-[2rem] font-bold">INSPIRE</p>
-                </div>
-
+            <Navbar />
+            <div className="flex p-16 pt-32 flex-col max-tablet:p-8 max-tablet:pt-28">
                 <div className="flex text-white uppercase font-bold text-lg w-full mb-4">My Workouts</div>
                 <div className="flex w-full gap-8 h-[40vh] max-laptop:flex-col items-end z-20">
                     <div className="flex w-[65%] h-full max-laptop:hidden ">
@@ -94,7 +89,7 @@ function Workout() {
                 <div className="flex text-white uppercase font-bold text-lg w-full">My Exercises</div>
                 <div className="flex gap-6 max-tablet:flex-col w-fit max-tablet:gap-3 flex-wrap">
                     {muscleGroups.map((muscle, index) => {
-                        return <WorkoutCard muscle={muscle.group} key={index} bg={'g' + (index % 3)} id={muscle._id} />
+                        return <WorkoutCard muscle={muscle.group} key={index} id={muscle._id} />
                     })}
                 </div>
             </div>
