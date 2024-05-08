@@ -56,7 +56,7 @@ function Workout() {
                         <ActiveWorkout />
                     </div>
                     <div className="text-white hidden max-laptop:flex w-full bg-indigo-600 p-4 font-medium rounded-sm justify-between items-center">
-                        <p className="text-[1.2rem]">ACTIVE</p>
+                        <p className="text-[1.2rem] uppercase">Schedule NAME</p>
                         <BsBoxArrowUpRight className=" text-[1.5rem]" />
                     </div>
                     <div className="flex w-[40%] h-fit overflow-y-hidden max-laptop:w-full">

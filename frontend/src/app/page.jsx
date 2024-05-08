@@ -12,9 +12,7 @@ export default function Home() {
 
 	return (
 		<div className="flex min-h-screen w-full font-satoshi bg-neutral-950">
-			{/* Taskbar */}
 			<div className="flex  w-full  fixed top-0 items-center justify-between p-6 ">
-				{/* LOGO */}
 				<div className="flex items-center gap-3">
 					<img src="logo.png" alt="logo" className='h-6' />
 					<p className='flex text-white text-[1.5rem] font-bold '>INSPIRE</p>
