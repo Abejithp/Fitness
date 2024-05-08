@@ -22,7 +22,6 @@ export function Tracker() {
   useEffect(() => {
     getActive().then((res) => {
       setData({ loaded: true, data: res.data.exercise })
-      console.log(res.data.exercise)
     })
   }, [])
 

@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/table"
 import { useEffect, useState } from "react";
 import { getMuscles } from "@/api/exercise.mjs";
-import { getWorkout } from "@/api/workout.mjs";
+import { getSchedule, getWorkout } from "@/api/workout.mjs";
 import Navbar from "@/components/custom/Navbar";
 
 
@@ -27,18 +27,32 @@ import Navbar from "@/components/custom/Navbar";
 function Workout() {
 
     const [muscleGroups, setGroups] = useState([])
-    const [schedule, setSchedule] = useState([])
+    const [workouts, setWorkouts] = useState([])
+    const [schedule, setSchedule] = useState([]);
+    const [scheduleName, setName] = useState('');
 
+    useEffect(()=>{
+   
+    }, [])
 
     useEffect(() => {
         getMuscles().then((res) => {
             setGroups(res.data)
-            console.log(res.data)
         })
 
         getWorkout().then((res) => {
-            setSchedule(res.data)
+            setWorkouts(res.data)
         })
+
+        getSchedule().then((res)=>{
+            if(!res.success){
+                return;
+            }
+            const {workoutName, workout } = res.data
+            setSchedule(workout);
+            setName(workoutName);
+        })
+   
     }, [])
 
     return (
@@ -48,10 +62,10 @@ function Workout() {
                 <div className="flex text-white uppercase font-bold text-lg w-full mb-4">My Workouts</div>
                 <div className="flex w-full gap-8 h-[40vh] max-laptop:flex-col items-end z-20">
                     <div className="flex w-[65%] h-full max-laptop:hidden ">
-                        <ActiveWorkout />
+                        <ActiveWorkout schedule={schedule}/>
                     </div>
                     <div className="text-white hidden max-laptop:flex w-full bg-indigo-600 p-4 font-medium rounded-sm justify-between items-center">
-                        <p className="text-[1.2rem] uppercase">Schedule NAME</p>
+                        <p className="text-[1.2rem] uppercase">{scheduleName}</p>
                         <BsBoxArrowUpRight className=" text-[1.5rem]" />
                     </div>
                     <div className="flex w-[40%] h-fit overflow-y-hidden max-laptop:w-full">
@@ -65,7 +79,7 @@ function Workout() {
                                 </TableRow>
                             </TableHeader>
                             <TableBody className=" overflow-hidden">
-                                {schedule.map((data, i) => (
+                                {workouts.map((data, i) => (
                                     <TableRow key={i} className="text-white">
                                         <TableCell>{data.workoutName}</TableCell>
                                         <TableCell className=" text-indigo-500 text-lg text-right">

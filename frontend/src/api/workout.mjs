@@ -1,12 +1,15 @@
 import { send } from "./util.mjs";
 
 export function addWorkout(workout, name) {
-
     return send("POST", "/api/workout/", {workout, name})
 }
 
 export function getWorkout() {
     return send("GET", "/api/workout/", null);
+}
+
+export function getSchedule(){
+    return send("GET", "/api/schedule/", null);
 }
 
 export function getActiveWorkout(id) {

@@ -92,7 +92,7 @@ app.post("/api/register/", body(['username', 'password']).notEmpty(), async func
     const hash = bcrypt.hashSync(req.body.password, 10);
     user = await User.create({ username: req.body.username, password: hash, active: null })
 
-    const project = req.session.user = { _id: user._id.toString(), username: user.username };
+    const project = req.session.user = { _id: user._id.toString(), username: user.username, active: null};
     console.log(req.session.user)
     setUserCookie(req, res);
 
@@ -116,7 +116,7 @@ app.post("/api/login/", body(['username', 'password']).notEmpty(), async functio
         return res.status(404).end("User not found!");
     }
 
-    const project = req.session.user = { _id: user._id.toString(), username: user.username };
+    const project = req.session.user = { _id: user._id.toString(), username: user.username, active: user.active};
     setUserCookie(req, res);
     
     req.session.save((err) => {
@@ -189,7 +189,6 @@ app.get("/api/muscles/:id/", isAuthenticated, async function (req, res) {
 
 
 // Workouts
-
 app.post("/api/workout/", isAuthenticated, async function (req, res, next) {
 
     const list = req.body.workout;
@@ -242,6 +241,22 @@ app.get("/api/workout/:id/", isAuthenticated, async function (req, res) {
     }
 });
 
+app.get("/api/schedule/", isAuthenticated, async function(req, res){
+    const user = req.session.user
+    
+    if(!user.active){
+       return res.status(200).json({data: [], success:true})
+    }
+
+    try {
+        const schedule = await WorkOut.findOne({userRef: user._id, _id: user.active}, {workoutName: 1, workout: 1}).populate('workout.exercise');
+        return res.status(200).json({data: schedule, success: true})
+    } catch(err){
+        return res.status(500).json({ success: false, msg: err.message });
+    }
+   
+});
+
 //Progression
 
 app.get("/api/active/", isAuthenticated, async function (req, res) {
@@ -252,7 +267,6 @@ app.get("/api/active/", isAuthenticated, async function (req, res) {
     }
 
     const day = new Date().getDay();
-
     return res.status(200).json({ data: workout.workout[day] })
 
 });
