@@ -59,7 +59,7 @@ function Workout() {
     return (
         <div className="flex min-h-dvh bg-neutral-950 w-full font-satoshi flex-col z-20 relative">
             <Navbar />
-            <div className="flex p-16 pt-32 flex-col max-tablet:p-8 max-tablet:pt-28">
+            <div className="flex p-16 pt-32 flex-col max-laptop:p-8 max-laptop:pt-28">
                 <div className="flex text-white uppercase font-bold text-lg w-full mb-4">My Workouts</div>
                 <div className="flex w-full gap-8 h-[40vh] max-laptop:flex-col items-end z-20">
                     <div className="flex w-[65%] h-full max-laptop:hidden ">
@@ -74,7 +74,7 @@ function Workout() {
                             <TableHeader>
                                 <TableRow>
                                     <TableHead>Name</TableHead>
-                                    <TableHead className="text-right">Activate</TableHead>
+                                    <TableHead className="max-laptop:text-right">Activate</TableHead>
                   
                                     <TableHead className="max-laptop:hidden">Delete</TableHead>
                                 </TableRow>
@@ -83,12 +83,12 @@ function Workout() {
                                 {workouts.map((data, i) => (
                                     <TableRow key={i} className="text-white">
                                         <TableCell>{data.workoutName}</TableCell>
-                                        <TableCell className=" text-indigo-500 text-lg max-tablet:text-right">
+                                        <TableCell className=" text-indigo-500 text-lg max-laptop:text-right">
                                             <button onClick={ async () => {
                                                 await updateActiveWorkout(data._id);
                                                 updateSchedule();
                                             }}>
-                                                <HiLightningBolt className=" hover:cursor-pointer text-center ml-4 max-tablet:mr-4" />
+                                                <HiLightningBolt className=" hover:cursor-pointer text-center ml-4 max-laptop:mr-4" />
                                             </button>
                                            
                                         </TableCell>
