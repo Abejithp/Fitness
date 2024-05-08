@@ -225,7 +225,10 @@ app.patch("/api/workout/", isAuthenticated, async function(req, res){
         return res.sendStatus(404);
     }
 
-    await User.updateOne({_id:req.session.user._id}, {active: req.body.id });
+    const user = await User.updateOne({_id:req.session.user._id}, {active: req.body.id });
+    console.log(user);
+
+    req.session.user.active = req.body.id;
 
     return res.status(200).json({success: true})
 });

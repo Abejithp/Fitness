@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/table"
 import { useEffect, useState } from "react";
 import { getMuscles } from "@/api/exercise.mjs";
-import { getSchedule, getWorkout } from "@/api/workout.mjs";
+import { getSchedule, getWorkout, updateActiveWorkout } from "@/api/workout.mjs";
 import Navbar from "@/components/custom/Navbar";
 
 
@@ -31,9 +31,17 @@ function Workout() {
     const [schedule, setSchedule] = useState([]);
     const [scheduleName, setName] = useState('');
 
-    useEffect(()=>{
-   
-    }, [])
+
+    const updateSchedule = () =>{
+        getSchedule().then((res)=>{
+            if(!res.success){
+                return;
+            }
+            const {workoutName, workout } = res.data
+            setSchedule(workout);
+            setName(workoutName);
+        })
+    }
 
     useEffect(() => {
         getMuscles().then((res) => {
@@ -44,14 +52,7 @@ function Workout() {
             setWorkouts(res.data)
         })
 
-        getSchedule().then((res)=>{
-            if(!res.success){
-                return;
-            }
-            const {workoutName, workout } = res.data
-            setSchedule(workout);
-            setName(workoutName);
-        })
+        updateSchedule();
    
     }, [])
 
@@ -73,8 +74,8 @@ function Workout() {
                             <TableHeader>
                                 <TableRow>
                                     <TableHead>Name</TableHead>
-                                    <TableHead>Active</TableHead>
-                                    <TableHead>View</TableHead>
+                                    <TableHead>Activate</TableHead>
+                  
                                     <TableHead className="max-laptop:hidden">Delete</TableHead>
                                 </TableRow>
                             </TableHeader>
@@ -82,14 +83,17 @@ function Workout() {
                                 {workouts.map((data, i) => (
                                     <TableRow key={i} className="text-white">
                                         <TableCell>{data.workoutName}</TableCell>
-                                        <TableCell className=" text-indigo-500 text-lg text-right">
-                                            <HiLightningBolt className=" hover:cursor-pointer text-center " />
+                                        <TableCell className=" text-indigo-500 text-lg">
+                                            <button onClick={ async () => {
+                                                await updateActiveWorkout(data._id);
+                                                updateSchedule();
+                                            }}>
+                                                <HiLightningBolt className=" hover:cursor-pointer text-center ml-4" />
+                                            </button>
+                                           
                                         </TableCell>
-                                        <TableCell >
-                                            <IoEyeSharp className="text-indigo-500 text-xl"/>
-                                        </TableCell>
-                                        <TableCell className="text-indigo-500 text-2xl align-middle max-laptop:hidden">
-                                            <TiDelete className=" hover:cursor-pointer"/>
+                                        <TableCell className="text-indigo-500 text-2xl  max-laptop:hidden">
+                                            <TiDelete className=" hover:cursor-pointer ml-2"/>
                                         </TableCell>
                                     </TableRow>
                                 ))}
