@@ -8,6 +8,10 @@ export function getExercise() {
     return send("GET", "/api/exercise/", null);
 }
 
+export function delExercise(id){
+    return send("DELETE", `/api/exercise/${id}`, null);
+}
+
 export function getMuscles(){
     return send("GET", "/api/muscles/", null);
 }

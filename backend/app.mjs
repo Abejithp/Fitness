@@ -169,11 +169,21 @@ app.get("/api/exercise/", isAuthenticated, async function (req, res) {
     return res.status(200).json(exercise);
 });
 
+app.delete("/api/exercise/:id/", isAuthenticated, async function(req,res){
+
+    try{
+        const data = await Exercise.deleteOne({userRef: req.session.user._id, _id: req.params.id})
+        return res.status(200).json(data)
+
+    }catch(err){
+        return res.status(500).json({ success: false, msg: err.message });
+    }
+    
+})
+
 app.get("/api/muscles/", isAuthenticated, async function (req, res) {
     const muscles = await Muscle.find({})
-    const data = muscles.slice(0, 5);
-    const rest = muscles.slice(6, muscles.length);
-    return res.status(200).json({ data: data, rest: rest})
+    return res.status(200).json({ data: muscles})
 });
 
 app.get("/api/muscles/:id/", isAuthenticated, async function (req, res) {
@@ -186,6 +196,7 @@ app.get("/api/muscles/:id/", isAuthenticated, async function (req, res) {
     }
 
 });
+
 
 
 // Workouts

@@ -8,7 +8,7 @@ import {
 
 import { TiDelete } from "react-icons/ti";
 
-import { addExercise, getActiveMuscle } from '@/api/exercise.mjs'
+import { addExercise, delExercise, getActiveMuscle } from '@/api/exercise.mjs'
 
 
 export default function WorkoutCard({ muscle, id }) {
@@ -59,7 +59,7 @@ export default function WorkoutCard({ muscle, id }) {
                             </div> : exercises.map((el, index) => {
                                 return <div className="flex items-center uppercase font-semibold border-b-2 justify-between border-neutral-800 p-4" key={index}>
                                     <p>{el.name}</p>
-                                    <button>
+                                    <button onClick={() => delExercise(el._id).then(() => handleEx(id))}>
                                         <TiDelete className='text-3xl hover:cursor-pointer text-indigo-500' />
                                     </button>
                                 </div>
