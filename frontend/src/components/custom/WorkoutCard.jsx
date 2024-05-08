@@ -25,9 +25,9 @@ export default function WorkoutCard({ muscle, bg, id }) {
         <Dialog>
             <DialogTrigger onClick={() => handleEx(id)}>
                 <div className='min-w-[300px] w-[300px] hover:cursor-pointer relative hover:scale-105 
-                                transition-transform ease-in-out duration-300 max-tablet:w-fit max-tablet:h-[60px] '>
-                    <img src={`/card/${bg}.png`} alt="background" className=' rounded-lg w-full h-full max-tablet:rounded-sm' />
-                    <p className=' absolute z-10 top-0 flex w-full justify-center items-center h-full text-black font-bold text-[2rem] uppercase'>{muscle}</p>
+                                transition-transform ease-out duration-300 max-tablet:w-fit max-tablet:h-[70px]
+                                bg-black border-2 border-indigo-600 h-[200px] rounded-lg max-tablet:rounded-sm '>
+                    <p className='text-white absolute z-10 top-0 flex w-full justify-center items-center h-full font-bold text-[1.5rem] max-tablet:font-medium uppercase'>{muscle}</p>
                 </div>
             </DialogTrigger>
 
@@ -61,7 +61,7 @@ export default function WorkoutCard({ muscle, bg, id }) {
                         <div className="flex w-[300px] aspect-square bg-gray-300 rounded-full">
 
                         </div>
-                        <p className='font-bold'>Favourite Exercise</p>
+                        <p className='font-bold'>Exercise Usage</p>
                     </div>
                 </div>
             </DialogContent>

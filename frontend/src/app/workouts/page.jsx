@@ -42,7 +42,7 @@ function Workout() {
     }, [])
 
     return (
-        <div className="flex min-h-dvh bg-neutral-950 w-full font-satoshi flex-col">
+        <div className="flex min-h-dvh bg-neutral-950 w-full font-satoshi flex-col z-20 relative">
             <Menu />
             <div className="flex p-16 flex-col max-tablet:p-8">
                 <div className="flex text-white mb-8 gap-2 items-center">
@@ -51,7 +51,7 @@ function Workout() {
                 </div>
 
                 <div className="flex text-white uppercase font-bold text-lg w-full mb-4">My Workouts</div>
-                <div className="flex w-full gap-8 h-[40vh] max-laptop:flex-col items-end">
+                <div className="flex w-full gap-8 h-[40vh] max-laptop:flex-col items-end z-20">
                     <div className="flex w-[65%] h-full max-laptop:hidden ">
                         <ActiveWorkout />
                     </div>
@@ -90,7 +90,7 @@ function Workout() {
                 </div>
 
             </div>
-            <div className="flex h-full w-full flex-col p-16 pt-0 gap-12 max-tablet:items-center max-tablet:p-8">
+            <div className="flex h-full w-full flex-col p-16 pt-0 gap-4 max-tablet:items-center max-tablet:p-8">
                 <div className="flex text-white uppercase font-bold text-lg w-full">My Exercises</div>
                 <div className="flex gap-6 max-tablet:flex-col w-fit max-tablet:gap-3 flex-wrap">
                     {muscleGroups.map((muscle, index) => {
