@@ -5,7 +5,6 @@ import WorkoutCard from "@/components/custom/WorkoutCard";
 
 import { HiLightningBolt } from "react-icons/hi";
 import { BsBoxArrowUpRight } from "react-icons/bs";
-import { IoEyeSharp } from "react-icons/io5";
 import { TiDelete } from "react-icons/ti";
 
 
@@ -21,6 +20,7 @@ import { useEffect, useState } from "react";
 import { getMuscles } from "@/api/exercise.mjs";
 import { getSchedule, getWorkout, updateActiveWorkout } from "@/api/workout.mjs";
 import Navbar from "@/components/custom/Navbar";
+import ScheduleViewer from "@/components/custom/ScheduleViewer";
 
 
 
@@ -67,14 +67,14 @@ function Workout() {
                     </div>
                     <div className="text-white hidden max-laptop:flex w-full bg-indigo-600 p-4 font-medium rounded-sm justify-between items-center">
                         <p className="text-[1.2rem] uppercase">{scheduleName}</p>
-                        <BsBoxArrowUpRight className=" text-[1.5rem]" />
+                        <ScheduleViewer name={scheduleName} schedule={schedule}/>    
                     </div>
                     <div className="flex w-[40%] h-fit overflow-y-hidden max-laptop:w-full">
                         <Table>
                             <TableHeader>
                                 <TableRow>
                                     <TableHead>Name</TableHead>
-                                    <TableHead>Activate</TableHead>
+                                    <TableHead className="text-right">Activate</TableHead>
                   
                                     <TableHead className="max-laptop:hidden">Delete</TableHead>
                                 </TableRow>
@@ -83,12 +83,12 @@ function Workout() {
                                 {workouts.map((data, i) => (
                                     <TableRow key={i} className="text-white">
                                         <TableCell>{data.workoutName}</TableCell>
-                                        <TableCell className=" text-indigo-500 text-lg">
+                                        <TableCell className=" text-indigo-500 text-lg max-tablet:text-right">
                                             <button onClick={ async () => {
                                                 await updateActiveWorkout(data._id);
                                                 updateSchedule();
                                             }}>
-                                                <HiLightningBolt className=" hover:cursor-pointer text-center ml-4" />
+                                                <HiLightningBolt className=" hover:cursor-pointer text-center ml-4 max-tablet:mr-4" />
                                             </button>
                                            
                                         </TableCell>

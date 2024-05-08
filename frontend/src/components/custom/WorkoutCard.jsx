@@ -31,7 +31,7 @@ export default function WorkoutCard({ muscle, id }) {
                 </div>
             </DialogTrigger>
 
-            <DialogContent className='w-[75vw] h-[60vh] rounded-lg p-0 border-0 text-white bg-neutral-900 flex flex-col gap-0 max-tablet:h-dvh max-tablet:w-dvw max-tablet:rounded-none'>
+            <DialogContent className='w-[75vw] h-[60vh] rounded-lg p-0 border-0 text-white bg-neutral-950 flex flex-col gap-0 max-tablet:h-dvh max-tablet:w-dvw max-tablet:rounded-none'>
                 <div className='flex relative h-fit w-full'>
                     <p className=' bg-indigo-700 rounded-t-lg py-4 uppercase font-medium text-[4rem] pl-12 flex h-full items-center 
                                     max-tablet:pl-6 max-tablet:text-[3rem] w-full max-tablet:rounded-none'>{muscle}</p>
@@ -40,7 +40,7 @@ export default function WorkoutCard({ muscle, id }) {
                 <div className="flex p-8 w-full h-full gap-4" >
                     <div className="flex flex-col w-[50%] max-tablet:w-full">
                         <div className="flex w-full justify-between">
-                            <input type="text" placeholder='Search for Exercise' className='pl-4 p-1 bg-neutral-950 placeholder:text-neutral-500 rounded-sm font-satoshi h-fit w-fit' autoFocus={false} />
+                            <input type="text" placeholder='Search for Exercise' className='pl-4 p-1 bg-neutral-900 placeholder:text-neutral-500 rounded-sm font-satoshi h-fit w-fit' autoFocus={false} />
                             <button className='p-1 px-4 rounded-sm bg-indigo-600 text-white'>create</button>
                         </div>
 
