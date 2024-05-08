@@ -8,12 +8,13 @@ import {
 
 import { TiDelete } from "react-icons/ti";
 
-import { getActiveMuscle } from '@/api/exercise.mjs'
+import { addExercise, getActiveMuscle } from '@/api/exercise.mjs'
 
 
 export default function WorkoutCard({ muscle, id }) {
 
     const [exercises, setExercises] = useState([])
+    const [creation, setCreation] = useState('');
 
     const handleEx = (id) => {
         getActiveMuscle(id).then((res) => {
@@ -39,9 +40,17 @@ export default function WorkoutCard({ muscle, id }) {
 
                 <div className="flex p-8 w-full h-full gap-4" >
                     <div className="flex flex-col w-[50%] max-tablet:w-full">
-                        <div className="flex w-full justify-between">
-                            <input type="text" placeholder='Search for Exercise' className='pl-4 p-1 bg-neutral-900 placeholder:text-neutral-500 rounded-sm font-satoshi h-fit w-fit' autoFocus={false} />
-                            <button className='p-1 px-4 rounded-sm bg-indigo-600 text-white'>create</button>
+                        <div className="flex w-full gap-4 flex-col">
+                            <input type="text" placeholder='Search for Exercise' className='pl-4 p-1 bg-neutral-900 placeholder:text-neutral-500 rounded-sm
+                             font-satoshi h-fit w-fit' autoFocus={false} />
+
+                            <div className="flex">
+                                <input type="text" placeholder='enter exercise name' className='pl-4 p-1 bg-neutral-900 placeholder:text-neutral-500 rounded-l-sm
+                             font-satoshi h-fit w-fit' value={creation} onChange={(e) => setCreation(e.target.value)} />
+                                <button className='p-1 px-4 rounded-r-sm bg-indigo-600 text-white'
+                                    onClick={() => { addExercise(creation, muscle).then(() =>handleEx(id)) }}>create</button>
+                            </div>
+
                         </div>
 
                         <div className="flex flex-col border-t-2 border-neutral-800 mt-5 h-full">
