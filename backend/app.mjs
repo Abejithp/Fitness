@@ -1,6 +1,5 @@
 import { createServer } from "http";
 import express from "express";
-import "./load.mjs"
 import cors from "cors";
 import session from "express-session";
 import bcrypt from "bcrypt";
@@ -8,6 +7,9 @@ import { Exercise, Muscle, Progress, User, Weight, WorkOut, getClient } from "./
 import { body, validationResult } from "express-validator";
 import { serialize } from "cookie";
 import MongoStore from "connect-mongo";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const PORT = process.env.PORT || 5000;
 const app = express();
