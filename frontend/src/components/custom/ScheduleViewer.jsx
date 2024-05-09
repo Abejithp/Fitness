@@ -17,7 +17,7 @@ export default function ScheduleViewer({name, schedule}) {
       <DialogTrigger>
         <BsBoxArrowUpRight className='text-[1.5rem]'/>
       </DialogTrigger>
-      <DialogContent className="w-full h-full flex bg-neutral-950 p-0 gap-4 flex-col">
+      <DialogContent className="w-full h-full flex bg-neutral-950 p-0 gap-4 flex-col border-0">
         <p className='text-white w-full h-fit p-8 bg-indigo-600'>{name}</p>
 
         <div className="flex flex-wrap gap-2 w-full justify-center p-6 mt-4">

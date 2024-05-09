@@ -1,7 +1,7 @@
 import { send } from "./util.mjs";
 
-export function addExercise(name, muscleGroup) {
-    return send("POST", "/api/exercise/", { name, muscleGroup })
+export function addExercise(name, id) {
+    return send("POST", "/api/exercise/", { name, id })
 }
 
 export function getExercise() {

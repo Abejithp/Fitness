@@ -51,7 +51,7 @@ app.use(function (req, res, next) {
 });
 
 function isAuthenticated(req, res, next) {
-    
+
     if (!req.session.user) {
         return res.status(401).end("Access denied!");
     }
@@ -74,7 +74,9 @@ function setUserCookie(req, res) {
     );
 }
 
-// Authentication
+/* 
+    Endpoints to handle user registration and login 
+*/
 
 app.post("/api/register/", body(['username', 'password']).notEmpty(), async function (req, res, next) {
 
@@ -92,14 +94,14 @@ app.post("/api/register/", body(['username', 'password']).notEmpty(), async func
     const hash = bcrypt.hashSync(req.body.password, 10);
     user = await User.create({ username: req.body.username, password: hash, active: null })
 
-    const project = req.session.user = { _id: user._id.toString(), username: user.username, active: null};
+    const project = req.session.user = { _id: user._id.toString(), username: user.username, active: null };
     console.log(req.session.user)
     setUserCookie(req, res);
 
     req.session.save((err) => {
-        if(err){
+        if (err) {
             console.log(err)
-        }else{
+        } else {
             res.status(201).json(project);
         }
     })
@@ -116,13 +118,13 @@ app.post("/api/login/", body(['username', 'password']).notEmpty(), async functio
         return res.status(404).end("User not found!");
     }
 
-    const project = req.session.user = { _id: user._id.toString(), username: user.username, active: user.active};
+    const project = req.session.user = { _id: user._id.toString(), username: user.username, active: user.active };
     setUserCookie(req, res);
-    
+
     req.session.save((err) => {
-        if(err){
+        if (err) {
             console.log(err)
-        }else{
+        } else {
             res.status(201).json(project);
         }
     })
@@ -136,54 +138,62 @@ app.delete("/api/login/", isAuthenticated, async function (req, res, next) {
     res.status(200).json({}).end();
 });
 
-//Exercise
-
+/* 
+    Endpoints to handle exercises. Exercises are 
+    reperseneted by a name along with references
+    to a muscle group and user.
+*/
 
 app.post("/api/exercise/", isAuthenticated, async function (req, res, next) {
 
-    const existing = await Muscle.findOne({ group: req.body.muscleGroup })
-    let muscle = null;
+    try {
 
-    if (!existing) {
-        muscle = await Muscle.create({
-            group: req.body.muscleGroup
+        const data = await Exercise.create({
+            userRef: req.session.user._id,
+            name: req.body.name,
+            muscleGroup: req.body.id
         });
-    } else {
-        muscle = existing
+
+        return res.status(200).json(data)
+
+    } catch (err) {
+        return res.sendStatus(500)
     }
-
-    const exercise = await Exercise.create({
-        userRef: req.session.user._id,
-        name: req.body.name,
-        muscleGroup: muscle._id,
-        repetitions: 0,
-        sets: 0,
-        weight: 0
-    });
-
-    return res.status(200).json(exercise)
 })
 
 app.get("/api/exercise/", isAuthenticated, async function (req, res) {
-    const exercise = await Exercise.find({ userRef: req.session.user._id })
-    return res.status(200).json(exercise);
+
+    try {
+
+        const exercise = await Exercise.find({ userRef: req.session.user._id })
+        return res.status(200).json(exercise);
+
+    } catch (err) {
+        return res.sendStatus(500)
+    }
+
 });
 
-app.delete("/api/exercise/:id/", isAuthenticated, async function(req,res){
+app.delete("/api/exercise/:id/", isAuthenticated, async function (req, res) {
 
-    try{
-        const data = await Exercise.deleteOne({userRef: req.session.user._id, _id: req.params.id})
+    try {
+        const data = await Exercise.deleteOne({ userRef: req.session.user._id, _id: req.params.id })
         return res.status(200).json(data)
 
-    }catch(err){
+    } catch (err) {
         return res.status(500).json({ success: false, msg: err.message });
     }
-    
+
 })
+
+/* 
+    Endpoints to handle muscle groups. Muscles are
+    represented by a group name. 
+*/
 
 app.get("/api/muscles/", isAuthenticated, async function (req, res) {
     const muscles = await Muscle.find({})
-    return res.status(200).json({ data: muscles})
+    return res.status(200).json({ data: muscles })
 });
 
 app.get("/api/muscles/:id/", isAuthenticated, async function (req, res) {
@@ -192,9 +202,8 @@ app.get("/api/muscles/:id/", isAuthenticated, async function (req, res) {
         const muscles = await Exercise.find({ userRef: req.session.user._id, muscleGroup: req.params.id }).populate('muscleGroup')
         return res.status(200).json({ data: muscles })
     } catch (err) {
-        return res.status(200).json({ data: [] })
+        return res.sendStatus(500)
     }
-
 });
 
 
@@ -230,18 +239,18 @@ app.get("/api/workout/", isAuthenticated, async function (req, res) {
     }
 })
 
-app.patch("/api/workout/", isAuthenticated, async function(req, res){
-    const workout = await WorkOut.findOne({_id:req.body.id})
-    if(!workout){
+app.patch("/api/workout/", isAuthenticated, async function (req, res) {
+    const workout = await WorkOut.findOne({ _id: req.body.id })
+    if (!workout) {
         return res.sendStatus(404);
     }
 
-    const user = await User.updateOne({_id:req.session.user._id}, {active: req.body.id });
+    const user = await User.updateOne({ _id: req.session.user._id }, { active: req.body.id });
     console.log(user);
 
     req.session.user.active = req.body.id;
 
-    return res.status(200).json({success: true})
+    return res.status(200).json({ success: true })
 });
 
 app.get("/api/workout/:id/", isAuthenticated, async function (req, res) {
@@ -255,20 +264,20 @@ app.get("/api/workout/:id/", isAuthenticated, async function (req, res) {
     }
 });
 
-app.get("/api/schedule/", isAuthenticated, async function(req, res){
+app.get("/api/schedule/", isAuthenticated, async function (req, res) {
     const user = req.session.user
-    
-    if(!user.active){
-       return res.status(200).json({data: [], success:true})
+
+    if (!user.active) {
+        return res.status(200).json({ data: [], success: true })
     }
 
     try {
-        const schedule = await WorkOut.findOne({userRef: user._id, _id: user.active}, {workoutName: 1, workout: 1}).populate('workout.exercise');
-        return res.status(200).json({data: schedule, success: true})
-    } catch(err){
+        const schedule = await WorkOut.findOne({ userRef: user._id, _id: user.active }, { workoutName: 1, workout: 1 }).populate('workout.exercise');
+        return res.status(200).json({ data: schedule, success: true })
+    } catch (err) {
         return res.status(500).json({ success: false, msg: err.message });
     }
-   
+
 });
 
 //Progression
@@ -286,19 +295,19 @@ app.get("/api/active/", isAuthenticated, async function (req, res) {
 });
 
 
-app.get("/api/active/:name/", isAuthenticated, async function (req, res){
-    const progress = await Progress.find({userRef: req.session.user._id})
+app.get("/api/active/:name/", isAuthenticated, async function (req, res) {
+    const progress = await Progress.find({ userRef: req.session.user._id })
     const data = []
 
     Array.from(progress).forEach((item) => {
-        item.workout.forEach((exercise) =>{
-            if(exercise.name == req.params.name){
+        item.workout.forEach((exercise) => {
+            if (exercise.name == req.params.name) {
                 data.push(exercise.repetitions * exercise.sets * exercise.weight)
             }
         })
     })
 
-    return res.status(200).json({data: data})
+    return res.status(200).json({ data: data })
 })
 
 app.patch("/api/active/", isAuthenticated, async function (req, res) {
@@ -343,7 +352,7 @@ app.patch("/api/active/", isAuthenticated, async function (req, res) {
     }
 
     const index = progress.workout.findIndex((exercise) => exercise.name == req.body.name)
-    progress.workout[index] = { name: req.body.name, repetitions: req.body.reps, sets: req.body.sets, weight: req.body.weight}
+    progress.workout[index] = { name: req.body.name, repetitions: req.body.reps, sets: req.body.sets, weight: req.body.weight }
 
     await Progress.updateOne({ date: today }, { $set: { workout: progress.workout } })
 
@@ -352,19 +361,19 @@ app.patch("/api/active/", isAuthenticated, async function (req, res) {
 
 //Weight
 
-app.post("/api/weight/", isAuthenticated, async function(req,res){
+app.post("/api/weight/", isAuthenticated, async function (req, res) {
     const weight = await Weight.create({
         userRef: req.session.user._id,
         weight: req.body.weight,
         createdAt: Date.now()
     })
 
-    return res.status(200).json({data: weight})
+    return res.status(200).json({ data: weight })
 })
 
-app.get("/api/weight/", isAuthenticated, async function(req, res){
-    const weight = await Weight.find({userRef: req.session.user._id}).sort({createdAt: 1})
-    return res.status(200).json({data: weight})
+app.get("/api/weight/", isAuthenticated, async function (req, res) {
+    const weight = await Weight.find({ userRef: req.session.user._id }).sort({ createdAt: 1 })
+    return res.status(200).json({ data: weight })
 })
 const server = createServer(app).listen(PORT, function (err) {
     if (err) console.log(err);

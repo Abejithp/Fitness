@@ -48,7 +48,7 @@ export default function WorkoutCard({ muscle, id }) {
                                 <input type="text" placeholder='enter exercise name' className='pl-4 p-1 bg-neutral-900 placeholder:text-neutral-500 rounded-l-sm
                              font-satoshi h-fit w-fit' value={creation} onChange={(e) => setCreation(e.target.value)} />
                                 <button className='p-1 px-4 rounded-r-sm bg-indigo-600 text-white'
-                                    onClick={() => { addExercise(creation, muscle).then(() =>handleEx(id)) }}>create</button>
+                                    onClick={() => { addExercise(creation, id).then(() =>handleEx(id)) }}>create</button>
                             </div>
 
                         </div>

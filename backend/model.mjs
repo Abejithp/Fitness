@@ -42,9 +42,6 @@ let exerciseSchema = new mongoose.Schema({
     },
 
     name: String,
-    repetitions: Number,
-    sets: Number,
-    weight: Number,
 
 })
 
@@ -60,15 +57,13 @@ let workoutSchema = new mongoose.Schema({
 })
 
 let progressSchema = new mongoose.Schema({
-    userRef: {
+    exerciseRef: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
+        ref: "Exercise"
     },
-
-
     date: String,
 
-    workout: [{name: String, sets: Number, repetitions: Number, weight: Number}]
+    workout: [{repetitions: Number, weight: Number}]
 
 });
 
