@@ -4,7 +4,6 @@ import ActiveWorkout from "@/components/custom/ActiveWorkout";
 import WorkoutCard from "@/components/custom/WorkoutCard";
 
 import { HiLightningBolt } from "react-icons/hi";
-import { BsBoxArrowUpRight } from "react-icons/bs";
 import { TiDelete } from "react-icons/ti";
 
 
@@ -84,7 +83,7 @@ function Workout() {
                         <p className="text-[1.2rem] uppercase">{scheduleName}</p>
                         <ScheduleViewer name={scheduleName} schedule={schedule}/>    
                     </div>
-                    <div className="flex w-[40%] h-fit overflow-y-hidden max-laptop:w-full">
+                    <div className="flex w-[40%] h-full overflow-y-hidden max-laptop:w-full">
                         <Table>
                             <TableHeader>
                                 <TableRow>

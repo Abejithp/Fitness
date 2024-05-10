@@ -4,17 +4,17 @@ import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { IoIosAdd } from "react-icons/io";
-import { getActiveMuscle, getExercise } from '@/api/exercise.mjs';
+import { getActiveMuscle } from '@/api/exercise.mjs';
 
+import { TbArrowBackUp } from "react-icons/tb";
 
 const variants = {
     open: {
-        width: 400,
-        height: 500,
+        width: 300,
+        height: 420,
         top: "-10px",
         left: "-10px",
         padding: "2rem",
-        paddingTop: '4rem',
         display: 'flex',
     },
     closed: {
@@ -43,7 +43,7 @@ const variantsMenu = {
     }
 }
 
-export default function WorkoutSelection({ muscle, update}) {
+export default function WorkoutSelection({ muscle, update }) {
     const [open, setOpen] = useState(false);
     const [active, setActive] = useState(null);
 
@@ -62,9 +62,9 @@ export default function WorkoutSelection({ muscle, update}) {
     return (
 
         <div className="flex relative h-fit items-center z-50">
-            <div className={`flex text-[1.5rem] p-2 bg-black border-2 border-indigo-600 font-medium rounded-md  cursor-pointer text-white`}
-                onClick={() => setOpen(!open)}>
-                <IoIosAdd />
+            <div className={`flex text-[1.5rem] p-2 bg-black border-2 border-indigo-600 font-medium rounded-md cursor-pointer text-white`}
+                onClick={() => {setOpen(!open); setActive(null)}}>
+                <IoIosAdd className={`${open ? 'rotate-45' : ''} transition-transform duration-500`} />
             </div>
 
 
@@ -74,36 +74,39 @@ export default function WorkoutSelection({ muscle, update}) {
                 animate={open ? 'open' : 'closed'}
                 variants={variants}
                 transition={{ duration: 0.7, ease: [0.75, 0, 0.24, 1] }}
-                className={`absolute bg-indigo-600 flex flex-col justify-center text-white shadow-md gap-4 -z-10 rounded-md p-4`}
+                className={`absolute bg-black flex flex-col  text-white -z-10 rounded-md`}
             >
-                <motion.div className={`flex min-h-[80%] items-center  ${!open ? 'hidden' : 'flex'}`}
+                <motion.div className={`flex h-full  ${!open ? 'hidden' : 'flex'}`}
                     variants={variantsMenu}
                     animate={open ? 'enter' : 'exit'}
                     exit={"exit"}
                     initial="initial">
 
-                    {(!active) ? <div className="flex flex-col gap-2 w-full">
+                    {(!active) ? <div className="flex flex-col gap-2 w-full justify-center h-full pt-6">
                         {muscle.map((el) =>
-                            <button className="flex uppercase font-satoshi text-[2rem] py-2 font-medium 
-                            border-b-2 w-full pl-4 cursor-pointer"
-                                onClick={() => {setActive(el); setExercises([])}}
+                            <button className="flex uppercase font-satoshi text-[1.5rem] py-2 font-medium 
+                              text-white w-full pl-4 cursor-pointer"
+                                onClick={() => { setActive(el); setExercises([]) }}
                             >
                                 {el.group}
                             </button>
                         )}
                     </div> :
 
-                        <div className="flex-col">
-                            {active.group}
-                            <div className="flex-col">
+                        <div className="flex-col flex w-full h-full gap-4">
+                                <p className=' text-[2rem] uppercase absolute top-3 left-[25%]'>
+                                {active.group}
+                            </p>
+
+                            <div className="flex-col flex absolute top-[25%] gap-2">
                                 {exercises.map((exercise) => {
-                                    return <button className="flex text-white" onClick={() => update(exercise._id)}>
+                                    return <button className="flex text-white text-lg uppercase" onClick={() => update(exercise)}>
                                         {exercise.name}
                                     </button>
                                 })}
                             </div>
-                            <button className="flex" onClick={() => setActive(null)}>
-                                home
+                            <button className="flex absolute top-4 right-4" onClick={() => setActive(null)}>
+                                <TbArrowBackUp className='text-[2rem]' />
                             </button>
                         </div>
 

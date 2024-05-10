@@ -214,25 +214,22 @@ app.get("/api/muscles/:id/", isAuthenticated, async function (req, res) {
 
 app.post("/api/workout/", isAuthenticated, async function (req, res, next) {
 
-    const list = req.body.workout;
-    // const filter = []
+    try {
 
-    // for (const day in list) {
-    //     filter.push({ day: day, exercise: list[day] })
-    // }
+        const workout = await WorkOut.create({
+            userRef: req.session.user._id,
+            workoutName: req.body.name,
+            workout: req.body.workout
+        });
 
-    console.log(list);
+        await User.updateOne({ _id: req.session.user._id }, { $set: { active: workout._id } })
+        req.session.user.active = workout._id
 
-    const workout = await WorkOut.create({
-        userRef: req.session.user._id,
-        workoutName: req.body.name,
-        workout: req.body.workout
-    });
+        return res.status(200).json([]);
+    } catch (err) {
+        return res.sendStatus(500);
+    }
 
-    await User.updateOne({ _id: req.session.user._id }, { $set: { active: workout._id } })
-    req.session.user.active = workout._id
-
-    return res.status(200).json([]);
 })
 
 app.get("/api/workout/", isAuthenticated, async function (req, res) {
