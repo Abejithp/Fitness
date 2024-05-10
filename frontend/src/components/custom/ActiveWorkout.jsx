@@ -5,7 +5,7 @@ export default function ActiveWorkout({ schedule }) {
             <img src="/card/bg2.png" alt="background" className=' absolute right-0 bottom-0 rounded-br-sm ' />
             <img src="/card/bg3.png" alt="background" className=' absolute -left-[59px] -bottom-12 rounded-bl-sm scale-75' />
 
-            {schedule.length == 0 ? <p className="w-full h-full flex justify-center items-center text-[3rem] lowercase">
+            {schedule.length == 0 ? <p className="w-full h-full flex justify-center items-center text-[3rem] lowercase z-40">
                     Create a Schedule
             </p> :
 

@@ -51,12 +51,6 @@ function Workout() {
         })
     }
 
-    const updateWorkouts = () => {
-        getWorkout().then((res) => {
-            setWorkouts(res.data)
-        })
-    }
-
     useEffect(() => {
         getMuscles().then((res) => {
             setGroups(res.data)
@@ -78,7 +72,7 @@ function Workout() {
                     My Workouts
                     <CreateSchedule muscle={muscleGroups} update={updateSchedule}/>
                 </div>
-                <div className={`flex w-full gap-8 h-[40vh] max-laptop:flex-col items-end z-20 max-tablet:h-fit`}>
+                <div className={`flex w-full gap-8 h-[40vh] max-laptop:flex-col items-end z-20 max-laptop:h-fit`}>
                     <div className="flex w-[65%] h-full max-laptop:hidden ">
                         <ActiveWorkout schedule={schedule} />
                     </div>
@@ -95,7 +89,7 @@ function Workout() {
 
 
                     </div>
-                    <div className={`flex w-[40%] h-full overflow-y-hidden max-laptop:w-full max-tablet:${scheduleName == ''? 'hidden': ''}`}>
+                    <div className={`flex w-[40%] h-full overflow-y-hidden max-laptop:w-full max-laptop:${scheduleName == ''? 'hidden': ''}`}>
                         <Table>
                             <TableHeader>
                                 <TableRow>

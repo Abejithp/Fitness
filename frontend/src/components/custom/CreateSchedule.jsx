@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import {
   Dialog,
@@ -31,14 +31,13 @@ export default function CreateSchedule({ muscle, update }) {
 
 
   const handleUpdate = (exercise) => {
-    const update = schedule[index];
-    const temp = schedule;
 
-    update.exercise.push(exercise);
-    temp[index] = update;
+    const updated = [...schedule]
+    const workout = updated[index]
 
-    setSchedule(temp);
+    workout.exercise.push(exercise)
 
+    setSchedule(updated)
   }
 
   return (
@@ -60,7 +59,7 @@ export default function CreateSchedule({ muscle, update }) {
 
         <div className="flex relative flex-col h-full p-8">
           <div className="flex absolute top-8 left-8">
-            <WorkoutSelection muscle={muscle} update={(exercise) => handleUpdate(exercise)} />
+            <WorkoutSelection muscle={muscle} update={(exercise) => {handleUpdate(exercise); }} />
           </div>
           <div className="flex w-full flex-wrap justify-center gap-3 max-tablet:w-[80%] self-end">
             {schedule.map((workout, index) => {
