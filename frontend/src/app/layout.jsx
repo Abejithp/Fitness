@@ -22,8 +22,9 @@ export default function RootLayout({ children }) {
           <span className=' font-bold ml-2 text-indigo-600'>ABE</span>
         </a>
       </footer>
-      </body>
       <Toaster />
+      </body>
+      
 
     </html>
   )

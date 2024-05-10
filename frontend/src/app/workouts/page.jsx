@@ -3,6 +3,8 @@
 import ActiveWorkout from "@/components/custom/ActiveWorkout";
 import WorkoutCard from "@/components/custom/WorkoutCard";
 
+import { Toaster } from "@/components/ui/sonner";
+
 import { HiLightningBolt } from "react-icons/hi";
 import { TiDelete } from "react-icons/ti";
 
@@ -67,6 +69,7 @@ function Workout() {
     return (
         <div className="flex min-h-dvh bg-neutral-950 w-full font-satoshi flex-col z-20 relative">
             <Navbar />
+            <Toaster />
             <div className="flex p-16 pt-32 flex-col max-laptop:p-8 max-laptop:pt-28">
                 <div className="flex text-white uppercase font-bold text-lg w-full mb-4 justify-between">
                     My Workouts

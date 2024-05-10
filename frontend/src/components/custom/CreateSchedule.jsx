@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import {
   Dialog,
@@ -11,6 +11,7 @@ import {
 
 import WorkoutSelection from './WorkoutSelection';
 import { addWorkout } from '@/api/workout.mjs';
+import { toast } from 'sonner';
 
 
 export default function CreateSchedule({ muscle, update }) {
@@ -40,6 +41,30 @@ export default function CreateSchedule({ muscle, update }) {
     setSchedule(updated)
   }
 
+  const isValid = async () => {
+    if (name.length < 0) {
+      toast.error('Invalid')
+      return;
+    }
+
+    await addWorkout(schedule, name);
+    update()
+    setName('')
+
+    setSchedule([
+      { day: 'Sunday', exercise: [] },
+      { day: 'Monday', exercise: [] },
+      { day: 'Tuesday', exercise: [] },
+      { day: 'Wednesday', exercise: [] },
+      { day: 'Thursday', exercise: [] },
+      { day: 'Friday', exercise: [] },
+      { day: 'Saturday', exercise: [] },
+    ])
+
+    setSelected(schedule[0])
+
+  }
+
   return (
     <Dialog>
       <DialogTrigger className='uppercase text-indigo-500'>
@@ -49,17 +74,18 @@ export default function CreateSchedule({ muscle, update }) {
       <DialogContent className='w-[75vw] h-[60vh] rounded-lg p-0 border-0 text-white bg-neutral-950 
             flex flex-col gap-0 max-tablet:h-dvh max-tablet:w-dvw max-tablet:rounded-none'>
 
-        <div className="flex w-full bg-indigo-600 p-4 max-tablet:py-6">
+        <div className="flex w-full bg-indigo-600 p-4 py-8 max-tablet:py-6">
           <input type="text"
             className='bg-indigo-600 text-[2rem] font-satoshi uppercase w-[50%] pl-4 font-medium max-tablet:w-[80%] max-tablet:text-[1.3rem]'
             placeholder='Enter Schedule Name'
             value={name}
-            onChange={(e) => setName(e.target.value)} />
+            onChange={(e) => setName(e.target.value)}
+          />
         </div>
 
         <div className="flex relative flex-col h-full p-8">
           <div className="flex absolute top-8 left-8">
-            <WorkoutSelection muscle={muscle} update={(exercise) => {handleUpdate(exercise); }} />
+            <WorkoutSelection muscle={muscle} update={(exercise) => { handleUpdate(exercise); }} />
           </div>
           <div className="flex w-full flex-wrap justify-center gap-3 max-tablet:w-[80%] self-end">
             {schedule.map((workout, index) => {
@@ -74,7 +100,7 @@ export default function CreateSchedule({ muscle, update }) {
             })}
           </div>
 
-          <div className="flex w-full h-full justify-center items-center max-tablet:items-start pt-20">
+          <div className="flex w-full h-full justify-center items-start pt-20">
             {selected.exercise.length == 0 ?
               <p className=' uppercase text-[3rem] font-satoshi font-normal'>Rest Day</p> :
               <div className="flex w-[40%] flex-wrap gap-2 justify-center max-tablet:w-full ">
@@ -91,9 +117,8 @@ export default function CreateSchedule({ muscle, update }) {
           </div>
 
           <DialogClose className='absolute bottom-8 right-8 bg-black border-2 border-indigo-600 rounded-sm p-2'
-            onClick={async () => {
-              await addWorkout(schedule, name);
-              update()
+            onClick={() => {
+              isValid()
             }}>
             create
           </DialogClose>
