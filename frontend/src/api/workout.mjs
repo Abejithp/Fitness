@@ -8,6 +8,10 @@ export function getWorkout() {
     return send("GET", "/api/workout/", null);
 }
 
+export function delWorkout(id){
+    return send("DELETE", `/api/workout/${id}`, null);
+}
+
 export function getSchedule(){
     return send("GET", "/api/schedule/", null);
 }

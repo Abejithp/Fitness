@@ -18,9 +18,10 @@ import {
 } from "@/components/ui/table"
 import { useEffect, useState } from "react";
 import { getMuscles } from "@/api/exercise.mjs";
-import { getSchedule, getWorkout, updateActiveWorkout } from "@/api/workout.mjs";
+import { delWorkout, getSchedule, getWorkout, updateActiveWorkout } from "@/api/workout.mjs";
 import Navbar from "@/components/custom/Navbar";
 import ScheduleViewer from "@/components/custom/ScheduleViewer";
+import CreateSchedule from "@/components/custom/CreateSchedule";
 
 
 
@@ -37,9 +38,20 @@ function Workout() {
             if(!res.success){
                 return;
             }
+
+            if(res.data === null){
+                return;
+            }
+
             const {workoutName, workout } = res.data
             setSchedule(workout);
             setName(workoutName);
+        })
+    }
+
+    const updateWorkouts = () => {
+        getWorkout().then((res) => {
+            setWorkouts(res.data)
         })
     }
 
@@ -60,7 +72,10 @@ function Workout() {
         <div className="flex min-h-dvh bg-neutral-950 w-full font-satoshi flex-col z-20 relative">
             <Navbar />
             <div className="flex p-16 pt-32 flex-col max-laptop:p-8 max-laptop:pt-28">
-                <div className="flex text-white uppercase font-bold text-lg w-full mb-4">My Workouts</div>
+                <div className="flex text-white uppercase font-bold text-lg w-full mb-4 justify-between">
+                    My Workouts 
+                    <CreateSchedule muscle={muscleGroups} />
+                </div>
                 <div className="flex w-full gap-8 h-[40vh] max-laptop:flex-col items-end z-20">
                     <div className="flex w-[65%] h-full max-laptop:hidden ">
                         <ActiveWorkout schedule={schedule}/>
@@ -93,7 +108,9 @@ function Workout() {
                                            
                                         </TableCell>
                                         <TableCell className="text-indigo-500 text-2xl  max-laptop:hidden">
-                                            <TiDelete className=" hover:cursor-pointer ml-2"/>
+                                            <button onClick={() => delWorkout(data._id).then(updateWorkouts())}>
+                                                <TiDelete className=" hover:cursor-pointer ml-2"/>
+                                            </button>
                                         </TableCell>
                                     </TableRow>
                                 ))}

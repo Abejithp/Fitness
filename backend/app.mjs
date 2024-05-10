@@ -207,26 +207,32 @@ app.get("/api/muscles/:id/", isAuthenticated, async function (req, res) {
 });
 
 
+/* 
+    Endpoints to handle workout creation. Workouts are
+    represented by a name and a list of exercises.
+*/
 
-// Workouts
 app.post("/api/workout/", isAuthenticated, async function (req, res, next) {
 
     const list = req.body.workout;
-    const filter = []
+    // const filter = []
 
-    for (const day in list) {
-        filter.push({ day: day, exercise: list[day] })
-    }
+    // for (const day in list) {
+    //     filter.push({ day: day, exercise: list[day] })
+    // }
+
+    console.log(list);
 
     const workout = await WorkOut.create({
         userRef: req.session.user._id,
         workoutName: req.body.name,
-        workout: filter
+        workout: req.body.workout
     });
 
     await User.updateOne({ _id: req.session.user._id }, { $set: { active: workout._id } })
+    req.session.user.active = workout._id
 
-    return res.status(200).json(workout);
+    return res.status(200).json([]);
 })
 
 app.get("/api/workout/", isAuthenticated, async function (req, res) {
@@ -234,10 +240,21 @@ app.get("/api/workout/", isAuthenticated, async function (req, res) {
         const workout = await WorkOut.find({ userRef: req.session.user._id }, { workoutName: 1 });
         res.status(200).json({ data: workout, success: true });
     } catch (err) {
-        console.log(err);
         res.status(500).json({ success: false, msg: err.message });
     }
 })
+
+app.delete("/api/workout/:id/", isAuthenticated, async function (req, res) {
+
+    try {
+        const data = await WorkOut.deleteOne({ userRef: req.session.user._id, _id: req.params.id })
+        return res.status(200).json(data)
+
+    } catch (err) {
+        return res.status(500).json({ success: false, msg: err.message });
+    }
+
+});
 
 app.patch("/api/workout/", isAuthenticated, async function (req, res) {
     const workout = await WorkOut.findOne({ _id: req.body.id })

@@ -6,9 +6,6 @@ import {
     DrawerTrigger,
 } from "@/components/ui/drawer"
 
-import Input from "./input";
-
-
 
 function Popup({ data }) {
     return (
