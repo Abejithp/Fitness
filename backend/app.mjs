@@ -245,6 +245,15 @@ app.delete("/api/workout/:id/", isAuthenticated, async function (req, res) {
 
     try {
         const data = await WorkOut.deleteOne({ userRef: req.session.user._id, _id: req.params.id })
+        if(data.deletedCount > 0){
+            const schedule = await WorkOut.findOne({userRef: req.session.user._id})
+            
+            const id = !schedule ? null : schedule._id;
+
+            await User.updateOne({ _id: req.session.user._id }, { $set: { active: id } })
+            req.session.user.active = id
+        }
+
         return res.status(200).json(data)
 
     } catch (err) {
@@ -282,7 +291,7 @@ app.get("/api/schedule/", isAuthenticated, async function (req, res) {
     const user = req.session.user
 
     if (!user.active) {
-        return res.status(200).json({ data: [], success: true })
+        return res.status(200).json({ data: {workout: [], workoutName: ''}, success: true })
     }
 
     try {

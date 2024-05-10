@@ -10,7 +10,7 @@ import { TbArrowBackUp } from "react-icons/tb";
 
 const variants = {
     open: {
-        width: 300,
+        width: 340,
         height: 420,
         top: "-10px",
         left: "-10px",

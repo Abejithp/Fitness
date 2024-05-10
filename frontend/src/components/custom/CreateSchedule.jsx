@@ -13,7 +13,7 @@ import WorkoutSelection from './WorkoutSelection';
 import { addWorkout } from '@/api/workout.mjs';
 
 
-export default function CreateSchedule({ muscle }) {
+export default function CreateSchedule({ muscle, update }) {
 
   const [schedule, setSchedule] = useState([
     { day: 'Sunday', exercise: [] },
@@ -91,7 +91,11 @@ export default function CreateSchedule({ muscle }) {
 
           </div>
 
-          <DialogClose className='absolute bottom-8 right-8 bg-black border-2 border-indigo-600 rounded-sm p-2' onClick={() => addWorkout(schedule, name)}>
+          <DialogClose className='absolute bottom-8 right-8 bg-black border-2 border-indigo-600 rounded-sm p-2'
+            onClick={async () => {
+              await addWorkout(schedule, name);
+              update()
+            }}>
             create
           </DialogClose>
         </div>

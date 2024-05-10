@@ -32,19 +32,22 @@ function Workout() {
     const [scheduleName, setName] = useState('');
 
 
-    const updateSchedule = () =>{
-        getSchedule().then((res)=>{
-            if(!res.success){
+    const updateSchedule = () => {
+        getSchedule().then((res) => {
+            if (!res.success) {
+                return;
+            }
+            if (res.data === null) {
                 return;
             }
 
-            if(res.data === null){
-                return;
-            }
-
-            const {workoutName, workout } = res.data
+            const { workoutName, workout } = res.data
             setSchedule(workout);
             setName(workoutName);
+        });
+
+        getWorkout().then((res) => {
+            setWorkouts(res.data)
         })
     }
 
@@ -64,7 +67,7 @@ function Workout() {
         })
 
         updateSchedule();
-   
+
     }, [])
 
     return (
@@ -72,24 +75,33 @@ function Workout() {
             <Navbar />
             <div className="flex p-16 pt-32 flex-col max-laptop:p-8 max-laptop:pt-28">
                 <div className="flex text-white uppercase font-bold text-lg w-full mb-4 justify-between">
-                    My Workouts 
-                    <CreateSchedule muscle={muscleGroups} />
+                    My Workouts
+                    <CreateSchedule muscle={muscleGroups} update={updateSchedule}/>
                 </div>
-                <div className="flex w-full gap-8 h-[40vh] max-laptop:flex-col items-end z-20">
+                <div className={`flex w-full gap-8 h-[40vh] max-laptop:flex-col items-end z-20 max-tablet:h-fit`}>
                     <div className="flex w-[65%] h-full max-laptop:hidden ">
-                        <ActiveWorkout schedule={schedule}/>
+                        <ActiveWorkout schedule={schedule} />
                     </div>
                     <div className="text-white hidden max-laptop:flex w-full bg-indigo-600 p-4 font-medium rounded-sm justify-between items-center">
-                        <p className="text-[1.2rem] uppercase">{scheduleName}</p>
-                        <ScheduleViewer name={scheduleName} schedule={schedule}/>    
+                        {scheduleName == '' ? <p className="text-[1.2rem] text-center w-full font-normal">
+                            create a schedule
+                        </p> : <>
+                            <p className="text-[1.2rem] uppercase">
+                                {scheduleName}
+                            </p>
+                            <ScheduleViewer name={scheduleName} schedule={schedule} />
+                        </>
+                        }
+
+
                     </div>
-                    <div className="flex w-[40%] h-full overflow-y-hidden max-laptop:w-full">
+                    <div className={`flex w-[40%] h-full overflow-y-hidden max-laptop:w-full max-tablet:${scheduleName == ''? 'hidden': ''}`}>
                         <Table>
                             <TableHeader>
                                 <TableRow>
                                     <TableHead>Name</TableHead>
                                     <TableHead className="max-laptop:text-right">Activate</TableHead>
-                  
+
                                     <TableHead className="max-laptop:hidden">Delete</TableHead>
                                 </TableRow>
                             </TableHeader>
@@ -98,17 +110,17 @@ function Workout() {
                                     <TableRow key={i} className="text-white">
                                         <TableCell>{data.workoutName}</TableCell>
                                         <TableCell className=" text-indigo-500 text-lg max-laptop:text-right">
-                                            <button onClick={ async () => {
+                                            <button onClick={async () => {
                                                 await updateActiveWorkout(data._id);
                                                 updateSchedule();
                                             }}>
                                                 <HiLightningBolt className=" hover:cursor-pointer text-center ml-4 max-laptop:mr-4" />
                                             </button>
-                                           
+
                                         </TableCell>
                                         <TableCell className="text-indigo-500 text-2xl  max-laptop:hidden">
-                                            <button onClick={() => delWorkout(data._id).then(updateWorkouts())}>
-                                                <TiDelete className=" hover:cursor-pointer ml-2"/>
+                                            <button onClick={() => delWorkout(data._id).then(() => {updateSchedule()})}>
+                                                <TiDelete className=" hover:cursor-pointer ml-2" />
                                             </button>
                                         </TableCell>
                                     </TableRow>
