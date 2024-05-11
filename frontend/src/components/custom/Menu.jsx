@@ -4,12 +4,13 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { logout } from '@/api/auth.mjs'
 
+
 const variants = {
     open: {
-        width: 400,
+        width: 350,
         height: 550,
-        top: "-20px",
-        right: "-20px",
+        top: "-10px",
+        right: "-10px",
         padding: "2rem",
         display: 'flex',
     },
@@ -57,7 +58,7 @@ export default function Menu() {
                     animate={open ? 'open' : 'closed'}
                     variants={variants}
                     transition={{ duration: 0.7, ease: [0.75, 0, 0.24, 1] }}
-                    className={`absolute bg-indigo-600 flex flex-col text-white shadow-md gap-4 -z-10 rounded-md`}
+                    className={`absolute bg-indigo-600 flex flex-col text-white shadow-md gap-4 -z-10 rounded-md max-tablet:`}
                 >
                     <motion.div className={`flex min-h-[80%] items-center  ${!open ? 'hidden' : 'flex'}`}
                         variants={variantsMenu}

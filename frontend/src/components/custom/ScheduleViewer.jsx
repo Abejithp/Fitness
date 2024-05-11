@@ -18,24 +18,28 @@ export default function ScheduleViewer({name, schedule}) {
         <BsBoxArrowUpRight className='text-[1.5rem]'/>
       </DialogTrigger>
       <DialogContent className="w-full h-full flex bg-neutral-950 p-0 gap-4 flex-col border-0">
-        <p className='text-white w-full h-fit p-8 bg-indigo-600'>{name}</p>
+        <p className='text-white w-full h-fit p-8 bg-indigo-600 text-[1.5rem] uppercase'>{name}</p>
 
-        <div className="flex flex-wrap gap-2 w-full justify-center p-6 mt-4">
+        <div className="flex flex-wrap gap-2 w-[80%] self-center justify-center p-6 mt-4">
           {schedule.map((workout, index) => {
             return (
-              <button className="flex text-white border-4 font-bold border-indigo-600 p-2
-                      justify-center items-center font-satoshi rounded-lg" key={index}
+              <button className={`flex text-white border-2 font-bold border-indigo-600 w-12 aspect-square
+                      justify-center items-center font-satoshi rounded-full ${selected.day == workout.day ? 'bg-indigo-600' : 'bg-black'}
+                       transition-colors duration-300 ease-out
+                      `} key={index}
                         
                       onClick={()=> setSelected(workout)}>
-                {workout.day}
+                {workout.day[0]}
               </button>
             )
           })}
         </div>
 
-        <div className="flex flex-col gap-2 w-full items-center">
-          {selected?.exercise.map((exercise) => {
-            return <div className="flex text-white bg-indigo-600 p-4 rounded-full uppercase px-6">
+        <div className="flex flex-wrap gap-2 w-[70%] self-center justify-center">
+          {}
+
+          {selected.exercise.map((exercise) => {
+            return <div className="flex text-white bg-indigo-600 p-3 px-5 rounded-full uppercase ">
               {exercise.name}
             </div>
           })}
