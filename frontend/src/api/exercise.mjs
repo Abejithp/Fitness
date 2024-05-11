@@ -4,6 +4,8 @@ export function addExercise(name, id) {
     return send("POST", "/api/exercise/", { name, id })
 }
 
+
+// TODO: delete function if not needed
 export function getExercise() {
     return send("GET", "/api/exercise/", null);
 }

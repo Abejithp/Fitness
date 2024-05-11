@@ -53,13 +53,13 @@ export default function WorkoutCard({ muscle, id }) {
 
                         </div>
 
-                        <div className="flex flex-col border-t-2 border-neutral-800 mt-5 h-full">
+                        <div className="flex flex-col border-t-2 border-neutral-800 mt-5 h-full overflow-auto tablet:h-[50%]">
                             {exercises.length == 0 ? <div className='mt-4 w-full h-full items-center flex justify-center text-[2rem] font-medium font-satoshi max-tablet:text-2xl'>
                                 Start by Creating an Exercise
                             </div> : exercises.map((el, index) => {
                                 return <div className="flex items-center uppercase font-semibold border-b-2 justify-between border-neutral-800 p-4" key={index}>
                                     <p>{el.name}</p>
-                                    <button onClick={() => delExercise(el._id).then(() => handleEx(id))}>
+                                    <button onClick={() => delExercise(el._id).then(() => handleEx(id))} className={`${el.global? 'hidden': ''}`}>
                                         <TiDelete className='text-3xl hover:cursor-pointer text-indigo-500' />
                                     </button>
                                 </div>

@@ -3,7 +3,7 @@ import express from "express";
 import cors from "cors";
 import session from "express-session";
 import bcrypt from "bcrypt";
-import { Exercise, Muscle, Progress, User, Weight, WorkOut, getClient } from "./model.mjs";
+import { Exercise, Muscle, Progress, SharedExercise, User, Weight, WorkOut, getClient } from "./model.mjs";
 import { body, validationResult } from "express-validator";
 import { serialize } from "cookie";
 import MongoStore from "connect-mongo";
@@ -151,7 +151,8 @@ app.post("/api/exercise/", isAuthenticated, async function (req, res, next) {
         const data = await Exercise.create({
             userRef: req.session.user._id,
             name: req.body.name,
-            muscleGroup: req.body.id
+            muscleGroup: req.body.id,
+            global: false
         });
 
         return res.status(200).json(data)
@@ -159,13 +160,13 @@ app.post("/api/exercise/", isAuthenticated, async function (req, res, next) {
     } catch (err) {
         return res.sendStatus(500)
     }
-})
+});
+
 
 app.get("/api/exercise/", isAuthenticated, async function (req, res) {
 
     try {
-
-        const exercise = await Exercise.find({ userRef: req.session.user._id })
+        const exercise = await Exercise.find({ userRef: req.session.user._id }, {userRef: 0})
         return res.status(200).json(exercise);
 
     } catch (err) {
@@ -199,8 +200,12 @@ app.get("/api/muscles/", isAuthenticated, async function (req, res) {
 app.get("/api/muscles/:id/", isAuthenticated, async function (req, res) {
 
     try {
-        const muscles = await Exercise.find({ userRef: req.session.user._id, muscleGroup: req.params.id }).populate('muscleGroup')
-        return res.status(200).json({ data: muscles })
+        const myExercises = await Exercise.find({ userRef: req.session.user._id, muscleGroup: req.params.id }, {userRef: 0}).populate('muscleGroup');
+        const sharedExercises = await SharedExercise.find({muscleGroup:req.params.id});
+
+        const exercises = myExercises.concat(sharedExercises);
+
+        return res.status(200).json({ data: exercises })
     } catch (err) {
         return res.sendStatus(500)
     }
