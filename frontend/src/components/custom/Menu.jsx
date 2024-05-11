@@ -86,7 +86,7 @@ export default function Menu() {
                     >
                         <a href='https://www.linkedin.com/in/abejithp/' className='hover:underline justify-self-center'>LinkedIn</a>
                         <a href='https://github.com/Abejithp' className='hover:underline justify-self-center'>Github</a>
-                        <div className="col-span-2 justify-self-center font-medium ">Developed by Abejith Pratheepan</div>
+                        <div className="col-span-2 justify-self-center font-medium ">Developed by ABE</div>
                     </motion.div>
                 </motion.div>
             </div>
