@@ -9,9 +9,10 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import Popup from "./popup"
-import { getActive } from "@/api/progression.mjs"
+
 import { Skeleton } from "../ui/skeleton"
 import { useEffect, useState } from "react";
+import { getToday } from "@/api/progression.mjs";
 
 
 
@@ -20,7 +21,11 @@ export function Tracker() {
   const [workout, setData] = useState({ loaded: false, data: [] });
 
   useEffect(() => {
-    getActive().then((res) => {
+    getToday().then((res) => {
+      if(!res.data){
+        setData({loaded: true, data: []})
+        return;
+      }
       setData({ loaded: true, data: res.data.exercise })
     })
   }, [])
@@ -30,8 +35,8 @@ export function Tracker() {
     {!workout.loaded ? <div className="flex flex-col flex-shrink-0 gap-4 w-full  pt-8">
       <Skeleton className={" flex flex-shrink-0 h-[60px] w-full bg-neutral-800"} />
       <div className="flex flex-col gap-3">
-        {Array(3).fill(0).map((_, index) => {
-          return (<div className="flex gap-2" key={index}>
+        {/* {Array(3).fill(0).map((_, index) => {
+          return (<div className="flex gap-2" key={index*2}>
             <Skeleton key={index} className={"h-[50px] w-[100px] bg-neutral-800"} />
             <Skeleton key={index} className={"h-[50px] w-[100px] bg-neutral-800 max-tablet:hidden"} />
             <Skeleton key={index} className={"h-[50px] w-full bg-neutral-800"} />
@@ -39,7 +44,7 @@ export function Tracker() {
           </div>
 
           )
-        })}
+        })} */}
       </div>
 
     </div> :

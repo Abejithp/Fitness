@@ -162,19 +162,6 @@ app.post("/api/exercise/", isAuthenticated, async function (req, res, next) {
     }
 });
 
-
-app.get("/api/exercise/", isAuthenticated, async function (req, res) {
-
-    try {
-        const exercise = await Exercise.find({ userRef: req.session.user._id }, {userRef: 0})
-        return res.status(200).json(exercise);
-
-    } catch (err) {
-        return res.sendStatus(500)
-    }
-
-});
-
 app.delete("/api/exercise/:id/", isAuthenticated, async function (req, res) {
 
     try {
@@ -200,8 +187,8 @@ app.get("/api/muscles/", isAuthenticated, async function (req, res) {
 app.get("/api/muscles/:id/", isAuthenticated, async function (req, res) {
 
     try {
-        const myExercises = await Exercise.find({ userRef: req.session.user._id, muscleGroup: req.params.id }, {userRef: 0}).populate('muscleGroup');
-        const sharedExercises = await SharedExercise.find({muscleGroup:req.params.id});
+        const myExercises = await Exercise.find({ userRef: req.session.user._id, muscleGroup: req.params.id }, { userRef: 0 }).populate('muscleGroup');
+        const sharedExercises = await SharedExercise.find({ muscleGroup: req.params.id });
 
         const exercises = myExercises.concat(sharedExercises);
 
@@ -250,9 +237,9 @@ app.delete("/api/workout/:id/", isAuthenticated, async function (req, res) {
 
     try {
         const data = await WorkOut.deleteOne({ userRef: req.session.user._id, _id: req.params.id })
-        if(data.deletedCount > 0){
-            const schedule = await WorkOut.findOne({userRef: req.session.user._id})
-            
+        if (data.deletedCount > 0) {
+            const schedule = await WorkOut.findOne({ userRef: req.session.user._id })
+
             const id = !schedule ? null : schedule._id;
 
             await User.updateOne({ _id: req.session.user._id }, { $set: { active: id } })
@@ -296,7 +283,7 @@ app.get("/api/schedule/", isAuthenticated, async function (req, res) {
     const user = req.session.user
 
     if (!user.active) {
-        return res.status(200).json({ data: {workout: [], workoutName: ''}, success: true })
+        return res.status(200).json({ data: { workout: [], workoutName: '' }, success: true })
     }
 
     try {
@@ -310,82 +297,127 @@ app.get("/api/schedule/", isAuthenticated, async function (req, res) {
 
 //Progression
 
-app.get("/api/active/", isAuthenticated, async function (req, res) {
-    const user = await User.findOne({ _id: req.session.user._id })
-    const workout = await WorkOut.findOne({ _id: user.active }).populate('workout.exercise')
-    if (!workout) {
-        return res.status(200).json({ data: null })
-    }
+app.get("/api/schedule/today/", isAuthenticated, async function (req, res) {
 
-    const day = new Date().getDay();
-    return res.status(200).json({ data: workout.workout[day] })
+    try {
+        const workout = await WorkOut.findOne({ _id: req.session.user.active }).populate('workout.exercise')
+
+        if (!workout) {
+            return res.status(200).json({ data: null })
+        }
+
+        const day = new Date().getDay();
+        return res.status(200).json({ data: workout.workout[day] });
+
+    } catch (err) {
+        return res.sendStatus(500);
+    }
 
 });
 
+app.post("/api/progress/", isAuthenticated, async function (req, res){
 
-app.get("/api/active/:name/", isAuthenticated, async function (req, res) {
-    const progress = await Progress.find({ userRef: req.session.user._id })
-    const data = []
+    try{
+        const date = new Date().toLocaleDateString();
 
-    Array.from(progress).forEach((item) => {
-        item.workout.forEach((exercise) => {
-            if (exercise.name == req.params.name) {
-                data.push(exercise.repetitions * exercise.sets * exercise.weight)
-            }
-        })
-    })
+        let progress = await Progress.findOne({exerciseRef: req.body.id, date: date})
 
-    return res.status(200).json({ data: data })
-})
+        if(progress) {
+            return res.status(200).json({data: progress.sets})
+        }
 
-app.patch("/api/active/", isAuthenticated, async function (req, res) {
-    const date = new Date();
-    const progress = await Progress.findOne({ date: today })
+        progress = await Progress.create({
+            exerciseRef: req.body.id,
+            date: date,
+            sets: [{reps: 0, weight: 0}]
+        });
 
-    if (!progress) {
+        return res.status(200).json({data: progress.sets});
 
-        const user = await User.findOne({ _id: req.session.user._id });
-        const data = await WorkOut.findOne({ _id: user.active }).populate('workout.exercise')
-
-        const workout = data.workout[date.getDay()]
-        const filter = []
-
-        workout.exercise.forEach((exercise) => {
-            console.log(exercise)
-            if (req.body.name == exercise.name) {
-                filter.push({
-                    name: exercise.name,
-                    repetitions: req.body.reps,
-                    sets: req.body.sets,
-                    weight: req.body.weight
-                })
-            } else {
-                filter.push({
-                    name: exercise.name,
-                    repetitions: 0,
-                    sets: 0,
-                    weight: 0
-                })
-            }
-
-        })
-
-        const progress = await Progress.create({
-            userRef: req.session.user._id,
-            date: today,
-            workout: filter
-        })
-
-        return res.status(200).json({ data: progress })
+    } catch (err) {
+        return res.sendStatus(500);
     }
+});
 
-    const index = progress.workout.findIndex((exercise) => exercise.name == req.body.name)
-    progress.workout[index] = { name: req.body.name, repetitions: req.body.reps, sets: req.body.sets, weight: req.body.weight }
+app.patch("/api/progress/", isAuthenticated, async function (req, res){
+    try {
+        const date = new Date().toLocaleDateString()
+        
+        const {id, sets} = req.body;
+        const progress = await Progress.findOne({exerciseRef: id, date: date});
 
-    await Progress.updateOne({ date: today }, { $set: { workout: progress.workout } })
+        const update = await Progress.updateOne({_id: progress._id}, {$set: {sets: sets}})
 
-    return res.status(200).json({ data: progress })
+        return res.status(200).json({data:update});
+
+    } catch (err) {
+        return res.sendStatus(500);
+    }
 })
+
+// app.get("/api/active/:name/", isAuthenticated, async function (req, res) {
+//     const progress = await Progress.find({ userRef: req.session.user._id })
+//     const data = []
+
+//     Array.from(progress).forEach((item) => {
+//         item.workout.forEach((exercise) => {
+//             if (exercise.name == req.params.name) {
+//                 data.push(exercise.repetitions * exercise.sets * exercise.weight)
+//             }
+//         })
+//     })
+
+//     return res.status(200).json({ data: data })
+// })
+
+// app.patch("/api/active/", isAuthenticated, async function (req, res) {
+//     const date = new Date();
+//     const progress = await Progress.findOne({ date: today })
+
+//     if (!progress) {
+
+//         const user = await User.findOne({ _id: req.session.user._id });
+//         const data = await WorkOut.findOne({ _id: user.active }).populate('workout.exercise')
+
+//         const workout = data.workout[date.getDay()]
+//         const filter = []
+
+//         workout.exercise.forEach((exercise) => {
+//             console.log(exercise)
+//             if (req.body.name == exercise.name) {
+//                 filter.push({
+//                     name: exercise.name,
+//                     repetitions: req.body.reps,
+//                     sets: req.body.sets,
+//                     weight: req.body.weight
+//                 })
+//             } else {
+//                 filter.push({
+//                     name: exercise.name,
+//                     repetitions: 0,
+//                     sets: 0,
+//                     weight: 0
+//                 })
+//             }
+
+//         })
+
+//         const progress = await Progress.create({
+//             userRef: req.session.user._id,
+//             date: today,
+//             workout: filter
+//         })
+
+//         return res.status(200).json({ data: progress })
+//     }
+
+//     const index = progress.workout.findIndex((exercise) => exercise.name == req.body.name)
+//     progress.workout[index] = { name: req.body.name, repetitions: req.body.reps, sets: req.body.sets, weight: req.body.weight }
+
+//     await Progress.updateOne({ date: today }, { $set: { workout: progress.workout } })
+
+//     return res.status(200).json({ data: progress })
+// })
 
 //Weight
 

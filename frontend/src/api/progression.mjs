@@ -1,22 +1,13 @@
 import { send } from "./util.mjs";
 
-export function getActive() {
-    return send("GET", "/api/active/", null);
+export function getToday() {
+    return send("GET", "/api/schedule/today/", null);
 }
 
-export function update(name, reps, sets, weight){
-    return send("PATCH", "/api/active/", {name, reps, sets, weight})
+export function addProgress(id){
+    return send("POST", "/api/progress/", {id});
 }
 
-export function getExProgress(name){
-    return send("GET", `/api/active/${name}/`, null)
+export function updateProgress(id, sets){
+    return send("PATCH", "/api/progress/", {id, sets});
 }
-
-export function addWeight(weight){
-    return send("POST", "/api/weight/", {weight})
-}
-
-export function getWeight(){
-    return send("GET", "/api/weight/", null);
-}
-

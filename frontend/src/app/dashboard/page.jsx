@@ -7,7 +7,7 @@ import Navbar from "@/components/custom/Navbar";
 
 function Dashboard() {
 
-    const date = new Date().toISOString().split('T')[0];
+    const date = new Date().toLocaleDateString()
     const [name, setName] = useState('')
 
     useEffect(()=>{
@@ -24,7 +24,7 @@ function Dashboard() {
                         Welcome, <span className="text-white font-normal">{name}</span>
                     </div>
                     <div className="flex text-white text-[1.5rem] ml-4 mb-6  font-satoshi font-light max-tablet:text-[1rem]">
-                        {date}
+                        {/* {date} */}
                     </div>
                 </div>
                
