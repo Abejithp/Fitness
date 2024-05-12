@@ -41,20 +41,10 @@ let exerciseSchema = new mongoose.Schema({
         ref: "Muscle"
     },
 
-    global: Boolean,
     name: String,
 
 });
 
-let sharedExeceriseSchema = new mongoose.Schema({
-    muscleGroup: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Muscle"
-    },
-
-    global: Boolean,
-    name: String,
-})
 
 
 let workoutSchema = new mongoose.Schema({
@@ -64,13 +54,13 @@ let workoutSchema = new mongoose.Schema({
     },
     workoutName: String,
 
-    workout: [{ day: String, exercise: [{ type: Schema.ObjectId, ref: 'Shared' }] }]
+    workout: [{ day: String, exercise: [{ type: Schema.ObjectId, ref: 'Exercise' }] }]
 })
 
 let progressSchema = new mongoose.Schema({
     exerciseRef: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Shared"
+        ref: "Exercise"
     },
 
     date: String,
@@ -94,7 +84,6 @@ let weightSchema = new mongoose.Schema({
 export const User = mongoose.model('User', userSchema);
 export const WorkOut = mongoose.model('Workout', workoutSchema);
 export const Exercise = mongoose.model('Exercise', exerciseSchema);
-export const SharedExercise = mongoose.model('Shared', sharedExeceriseSchema);
 export const Progress = mongoose.model('Progress', progressSchema);
 export const Muscle = mongoose.model('Muscle', muscleSchema);
 export const Weight = mongoose.model('Weight', weightSchema);

@@ -59,7 +59,7 @@ export default function WorkoutCard({ muscle, id }) {
                             </div> : exercises.map((el, index) => {
                                 return <div className="flex items-center uppercase font-semibold border-b-2 justify-between border-neutral-800 p-4" key={index}>
                                     <p>{el.name}</p>
-                                    <button onClick={() => delExercise(el._id).then(() => handleEx(id))} className={`${el.global? 'hidden': ''}`}>
+                                    <button onClick={() => delExercise(el._id).then(() => handleEx(id))}>
                                         <TiDelete className='text-3xl hover:cursor-pointer text-indigo-500' />
                                     </button>
                                 </div>

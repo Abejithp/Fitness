@@ -3,7 +3,7 @@ import express from "express";
 import cors from "cors";
 import session from "express-session";
 import bcrypt from "bcrypt";
-import { Exercise, Muscle, Progress, SharedExercise, User, Weight, WorkOut, getClient } from "./model.mjs";
+import { Exercise, Muscle, Progress, User, Weight, WorkOut, getClient } from "./model.mjs";
 import { body, validationResult } from "express-validator";
 import { serialize } from "cookie";
 import MongoStore from "connect-mongo";
@@ -181,17 +181,16 @@ app.delete("/api/exercise/:id/", isAuthenticated, async function (req, res) {
 
 app.get("/api/muscles/", isAuthenticated, async function (req, res) {
     const muscles = await Muscle.find({})
+
+    
+
     return res.status(200).json({ data: muscles })
 });
 
 app.get("/api/muscles/:id/", isAuthenticated, async function (req, res) {
 
     try {
-        const myExercises = await Exercise.find({ userRef: req.session.user._id, muscleGroup: req.params.id }, { userRef: 0 }).populate('muscleGroup');
-        const sharedExercises = await SharedExercise.find({ muscleGroup: req.params.id });
-
-        const exercises = myExercises.concat(sharedExercises);
-
+        const exercises = await Exercise.find({ userRef: req.session.user._id, muscleGroup: req.params.id }, { userRef: 0 }).populate('muscleGroup');
         return res.status(200).json({ data: exercises })
     } catch (err) {
         return res.sendStatus(500)
@@ -313,6 +312,14 @@ app.get("/api/schedule/today/", isAuthenticated, async function (req, res) {
         return res.sendStatus(500);
     }
 
+});
+
+app.get("/api/progress/:id/", isAuthenticated, async function (req, res){
+    try {
+
+    } catch(err) {
+        return res.sendStatus(500)
+    }
 });
 
 app.post("/api/progress/", isAuthenticated, async function (req, res){
