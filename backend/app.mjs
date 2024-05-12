@@ -355,69 +355,6 @@ app.patch("/api/progress/", isAuthenticated, async function (req, res){
     }
 })
 
-// app.get("/api/active/:name/", isAuthenticated, async function (req, res) {
-//     const progress = await Progress.find({ userRef: req.session.user._id })
-//     const data = []
-
-//     Array.from(progress).forEach((item) => {
-//         item.workout.forEach((exercise) => {
-//             if (exercise.name == req.params.name) {
-//                 data.push(exercise.repetitions * exercise.sets * exercise.weight)
-//             }
-//         })
-//     })
-
-//     return res.status(200).json({ data: data })
-// })
-
-// app.patch("/api/active/", isAuthenticated, async function (req, res) {
-//     const date = new Date();
-//     const progress = await Progress.findOne({ date: today })
-
-//     if (!progress) {
-
-//         const user = await User.findOne({ _id: req.session.user._id });
-//         const data = await WorkOut.findOne({ _id: user.active }).populate('workout.exercise')
-
-//         const workout = data.workout[date.getDay()]
-//         const filter = []
-
-//         workout.exercise.forEach((exercise) => {
-//             console.log(exercise)
-//             if (req.body.name == exercise.name) {
-//                 filter.push({
-//                     name: exercise.name,
-//                     repetitions: req.body.reps,
-//                     sets: req.body.sets,
-//                     weight: req.body.weight
-//                 })
-//             } else {
-//                 filter.push({
-//                     name: exercise.name,
-//                     repetitions: 0,
-//                     sets: 0,
-//                     weight: 0
-//                 })
-//             }
-
-//         })
-
-//         const progress = await Progress.create({
-//             userRef: req.session.user._id,
-//             date: today,
-//             workout: filter
-//         })
-
-//         return res.status(200).json({ data: progress })
-//     }
-
-//     const index = progress.workout.findIndex((exercise) => exercise.name == req.body.name)
-//     progress.workout[index] = { name: req.body.name, repetitions: req.body.reps, sets: req.body.sets, weight: req.body.weight }
-
-//     await Progress.updateOne({ date: today }, { $set: { workout: progress.workout } })
-
-//     return res.status(200).json({ data: progress })
-// })
 
 //Weight
 

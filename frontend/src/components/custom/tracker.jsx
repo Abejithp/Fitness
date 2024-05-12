@@ -32,21 +32,8 @@ export function Tracker() {
 
 
   return (<>
-    {!workout.loaded ? <div className="flex flex-col flex-shrink-0 gap-4 w-full  pt-8">
+    {!workout.loaded ? <div className="flex flex-col flex-shrink-0 w-full">
       <Skeleton className={" flex flex-shrink-0 h-[60px] w-full bg-neutral-800"} />
-      <div className="flex flex-col gap-3">
-        {/* {Array(3).fill(0).map((_, index) => {
-          return (<div className="flex gap-2" key={index*2}>
-            <Skeleton key={index} className={"h-[50px] w-[100px] bg-neutral-800"} />
-            <Skeleton key={index} className={"h-[50px] w-[100px] bg-neutral-800 max-tablet:hidden"} />
-            <Skeleton key={index} className={"h-[50px] w-full bg-neutral-800"} />
-            <Skeleton key={index} className={"h-[50px] w-[150px] bg-neutral-800"} />
-          </div>
-
-          )
-        })} */}
-      </div>
-
     </div> :
 
       (workout.data.length) === 0 ?
@@ -55,7 +42,7 @@ export function Tracker() {
           No Workouts Today
 
         </div> :
-        <Table className="mt-8 z-0">
+        <Table className="z-0">
           <TableHeader>
             <TableRow>
               <TableHead>Exercise</TableHead>

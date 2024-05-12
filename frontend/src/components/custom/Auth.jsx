@@ -19,6 +19,8 @@ function handleSubmit(res, err) {
     if (!res) {
         return toast.error("Incorrect credentials")
     }
+
+    localStorage.setItem('username', JSON.stringify(res.username))
     window.location.href = '/dashboard'
 }
 
