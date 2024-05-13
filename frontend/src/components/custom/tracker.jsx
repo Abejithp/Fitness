@@ -21,7 +21,8 @@ export function Tracker() {
   const [workout, setData] = useState({ loaded: false, data: [] });
 
   useEffect(() => {
-    getToday().then((res) => {
+    const day = new Date().getDay();
+    getToday(day).then((res) => {
       if(!res.data){
         setData({loaded: true, data: []})
         return;

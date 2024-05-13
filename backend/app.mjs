@@ -296,7 +296,7 @@ app.get("/api/schedule/", isAuthenticated, async function (req, res) {
 
 //Progression
 
-app.get("/api/schedule/today/", isAuthenticated, async function (req, res) {
+app.get("/api/schedule/:day/", isAuthenticated, async function (req, res) {
 
     try {
         const workout = await WorkOut.findOne({ _id: req.session.user.active }).populate('workout.exercise')
@@ -305,8 +305,7 @@ app.get("/api/schedule/today/", isAuthenticated, async function (req, res) {
             return res.status(200).json({ data: null })
         }
 
-        const day = new Date().getDay();
-        return res.status(200).json({ data: workout.workout[day] });
+        return res.status(200).json({ data: workout.workout[req.params.day] });
 
     } catch (err) {
         return res.sendStatus(500);
@@ -343,16 +342,17 @@ app.get("/api/progress/:id/", isAuthenticated, async function (req, res){
 app.post("/api/progress/", isAuthenticated, async function (req, res){
 
     try{
-        const date = new Date().toLocaleDateString();
+        const {id, date} = req.body;
 
-        let progress = await Progress.findOne({exerciseRef: req.body.id, date: date})
+
+        let progress = await Progress.findOne({exerciseRef: id, date: date})
 
         if(progress) {
             return res.status(200).json({data: progress.sets})
         }
 
         progress = await Progress.create({
-            exerciseRef: req.body.id,
+            exerciseRef: id,
             date: date,
             sets: [{reps: 0, weight: 0}]
         });
@@ -366,9 +366,8 @@ app.post("/api/progress/", isAuthenticated, async function (req, res){
 
 app.patch("/api/progress/", isAuthenticated, async function (req, res){
     try {
-        const date = new Date().toLocaleDateString()
-        
-        const {id, sets} = req.body;
+
+        const {id, sets, date} = req.body;
         const progress = await Progress.findOne({exerciseRef: id, date: date});
 
         const update = await Progress.updateOne({_id: progress._id}, {$set: {sets: sets}})
@@ -381,22 +380,6 @@ app.patch("/api/progress/", isAuthenticated, async function (req, res){
 })
 
 
-//Weight
-
-app.post("/api/weight/", isAuthenticated, async function (req, res) {
-    const weight = await Weight.create({
-        userRef: req.session.user._id,
-        weight: req.body.weight,
-        createdAt: Date.now()
-    })
-
-    return res.status(200).json({ data: weight })
-})
-
-app.get("/api/weight/", isAuthenticated, async function (req, res) {
-    const weight = await Weight.find({ userRef: req.session.user._id }).sort({ createdAt: 1 })
-    return res.status(200).json({ data: weight })
-})
 const server = createServer(app).listen(PORT, function (err) {
     if (err) console.log(err);
     else console.log("HTTP server on http://localhost:%s", PORT);
