@@ -398,7 +398,6 @@ app.get("/api/summary/:date/", isAuthenticated, async function (req, res){
         const [month, day, year] = date.split('-');
 
         const getDate = (index) => {
-
             const result = subDays(new Date(year, month-1, day), index)
             return result.toLocaleDateString()
         }
@@ -409,9 +408,12 @@ app.get("/api/summary/:date/", isAuthenticated, async function (req, res){
 
             workouts.forEach((workout) => {
                 volume += calulate(workout.sets)
-            })
+            });
 
-            return {volume: volume};
+            const [year, month, day] = date.split('-');
+            const dayOfWeek = new Date(year, month - 1, day).toLocaleDateString('en-US', { weekday: 'long' })[0];
+        
+            return { volume: volume, day: dayOfWeek};
 
         }
 

@@ -19,10 +19,11 @@ export default function Summary() {
     }, [])
 
     return (
-        <div className="flex h-[300px] mt-4">
+        <div className="flex h-[300px] mt-4 bg-indigo-400 rounded-sm">
             <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={data}>
                     <Tooltip />
+                    <XAxis dataKey={"day"} tickLine={0} tickMargin={8}/>
                     <Bar
                         dataKey="volume"
                         style={
