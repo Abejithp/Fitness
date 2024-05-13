@@ -72,7 +72,7 @@ function Workout() {
             <Toaster />
             <div className="flex p-16 pt-32 flex-col max-laptop:p-8 max-laptop:pt-36">
                 <div className="flex text-white uppercase font-bold text-lg w-full mb-4 justify-between">
-                    My Workouts
+                    My Schedules
                     <CreateSchedule muscle={muscleGroups} update={updateSchedule}/>
                 </div>
                 <div className={`flex w-full gap-8 h-[40vh] max-laptop:flex-col items-end z-20 max-laptop:h-fit`}>
@@ -96,7 +96,7 @@ function Workout() {
                         <Table>
                             <TableHeader>
                                 <TableRow>
-                                    <TableHead>Name</TableHead>
+                                    <TableHead>Schedule</TableHead>
                                     <TableHead className="max-laptop:text-right">Activate</TableHead>
 
                                     <TableHead className="max-laptop:hidden">Delete</TableHead>

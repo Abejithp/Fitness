@@ -8,7 +8,7 @@ export function addProgress(id, date){
     return send("POST", "/api/progress/", {id, date});
 }
 
-export function updateProgress(id, sets){
+export function updateProgress(id, sets, date){
     return send("PATCH", "/api/progress/", {id, sets, date});
 }
 
