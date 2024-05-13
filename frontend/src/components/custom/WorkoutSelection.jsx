@@ -98,7 +98,7 @@ export default function WorkoutSelection({ muscle, update }) {
                                 {active.group}
                             </p>
 
-                            <div className="flex-col flex absolute top-[25%] gap-2">
+                            <div className="flex-col flex absolute top-[25%] gap-2 h-[70%] overflow-auto w-[85%]">
                                 {exercises.map((exercise) => {
                                     return <button className="flex text-white text-lg uppercase" onClick={() => update(exercise)}>
                                         {exercise.name}

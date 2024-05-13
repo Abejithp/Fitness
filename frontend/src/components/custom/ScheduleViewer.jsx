@@ -36,8 +36,6 @@ export default function ScheduleViewer({name, schedule}) {
         </div>
 
         <div className="flex flex-wrap gap-2 w-[70%] self-center justify-center">
-          {}
-
           {selected.exercise.map((exercise) => {
             return <div className="flex text-white bg-indigo-600 p-3 px-5 rounded-full uppercase ">
               {exercise.name}

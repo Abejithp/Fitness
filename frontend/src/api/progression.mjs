@@ -11,3 +11,7 @@ export function addProgress(id){
 export function updateProgress(id, sets){
     return send("PATCH", "/api/progress/", {id, sets});
 }
+
+export function getProgress(id) {
+    return send("GET", `/api/progress/${id}/`, null);
+}

@@ -314,8 +314,26 @@ app.get("/api/schedule/today/", isAuthenticated, async function (req, res) {
 
 });
 
+const calulate = (sets) => {
+    if(!sets) {
+        return 0
+    }
+
+    let progress = 0;
+    sets.forEach((set) => progress += set.reps * set.weight)
+
+    return progress;
+}
+
 app.get("/api/progress/:id/", isAuthenticated, async function (req, res){
     try {
+        const progressions = await Progress.find({exerciseRef: req.params.id}).limit(5);
+
+        const data = progressions.map((progress) => {
+            return calulate(progress.sets)
+        });
+
+        return res.status(200).json({data: data})
 
     } catch(err) {
         return res.sendStatus(500)

@@ -71,10 +71,10 @@ export default function CreateSchedule({ muscle, update }) {
         Create
       </DialogTrigger>
 
-      <DialogContent className='w-[75vw] h-[60vh] rounded-lg p-0 border-0 text-white bg-neutral-950 
+      <DialogContent className='w-[75vw] h-[70vh] rounded-lg p-0 border-0 text-white bg-neutral-950 
             flex flex-col gap-0 max-tablet:h-dvh max-tablet:w-dvw max-tablet:rounded-none'>
 
-        <div className="flex w-full bg-indigo-600 p-4 py-8 max-tablet:py-6">
+        <div className="flex w-full bg-indigo-600 p-4 py-8 max-tablet:py-6 tablet:rounded-t-lg">
           <input type="text"
             className='bg-indigo-600 text-[2rem] font-satoshi uppercase w-[50%] pl-4 font-medium max-tablet:w-[80%] max-tablet:text-[1.3rem]'
             placeholder='Enter Schedule Name'
