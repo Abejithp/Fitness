@@ -184,7 +184,7 @@ app.delete("/api/exercise/:id/", isAuthenticated, async function (req, res) {
 app.get("/api/muscles/", isAuthenticated, async function (req, res) {
     const muscles = await Muscle.find({})
 
-    
+
 
     return res.status(200).json({ data: muscles })
 });
@@ -320,7 +320,7 @@ app.get("/api/schedule/:day/", isAuthenticated, async function (req, res) {
 });
 
 const calulate = (sets) => {
-    if(!sets || sets.length == 0) {
+    if (!sets || sets.length == 0) {
         return 0
     }
 
@@ -330,80 +330,80 @@ const calulate = (sets) => {
     return progress;
 }
 
-app.get("/api/progress/:id/", isAuthenticated, async function (req, res){
+app.get("/api/progress/:id/", isAuthenticated, async function (req, res) {
     try {
-        const progressions = await Progress.find({exerciseRef: req.params.id}).limit(5);
+        const progressions = await Progress.find({ exerciseRef: req.params.id }).limit(5);
 
         const data = progressions.map((progress) => {
             return calulate(progress.sets)
         });
 
-        return res.status(200).json({data: data})
+        return res.status(200).json({ data: data })
 
-    } catch(err) {
+    } catch (err) {
         return res.sendStatus(500)
     }
 });
 
-app.post("/api/progress/", isAuthenticated, async function (req, res){
+app.post("/api/progress/", isAuthenticated, async function (req, res) {
 
-    try{
-        const {id, date} = req.body;
+    try {
+        const { id, offset } = req.body;
+        const date = new Date(Date.now() - (offset * 60 * 1000)).toJSON().split('T')[0];
 
-        const [month, day, year] = date.split('/');
-        const myDate = new Date(year, month-1, day).toLocaleDateString();
+        let progress = await Progress.findOne({ exerciseRef: id, date: date })
 
-        let progress = await Progress.findOne({exerciseRef: id, date: myDate})
-
-        if(progress) {
-            return res.status(200).json({data: progress.sets})
+        if (progress) {
+            return res.status(200).json({ data: progress.sets })
         }
 
         progress = await Progress.create({
             exerciseRef: id,
             userRef: req.session.user._id,
-            date: myDate,
-            sets: [{reps: 0, weight: 0}]
+            date: date,
+            sets: [{ reps: 0, weight: 0 }]
         });
 
-        return res.status(200).json({data: progress.sets});
+        return res.status(200).json({ data: progress.sets });
 
     } catch (err) {
         return res.sendStatus(500);
     }
 });
 
-app.patch("/api/progress/", isAuthenticated, async function (req, res){
+app.patch("/api/progress/", isAuthenticated, async function (req, res) {
     try {
 
-        const {id, sets, date} = req.body;
-        const [month, day, year] = date.split('/');
-        const myDate = new Date(year, month-1, day).toLocaleDateString();
+        const { id, sets, offset } = req.body;
+        const date = new Date(Date.now() - (offset * 60 * 1000)).toJSON().split('T')[0];
 
-        const progress = await Progress.findOne({exerciseRef: id, date: myDate});
 
-        const update = await Progress.updateOne({_id: progress._id}, {$set: {sets: sets}})
+        const progress = await Progress.findOne({ exerciseRef: id, date: date });
+        const update = await Progress.updateOne({ _id: progress._id }, { $set: { sets: sets } })
 
-        return res.status(200).json({data:update});
+        return res.status(200).json({ data: update });
 
     } catch (err) {
         return res.sendStatus(500);
     }
 })
 
-app.get("/api/summary/:date/", isAuthenticated, async function (req, res){
+app.get("/api/summary/:offset/", isAuthenticated, async function (req, res) {
 
     try {
-        const date = req.params.date;
-        const [month, day, year] = date.split('-');
+        const offset = req.params.offset;
+        const date = new Date(Date.now() - (offset * 60 * 1000)).toJSON().split('T')[0];
+        const [year, month, day] = date.split('-');
+
+        console.log(date)
 
         const getDate = (index) => {
-            const result = subDays(new Date(year, month-1, day), index)
-            return result.toLocaleDateString()
+            const result = subDays(new Date(year, month - 1, day), index)
+            return result.toJSON().split('T')[0];
         }
 
         const getData = async (date) => {
-            const workouts = await Progress.find({date: date, userRef: req.session.user._id}, {sets: 1});
+            const workouts = await Progress.find({ date: date, userRef: req.session.user._id }, { sets: 1 });
             let volume = 0;
 
             workouts.forEach((workout) => {
@@ -411,21 +411,19 @@ app.get("/api/summary/:date/", isAuthenticated, async function (req, res){
             });
 
             const [year, month, day] = date.split('-');
-            const dayOfWeek = new Date(year, month - 1, day).toLocaleDateString('en-US', { weekday: 'long' })[0];
-        
-            return { volume: volume, day: dayOfWeek};
+            const dayOfWeek = new Date(year, month - 1, day).toDateString()[0];
+
+            return { volume: volume, day: dayOfWeek };
 
         }
 
-        const week = Array.from({length: 7}, (_, i) => getDate(i))
-        
+        const week = Array.from({ length: 7 }, (_, i) => getDate(i))
+
         const data = await Promise.all(week.map((workout) => {
             return getData(workout);
         }));
 
-        console.log(week)
-
-        return res.status(200).json({data: data.reverse()});
+        return res.status(200).json({ data: data.reverse() });
 
     } catch (err) {
         return res.sendStatus(500)

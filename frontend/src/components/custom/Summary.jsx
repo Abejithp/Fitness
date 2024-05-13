@@ -12,8 +12,7 @@ export default function Summary() {
     const [data, setData] = useState([]);
 
     useEffect(()=> {
-        const date = new Date().toLocaleDateString().replaceAll('/', '-');
-        getSummary(date).then((res) => {
+        getSummary().then((res) => {
             setData(res.data)
         });
     }, [])
@@ -23,7 +22,7 @@ export default function Summary() {
             <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={data}>
                     <Tooltip />
-                    <XAxis dataKey={"day"} tickLine={0} tickMargin={8}/>
+                    <XAxis dataKey={"day"} tickLine={false} tickMargin={8}/>
                     <Bar
                         dataKey="volume"
                         style={

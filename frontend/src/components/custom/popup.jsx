@@ -16,12 +16,10 @@ import { useState } from "react";
 
 function Popup({ data }) {
 
-    const date = new Date().toLocaleDateString()
-
     const [sets, updateSets] = useState([])
 
     const getProgress = () => {
-        addProgress(data._id, date).then((res) => {
+        addProgress(data._id).then((res) => {
             updateSets(res.data)
         })
     }
@@ -43,7 +41,7 @@ function Popup({ data }) {
     }
 
     return (
-        <Sheet onOpenChange={() => updateProgress(data._id, sets, date)}>
+        <Sheet onOpenChange={() => updateProgress(data._id, sets)}>
             <SheetTrigger onClick={() => getProgress()} >TRACK</SheetTrigger>
             <SheetContent side={'bottom'} className=" p-0 border-0 flex flex-col h-[60vh] bg-neutral-950">
                 <p className="text-white w-full bg-indigo-600 px-8 p-6 uppercase font-medium">
