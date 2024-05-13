@@ -15,3 +15,7 @@ export function updateProgress(id, sets, date){
 export function getProgress(id) {
     return send("GET", `/api/progress/${id}/`, null);
 }
+
+export function getSummary(date){
+    return send("GET", `/api/summary/${date}/`, null);
+}

@@ -63,21 +63,14 @@ let progressSchema = new mongoose.Schema({
         ref: "Exercise"
     },
 
-    date: String,
-
-    sets: [{reps: Number, weight: Number}]
-
-});
-
-let weightSchema = new mongoose.Schema({
     userRef: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     },
 
-    weight: Number,
-    
-    createdAt: Date
+    date: String,
+
+    sets: [{reps: Number, weight: Number}]
 
 });
 
@@ -86,7 +79,6 @@ export const WorkOut = mongoose.model('Workout', workoutSchema);
 export const Exercise = mongoose.model('Exercise', exerciseSchema);
 export const Progress = mongoose.model('Progress', progressSchema);
 export const Muscle = mongoose.model('Muscle', muscleSchema);
-export const Weight = mongoose.model('Weight', weightSchema);
 
 
 export function getClient() {

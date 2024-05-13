@@ -3,11 +3,13 @@ import express from "express";
 import cors from "cors";
 import session from "express-session";
 import bcrypt from "bcrypt";
-import { Exercise, Muscle, Progress, User, Weight, WorkOut, getClient } from "./model.mjs";
+import { Exercise, Muscle, Progress, User, WorkOut, getClient } from "./model.mjs";
 import { body, validationResult } from "express-validator";
 import { serialize } from "cookie";
 import MongoStore from "connect-mongo";
 import dotenv from "dotenv";
+import { subDays } from "date-fns";
+
 
 dotenv.config();
 
@@ -294,7 +296,11 @@ app.get("/api/schedule/", isAuthenticated, async function (req, res) {
 
 });
 
-//Progression
+/*
+    Endpoints to handle progressions. Progressions are
+    represented by a list of sets. Sets are represented
+    by a number of reps and a weight.
+*/
 
 app.get("/api/schedule/:day/", isAuthenticated, async function (req, res) {
 
@@ -314,7 +320,7 @@ app.get("/api/schedule/:day/", isAuthenticated, async function (req, res) {
 });
 
 const calulate = (sets) => {
-    if(!sets) {
+    if(!sets || sets.length == 0) {
         return 0
     }
 
@@ -344,8 +350,10 @@ app.post("/api/progress/", isAuthenticated, async function (req, res){
     try{
         const {id, date} = req.body;
 
+        const [month, day, year] = date.split('/');
+        const myDate = new Date(year, month-1, day).toLocaleDateString();
 
-        let progress = await Progress.findOne({exerciseRef: id, date: date})
+        let progress = await Progress.findOne({exerciseRef: id, date: myDate})
 
         if(progress) {
             return res.status(200).json({data: progress.sets})
@@ -353,7 +361,8 @@ app.post("/api/progress/", isAuthenticated, async function (req, res){
 
         progress = await Progress.create({
             exerciseRef: id,
-            date: date,
+            userRef: req.session.user._id,
+            date: myDate,
             sets: [{reps: 0, weight: 0}]
         });
 
@@ -368,7 +377,10 @@ app.patch("/api/progress/", isAuthenticated, async function (req, res){
     try {
 
         const {id, sets, date} = req.body;
-        const progress = await Progress.findOne({exerciseRef: id, date: date});
+        const [month, day, year] = date.split('/');
+        const myDate = new Date(year, month-1, day).toLocaleDateString();
+
+        const progress = await Progress.findOne({exerciseRef: id, date: myDate});
 
         const update = await Progress.updateOne({_id: progress._id}, {$set: {sets: sets}})
 
@@ -376,6 +388,45 @@ app.patch("/api/progress/", isAuthenticated, async function (req, res){
 
     } catch (err) {
         return res.sendStatus(500);
+    }
+})
+
+app.get("/api/summary/:date/", isAuthenticated, async function (req, res){
+
+    try {
+        const date = req.params.date;
+        const [month, day, year] = date.split('-');
+
+        const getDate = (index) => {
+
+            const result = subDays(new Date(year, month-1, day), index)
+            return result.toLocaleDateString()
+        }
+
+        const getData = async (date) => {
+            const workouts = await Progress.find({date: date, userRef: req.session.user._id}, {sets: 1});
+            let volume = 0;
+
+            workouts.forEach((workout) => {
+                volume += calulate(workout.sets)
+            })
+
+            return {volume: volume};
+
+        }
+
+        const week = Array.from({length: 7}, (_, i) => getDate(i))
+        
+        const data = await Promise.all(week.map((workout) => {
+            return getData(workout);
+        }));
+
+        console.log(week)
+
+        return res.status(200).json({data: data.reverse()});
+
+    } catch (err) {
+        return res.sendStatus(500)
     }
 })
 

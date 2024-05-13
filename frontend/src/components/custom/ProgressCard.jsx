@@ -29,8 +29,6 @@ export default function ProgressCard({ muscle }) {
         })
     }
 
-    console.log(active)
-
     return (
         <Dialog>
             <DialogTrigger className='bg-indigo-600 rounded-sm uppercase font-satoshi 
