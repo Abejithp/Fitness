@@ -83,10 +83,10 @@ export default function WorkoutSelection({ muscle, update }) {
                     initial="initial">
 
                     {(!active) ? <div className="flex flex-col gap-2 w-full justify-center h-full pt-6">
-                        {muscle.map((el) =>
+                        {muscle.map((el, i) =>
                             <button className="flex uppercase font-satoshi text-[1.5rem] py-2 font-medium 
                               text-white w-full pl-4 cursor-pointer"
-                                onClick={() => { setActive(el); setExercises([]) }}
+                                onClick={() => { setActive(el); setExercises([]) }} key={i}
                             >
                                 {el.group}
                             </button>
@@ -99,8 +99,8 @@ export default function WorkoutSelection({ muscle, update }) {
                             </p>
 
                             <div className="flex-col flex absolute top-[25%] gap-2 h-[70%] overflow-auto w-[85%]">
-                                {exercises.map((exercise) => {
-                                    return <button className="flex text-white text-lg uppercase" onClick={() => update(exercise)}>
+                                {exercises.map((exercise, i) => {
+                                    return <button className="flex text-white text-lg uppercase" onClick={() => update(exercise)} key={i}>
                                         {exercise.name}
                                     </button>
                                 })}

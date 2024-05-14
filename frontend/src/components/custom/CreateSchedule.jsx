@@ -13,6 +13,7 @@ import WorkoutSelection from './WorkoutSelection';
 import { addWorkout } from '@/api/workout.mjs';
 import { toast } from 'sonner';
 
+import { TiDelete } from 'react-icons/ti';
 
 export default function CreateSchedule({ muscle, update }) {
 
@@ -36,9 +37,25 @@ export default function CreateSchedule({ muscle, update }) {
     const updated = [...schedule]
     const workout = updated[index]
 
+    const name = exercise.name
+    const find = workout.exercise.findIndex((exercise) => exercise.name == name)
+
+    if(find != -1) {
+      return;
+    }
+
     workout.exercise.push(exercise)
 
     setSchedule(updated)
+  }
+
+  const handleRemove = (name) => {
+    const updated = [...schedule]
+    const workout = updated[index];
+
+    workout.exercise.splice(name, 1);
+    setSchedule(updated)
+
   }
 
   const isValid = async () => {
@@ -104,9 +121,12 @@ export default function CreateSchedule({ muscle, update }) {
             {selected.exercise.length == 0 ?
               <p className=' uppercase text-[3rem] font-satoshi font-normal'>Rest Day</p> :
               <div className="flex w-[40%] flex-wrap gap-2 justify-center max-tablet:w-full ">
-                {selected.exercise.map((el) => {
-                  return <div className="flex bg-indigo-600 p-4 rounded-full cursor-default uppercase">
+                {selected.exercise.map((el, i) => {
+                  return <div className="flex bg-indigo-600 p-4 rounded-full cursor-default uppercase gap-2 items-center " key={i}>
                     {el.name}
+                    <button onClick={() => handleRemove(el.name)}>
+                      <TiDelete  className='text-3xl'/>
+                    </button>
                   </div>
                 })}
               </div>

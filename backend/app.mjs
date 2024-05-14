@@ -97,7 +97,6 @@ app.post("/api/register/", body(['username', 'password']).notEmpty(), async func
     user = await User.create({ username: req.body.username, password: hash, active: null })
 
     const project = req.session.user = { _id: user._id.toString(), username: user.username, active: null };
-    console.log(req.session.user)
     setUserCookie(req, res);
 
     req.session.save((err) => {
@@ -261,9 +260,7 @@ app.patch("/api/workout/", isAuthenticated, async function (req, res) {
         return res.sendStatus(404);
     }
 
-    const user = await User.updateOne({ _id: req.session.user._id }, { active: req.body.id });
-    console.log(user);
-
+    await User.updateOne({ _id: req.session.user._id }, { active: req.body.id });
     req.session.user.active = req.body.id;
 
     return res.status(200).json({ success: true })
@@ -275,7 +272,6 @@ app.get("/api/workout/:id/", isAuthenticated, async function (req, res) {
         res.status(200).json({ data: workout, success: true });
 
     } catch (err) {
-        console.log(err);
         res.status(500).json({ success: false, msg: err.message });
     }
 });
@@ -357,6 +353,13 @@ app.post("/api/progress/", isAuthenticated, async function (req, res) {
             return res.status(200).json({ data: progress.sets })
         }
 
+        // Find the set of the previous workout
+
+        progress = await Progress.findOne({exerciseRef: id});
+        if(progress) {
+            return res.status(200).json({data: progress.sets});
+        }
+
         progress = await Progress.create({
             exerciseRef: id,
             userRef: req.session.user._id,
@@ -394,8 +397,6 @@ app.get("/api/summary/:offset/", isAuthenticated, async function (req, res) {
         const offset = req.params.offset;
         const date = new Date(Date.now() - (offset * 60 * 1000)).toJSON().split('T')[0];
         const [year, month, day] = date.split('-');
-
-        console.log(date)
 
         const getDate = (index) => {
             const result = subDays(new Date(year, month - 1, day), index)

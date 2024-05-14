@@ -11,9 +11,9 @@ export default function ActiveWorkout({ schedule }) {
 
                 schedule.map((workout, index) => <div className='w-full flex flex-col text-center font-bold font-satoshi gap-4 z-10 overflow-hidden' key={index}>
                     <p>{workout.day[0]}</p>
-                    {workout.exercise.map((el) => {
+                    {workout.exercise.map((el, i) => {
                         return (
-                            <div className="flex border-2  bg-black border-indigo-600 justify-center items-center p-2 text-white font-normal rounded-sm" >
+                            <div className="flex border-2  bg-black border-indigo-600 justify-center items-center p-2 text-white font-normal rounded-sm" key={i} >
                                 {el.name}
                             </div>)
                     })}
