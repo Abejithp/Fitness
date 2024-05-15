@@ -15,6 +15,7 @@ function Dashboard() {
 
     const [name, setName] = useState('')
     const [routines, setRoutines] = useState([])
+    const [routineId, setRoutineId] = useState(null);
 
     useEffect(() => {
         const name = JSON.parse(localStorage.getItem('username'))
@@ -22,7 +23,12 @@ function Dashboard() {
 
         getAllRoutines().then((res) => {
             setRoutines(res.data)
-        })
+            if(res.data.length == 0){
+                return;
+            }
+
+            setRoutineId(res.data[0]._id)
+        });
 
     }, [])
 
@@ -41,14 +47,21 @@ function Dashboard() {
                 {routines.length != 0 && 
                 <div className="flex flex-col gap-4">
                     <p className="text-white uppercase font-medium text-lg">My Routines</p>
-                    <div className="flex">
-
+                    <div className="flex flex-wrap mb-8">
+                        {routines.map((exercise) => {
+                           return  <button className="flex text-white w-[300px] border-4 bg-black 
+                           border-indigo-600 rounded-md font-satoshi h-[200px] uppercase font-medium items-center 
+                           justify-center cursor-pointer">
+                                {exercise.workoutName}
+                            </button>
+                        })}
                     </div>
                 </div> }
+                <Tracker routineId={routineId} isRoutine={true} />
          
 
                 <p className="text-white uppercase font-medium text-lg">My Schedule</p>
-                <Tracker />
+                <Tracker routineId={null} isRoutine={false} />
             </div>
         </div>
 

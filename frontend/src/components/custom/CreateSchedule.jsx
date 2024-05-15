@@ -60,11 +60,16 @@ export default function CreateSchedule({ muscle, update }) {
   }
 
   const handleRemove = (name) => {
-    const updated = [...schedule]
-    const workout = updated[index];
+    const updated = scheduleCreation ? [...schedule] : [...routine];
+    const workout = scheduleCreation ? updated[index] : updated[0];
 
     workout.exercise.splice(name, 1);
-    setSchedule(updated)
+
+    if(scheduleCreation){
+      return setSchedule(updated)
+    }
+
+    return setRoutine(updated);
 
   }
 
@@ -135,9 +140,6 @@ export default function CreateSchedule({ muscle, update }) {
             })}
           </div>}
 
-          {!scheduleCreation && <div className="flex text-white w-full  justify-center">
-            urmom
-          </div>}
 
           <Switch checked={scheduleCreation} onCheckedChange={() => setCreation(!scheduleCreation)} className="absolute top-10 right-8" />
 

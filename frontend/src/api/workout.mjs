@@ -8,8 +8,8 @@ export function addRoutine(workout, name){
     return send("POST", "/api/routine/", {workout, name})
 }
 
-export function getRoutine(name) {
-    return send("GET", `/api/routine/${name}/`, null)
+export function getRoutine(id) {
+    return send("GET", `/api/routine/${id}/`, null)
 }
 
 export function getAllRoutines(){

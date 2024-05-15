@@ -13,7 +13,7 @@ import { subDays } from "date-fns";
 
 dotenv.config();
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 4000;
 const app = express();
 const SESSION_TIME = 60 * 60 * 24;
 
@@ -321,15 +321,20 @@ app.post("/api/routine/", isAuthenticated, async function (req, res) {
     }
 });
 
-app.get("/api/routine/:name/", isAuthenticated, async function (req, res) {
+app.get("/api/routine/:id/", isAuthenticated, async function (req, res) {
     try {
+        if(!req.params.id){
+            return res.status(200).json({data: []})
+        }
 
         const routine = await WorkOut.findOne({
             routine: true,
-            workoutName: req.params.name
-        })
+            _id: req.params.id
+        }).populate('workout.exercise')
 
-        return res.status(200).json({ data: routine })
+    
+
+        return res.status(200).json({ data: routine.workout[0].exercise })
 
     } catch (err) {
         return res.sendStatus(500)
@@ -341,7 +346,7 @@ app.get("/api/routine/", isAuthenticated, async function (req, res) {
 
         const data = await WorkOut.find({
             routine: true,
-        })
+        }, {workoutName: 1})
 
         return res.status(200).json({ data: data })
 

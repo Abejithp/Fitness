@@ -13,14 +13,25 @@ import Popup from "./popup"
 import { Skeleton } from "../ui/skeleton"
 import { useEffect, useState } from "react";
 import { getToday } from "@/api/progression.mjs";
+import { getRoutine } from "@/api/workout.mjs";
 
 
 
-export function Tracker() {
+export function Tracker({routineId, isRoutine}) {
 
   const [workout, setData] = useState({ loaded: false, data: [] });
 
   useEffect(() => {
+    if(isRoutine) {
+    
+      getRoutine(routineId).then((res) => {
+ 
+        setData({loaded: true, data: res.data});
+      })
+
+      return;
+    }
+
     const day = new Date().getDay();
     getToday(day).then((res) => {
       if(!res.data){
@@ -29,7 +40,7 @@ export function Tracker() {
       }
       setData({ loaded: true, data: res.data.exercise })
     })
-  }, [])
+  }, [routineId])
 
 
   return (<>
