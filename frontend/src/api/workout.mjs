@@ -4,6 +4,18 @@ export function addWorkout(workout, name) {
     return send("POST", "/api/workout/", {workout, name})
 }
 
+export function addRoutine(workout, name){
+    return send("POST", "/api/routine/", {workout, name})
+}
+
+export function getRoutine(name) {
+    return send("GET", `/api/routine/${name}/`, null)
+}
+
+export function getAllRoutines(){
+    return send("GET", '/api/routine/', null);
+}
+
 export function getWorkout() {
     return send("GET", "/api/workout/", null);
 }

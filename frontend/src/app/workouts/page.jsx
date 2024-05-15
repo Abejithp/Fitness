@@ -128,7 +128,13 @@ function Workout() {
                 </div>
 
             </div>
-            <div className="flex h-full w-full flex-col p-16 pt-0 gap-4 max-tablet:items-center max-tablet:p-8">
+   
+            <div className="flex h-full w-full flex-col p-16 max-laptop:px-10 pt-0 gap-4 max-tablet:items-center max-tablet:p-8">
+                <p className="flex text-white uppercase font-bold text-lg w-full">My Routines</p>
+                <button className="text-indigo-400 w-fit uppercase font-semibold">create</button>
+            </div>
+
+            <div className="flex h-full w-full flex-col p-16 max-laptop:px-10 pt-0 gap-4 max-tablet:items-center max-tablet:p-8">
                 <div className="flex text-white uppercase font-bold text-lg w-full">My Exercises</div>
                 <div className="flex gap-6 max-tablet:flex-col w-fit max-tablet:gap-3 flex-wrap">
                     {muscleGroups.map((muscle, index) => {

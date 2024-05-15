@@ -10,7 +10,9 @@ import {
 } from "@/components/ui/dialog"
 
 import WorkoutSelection from './WorkoutSelection';
-import { addWorkout } from '@/api/workout.mjs';
+import { Switch } from "@/components/ui/switch"
+
+import { addRoutine, addWorkout } from '@/api/workout.mjs';
 import { toast } from 'sonner';
 
 import { TiDelete } from 'react-icons/ti';
@@ -31,22 +33,30 @@ export default function CreateSchedule({ muscle, update }) {
   const [selected, setSelected] = useState(schedule[0]);
   const [name, setName] = useState('')
 
+  const [scheduleCreation, setCreation] = useState(true);
+
+  const [routine, setRoutine] = useState([{ day: "", exercise: [] }])
 
   const handleUpdate = (exercise) => {
 
-    const updated = [...schedule]
-    const workout = updated[index]
+    const updated = scheduleCreation ? [...schedule] : [...routine]
+    const workout = scheduleCreation ? updated[index] : updated[0]
 
-    const name = exercise.name
+    const name = exercise.name;
     const find = workout.exercise.findIndex((exercise) => exercise.name == name)
 
-    if(find != -1) {
+    if (find != -1) {
       return;
     }
 
     workout.exercise.push(exercise)
 
-    setSchedule(updated)
+    if (scheduleCreation) {
+      return setSchedule(updated);
+    }
+
+    return setRoutine(updated);
+
   }
 
   const handleRemove = (name) => {
@@ -64,8 +74,14 @@ export default function CreateSchedule({ muscle, update }) {
       return;
     }
 
-    await addWorkout(schedule, name);
-    update()
+
+    if(scheduleCreation){
+      await addWorkout(schedule, name);
+      update()
+    } else {
+      await addRoutine(routine, name)
+    }
+
     setName('')
 
     setSchedule([
@@ -81,6 +97,8 @@ export default function CreateSchedule({ muscle, update }) {
     setSelected(schedule[0])
 
   }
+
+  console.log(routine)
 
   return (
     <Dialog>
@@ -104,7 +122,7 @@ export default function CreateSchedule({ muscle, update }) {
           <div className="flex absolute top-8 left-8">
             <WorkoutSelection muscle={muscle} update={(exercise) => { handleUpdate(exercise); }} />
           </div>
-          <div className="flex w-full flex-wrap justify-center gap-3 max-tablet:w-[80%] self-end">
+          {scheduleCreation && <div className="flex w-full flex-wrap justify-center gap-3 max-tablet:w-[80%] self-end">
             {schedule.map((workout, index) => {
               return (
                 <button className={`flex text-white border-2 font-normal border-indigo-600 w-12 aspect-square rounded-full
@@ -115,22 +133,40 @@ export default function CreateSchedule({ muscle, update }) {
                 </button>
               )
             })}
-          </div>
+          </div>}
+
+          {!scheduleCreation && <div className="flex text-white w-full  justify-center">
+            urmom
+          </div>}
+
+          <Switch checked={scheduleCreation} onCheckedChange={() => setCreation(!scheduleCreation)} className="absolute top-10 right-8" />
 
           <div className="flex w-full h-full justify-center items-start pt-20">
-            {selected.exercise.length == 0 ?
-              <p className=' uppercase text-[3rem] font-satoshi font-normal'>Rest Day</p> :
+
+            {(scheduleCreation) &&
               <div className="flex w-[40%] flex-wrap gap-2 justify-center max-tablet:w-full ">
                 {selected.exercise.map((el, i) => {
                   return <div className="flex bg-indigo-600 p-4 rounded-full cursor-default uppercase gap-2 items-center " key={i}>
                     {el.name}
                     <button onClick={() => handleRemove(el.name)}>
-                      <TiDelete  className='text-3xl'/>
+                      <TiDelete className='text-3xl' />
                     </button>
                   </div>
                 })}
-              </div>
-            }
+              </div>}
+
+
+            {!scheduleCreation && <div className="flex h-full w-full justify-center items-center">
+              {routine[0].exercise.map((el, i) => {
+                return <div className="flex bg-indigo-600 p-4 rounded-full cursor-default uppercase gap-2 items-center " key={i}>
+                  {el.name}
+                  <button onClick={() => handleRemove(el.name)}>
+                    <TiDelete className='text-3xl' />
+                  </button>
+                </div>
+              })}
+
+            </div>}
 
 
 

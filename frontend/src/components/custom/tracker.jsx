@@ -46,18 +46,14 @@ export function Tracker() {
         <Table className="z-0">
           <TableHeader>
             <TableRow>
-              <TableHead>Exercise</TableHead>
-              <TableHead className="max-tablet:hidden">Status</TableHead>
-             
+              <TableHead>Exercise</TableHead>       
             </TableRow>
           </TableHeader>
           <TableBody>
             {workout.data.map((data, i) => (
               <TableRow key={i} className="text-white">
-
                 <TableCell className="">{data.name}</TableCell>
-                <TableCell className="text-orange-400 max-tablet:hidden">In Progress</TableCell>
-                <TableCell >
+                <TableCell className="text-right">
                   <Popup data={data} />
                 </TableCell>
               </TableRow>

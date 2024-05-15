@@ -211,7 +211,8 @@ app.post("/api/workout/", isAuthenticated, async function (req, res, next) {
         const workout = await WorkOut.create({
             userRef: req.session.user._id,
             workoutName: req.body.name,
-            workout: req.body.workout
+            workout: req.body.workout,
+            routine: false
         });
 
         await User.updateOne({ _id: req.session.user._id }, { $set: { active: workout._id } })
@@ -292,6 +293,63 @@ app.get("/api/schedule/", isAuthenticated, async function (req, res) {
 
 });
 
+
+app.post("/api/routine/", isAuthenticated, async function (req, res) {
+    try {
+
+        const { name, workout } = req.body;
+
+        let routine = await WorkOut.findOne({
+            routine: true,
+            workoutName: name,
+        });
+
+        if (routine) {
+            return res.status(200).json({ data: routine });
+        }
+
+        routine = await WorkOut.create({
+            userRef: req.session.user._id,
+            workout: workout,
+            workoutName: name,
+            routine: true
+        })
+
+        return res.status(200).json({ data: routine })
+    } catch (err) {
+        return res.sendStatus(500)
+    }
+});
+
+app.get("/api/routine/:name/", isAuthenticated, async function (req, res) {
+    try {
+
+        const routine = await WorkOut.findOne({
+            routine: true,
+            workoutName: req.params.name
+        })
+
+        return res.status(200).json({ data: routine })
+
+    } catch (err) {
+        return res.sendStatus(500)
+    }
+})
+
+app.get("/api/routine/", isAuthenticated, async function (req, res) {
+    try {
+
+        const data = await WorkOut.find({
+            routine: true,
+        })
+
+        return res.status(200).json({ data: data })
+
+    } catch (err) {
+        return res.sendStatus(500)
+    }
+})
+
 /*
     Endpoints to handle progressions. Progressions are
     represented by a list of sets. Sets are represented
@@ -355,9 +413,9 @@ app.post("/api/progress/", isAuthenticated, async function (req, res) {
 
         // Find the set of the previous workout
 
-        progress = await Progress.findOne({exerciseRef: id});
-        if(progress) {
-            return res.status(200).json({data: progress.sets});
+        progress = await Progress.findOne({ exerciseRef: id });
+        if (progress) {
+            return res.status(200).json({ data: progress.sets });
         }
 
         progress = await Progress.create({
