@@ -31,7 +31,7 @@ function Progression() {
     }, [])
 
     useEffect(() => {
-        const findDate = date ? date.toJSON().split('T')[0] : currentDate;
+        const findDate = date ? date.toJSON().split('T')[0] : new Date().toJSON().split('T')[0];
 
         getSummaryDate(findDate).then((res) => {
             setProgress(res.data)
@@ -58,10 +58,9 @@ function Progression() {
 
 
                 <div className="flex flex-col mt-4">
-                    {progresses.map((progress, i) => {
+                    {progresses.length > 0 ? progresses.map((progress, i) => {
                         return <SummaryDate progress={progress} key={i} />
-                    })}
-
+                    }) : <div className="flex uppercase font-medium text-2xl text-white justify-center w-full py-4">No Workout on this day</div> }
                 </div>
 
                 <p className="font-medium uppercase text-lg mt-8">My Progress</p>

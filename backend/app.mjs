@@ -411,18 +411,11 @@ app.post("/api/progress/", isAuthenticated, async function (req, res) {
 
         const date = new Date(Date.now() - (offset * 60 * 1000)).toJSON().split('T')[0];
 
-
-        console.log(date)
-
         let progress = await Progress.findOne({ exerciseRef: id, date: date })
-
-        console.log(progress)
 
         if (progress) {
             return res.status(200).json({ data: progress.sets })
         }
-
-        // Find the set of the previous workout
 
         progress = await Progress.findOne({ exerciseRef: id });
         if (progress) {
@@ -444,8 +437,6 @@ app.post("/api/progress/", isAuthenticated, async function (req, res) {
             sets: [{ reps: 0, weight: 0 }]
         });
 
-
-        console.log("HELLLO")
         return res.status(200).json({ data: progress.sets });
 
     } catch (err) {
