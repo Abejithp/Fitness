@@ -19,6 +19,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
+
 import { useEffect, useState } from "react";
 import { getMuscles } from "@/api/exercise.mjs";
 import { delWorkout, getSchedule, getAllWorkout, updateActiveWorkout } from "@/api/workout.mjs";

@@ -63,7 +63,7 @@ export default function WorkoutSelection({ muscle, update }) {
 
         <div className="flex relative h-fit items-center z-50">
             <div className={`flex text-[1.5rem] p-2 bg-black border-2 border-indigo-600 font-medium rounded-md cursor-pointer text-white`}
-                onClick={() => {setOpen(!open); setActive(null)}}>
+                onClick={() => { setOpen(!open); setActive(null) }}>
                 <IoIosAdd className={`${open ? 'rotate-45' : ''} transition-transform duration-500`} />
             </div>
 
@@ -94,7 +94,7 @@ export default function WorkoutSelection({ muscle, update }) {
                     </div> :
 
                         <div className="flex-col flex w-full h-full gap-4">
-                                <p className=' text-[2rem] uppercase absolute top-3 left-[25%]'>
+                            <p className=' text-[2rem] uppercase absolute top-3 left-[25%]'>
                                 {active.group}
                             </p>
 

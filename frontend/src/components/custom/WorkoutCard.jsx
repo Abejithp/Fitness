@@ -9,6 +9,7 @@ import {
 import { TiDelete } from "react-icons/ti";
 
 import { addExercise, delExercise, getActiveMuscle } from '@/api/exercise.mjs'
+import DataTable from './DataTable';
 
 
 export default function WorkoutCard({ muscle, id }) {
@@ -32,47 +33,21 @@ export default function WorkoutCard({ muscle, id }) {
                 </div>
             </DialogTrigger>
 
-            <DialogContent className='w-[75vw] h-[60vh] rounded-lg p-0 border-0 text-white bg-neutral-950 flex flex-col gap-0 max-tablet:h-dvh max-tablet:w-dvw max-tablet:rounded-none'>
+            <DialogContent className='w-[50vw] h-[70vh] rounded-lg p-0 border-0 text-white bg-neutral-950 flex flex-col gap-0 max-tablet:h-dvh max-tablet:w-dvw max-tablet:rounded-none'>
                 <div className='flex relative h-fit w-full'>
                     <p className=' bg-indigo-700 rounded-t-lg py-4 uppercase font-medium text-[4rem] pl-12 flex h-full items-center 
                                     max-tablet:pl-6 max-tablet:text-[3rem] w-full max-tablet:rounded-none'>{muscle}</p>
                 </div>
 
                 <div className="flex p-8 w-full h-full gap-4" >
-                    <div className="flex flex-col w-[50%] max-tablet:w-full">
-                        <div className="flex w-full gap-4 flex-col">
-                            <input type="text" placeholder='Search for Exercise' className='pl-4 p-1 bg-neutral-900 placeholder:text-neutral-500 rounded-sm
-                             font-satoshi h-fit w-fit' autoFocus={false} />
+                    <div className="flex flex-col w-full max-tablet:w-full">
 
-                            <div className="flex">
-                                <input type="text" placeholder='enter exercise name' className='pl-4 p-1 bg-neutral-900 placeholder:text-neutral-500 rounded-l-sm
-                             font-satoshi h-fit w-fit' value={creation} onChange={(e) => setCreation(e.target.value)} />
-                                <button className='p-1 px-4 rounded-r-sm bg-indigo-600 text-white'
-                                    onClick={() => { addExercise(creation, id).then(() =>handleEx(id)) }}>create</button>
-                            </div>
+                        <DataTable
+                            data={exercises}
+                            deletion={(exId) => delExercise(exId).then(() => handleEx(id))}
+                            add={(name) => addExercise(name, id).then(() => handleEx(id))}
+                        />
 
-                        </div>
-
-                        <div className="flex flex-col border-t-2 border-neutral-800 mt-5 h-full overflow-auto tablet:h-[50%]">
-                            {exercises.length == 0 ? <div className='mt-4 w-full h-full items-center flex justify-center text-[2rem] font-medium font-satoshi max-tablet:text-2xl'>
-                                Start by Creating an Exercise
-                            </div> : exercises.map((el, index) => {
-                                return <div className="flex items-center uppercase font-semibold border-b-2 justify-between border-neutral-800 p-4" key={index}>
-                                    <p>{el.name}</p>
-                                    <button onClick={() => delExercise(el._id).then(() => handleEx(id))}>
-                                        <TiDelete className='text-3xl hover:cursor-pointer text-indigo-500' />
-                                    </button>
-                                </div>
-                            })}
-
-                        </div>
-                    </div>
-                    <div className="flex flex-col w-[50%] items-center gap-4 justify-start max-tablet:hidden">
-
-                        <div className="flex w-[300px] aspect-square bg-neutral-300 rounded-full">
-
-                        </div>
-                        <p className='font-bold'>Exercise Usage</p>
                     </div>
                 </div>
             </DialogContent>
