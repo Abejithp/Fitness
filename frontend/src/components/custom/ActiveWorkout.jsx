@@ -33,7 +33,7 @@ export default function ActiveWorkout({ schedule }) {
                                         </TooltipTrigger>
                                         <TooltipContent >
                                             <div className=" text-black rounded-md">
-                                                <p>Exercise name: {el.name}</p>
+                                                <p>{el.name}</p>
                                             </div>
                                         </TooltipContent>
                                     </Tooltip>

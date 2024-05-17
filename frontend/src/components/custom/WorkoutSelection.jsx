@@ -8,6 +8,8 @@ import { getActiveMuscle } from '@/api/exercise.mjs';
 
 import { TbArrowBackUp } from "react-icons/tb";
 
+import MuscleTable from './MuscleTable';
+
 const variants = {
     open: {
         width: 340,
@@ -98,12 +100,13 @@ export default function WorkoutSelection({ muscle, update }) {
                                 {active.group}
                             </p>
 
-                            <div className="flex-col flex absolute top-[25%] gap-2 h-[70%] overflow-auto w-[85%]">
-                                {exercises.map((exercise, i) => {
+                            <div className="flex-col flex absolute top-[17%] h-[80%] overflow-hidden w-[85%] px-1">
+                                <MuscleTable data={exercises} update={(exercise) => update(exercise)}/>
+                                {/* {exercises.map((exercise, i) => {
                                     return <button className="flex text-white text-lg uppercase" onClick={() => update(exercise)} key={i}>
                                         {exercise.name}
                                     </button>
-                                })}
+                                })} */}
                             </div>
                             <button className="flex absolute top-4 right-4" onClick={() => setActive(null)}>
                                 <TbArrowBackUp className='text-[2rem]' />
