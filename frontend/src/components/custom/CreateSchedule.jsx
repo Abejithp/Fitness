@@ -83,11 +83,10 @@ export default function CreateSchedule({ muscle, update}) {
 
     if(scheduleCreation){
       await addWorkout(schedule, name);
-      update()
     } else {
       await addRoutine(routine, name)
     }
-
+    update()
     setName('')
 
     setSchedule([

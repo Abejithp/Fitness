@@ -248,7 +248,7 @@ app.delete("/api/workout/:id/", isAuthenticated, async function (req, res) {
     try {
         const data = await WorkOut.deleteOne({ userRef: req.session.user._id, _id: req.params.id })
         if (data.deletedCount > 0) {
-            const schedule = await WorkOut.findOne({ userRef: req.session.user._id })
+            const schedule = await WorkOut.findOne({ userRef: req.session.user._id, routine: false})
 
             const id = !schedule ? null : schedule._id;
 
@@ -265,7 +265,7 @@ app.delete("/api/workout/:id/", isAuthenticated, async function (req, res) {
 });
 
 app.patch("/api/workout/active/", isAuthenticated, async function (req, res) {
-    const workout = await WorkOut.findOne({ _id: req.body.id })
+    const workout = await WorkOut.findOne({ _id: req.body.id, routine: false})
     if (!workout) {
         return res.sendStatus(404);
     }
