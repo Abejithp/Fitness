@@ -44,7 +44,9 @@ function Workout() {
                 return;
             }
 
-            const { workoutName, workout, _id} = res.data
+            const { workoutName, workout, _id} = res.data;
+
+            console.log(_id);
             setSchedule({workout: workout, workoutName: workoutName, id: _id})
             
         });
@@ -87,7 +89,7 @@ function Workout() {
                             <p className="text-[1.2rem] uppercase">
                                 {schedule.workoutName}
                             </p>
-                            <ScheduleViewer id={schedule._id} trigger={<BsBoxArrowUpRight />} muscle={muscleGroups} update={updateSchedule}/>
+                            <ScheduleViewer id={schedule.id} trigger={<BsBoxArrowUpRight />} muscle={muscleGroups} update={updateSchedule}/>
                         </>
                         }
 

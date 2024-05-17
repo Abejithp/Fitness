@@ -10,27 +10,27 @@ import {
 import { TiDelete } from 'react-icons/ti';
 
 import WorkoutSelection from './WorkoutSelection';
-import {  getWorkout, updateWorkout } from '@/api/workout.mjs';
+import { getWorkout, updateWorkout, delWorkout} from '@/api/workout.mjs';
 
 
-export default function ScheduleViewer({id, trigger, muscle, update}) {
+export default function ScheduleViewer({ id, trigger, muscle, update }) {
 
   const [schedule, setSchedule] = useState([]);
   const [name, setName] = useState("")
   const [index, setIndex] = useState(0);
-  const [selected, setSelected] = useState({day: '', exercise: []})
+  const [selected, setSelected] = useState({ day: '', exercise: [] })
 
   const getSchedule = () => {
     getWorkout(id).then((res) => {
 
-        if(!res.data){
-          return;
-        }
+      if (!res.data) {
+        return;
+      }
 
-        const {workout, workoutName} = res.data;
-        setSchedule(workout);
-        setSelected(workout[0])
-        setName(workoutName);
+      const { workout, workoutName } = res.data;
+      setSchedule(workout);
+      setSelected(workout[0])
+      setName(workoutName);
     })
   }
 
@@ -76,6 +76,8 @@ export default function ScheduleViewer({id, trigger, muscle, update}) {
           />
         </div>
 
+
+
         <div className="flex relative flex-col h-full p-8">
           <div className="flex absolute top-8 left-8">
             <WorkoutSelection muscle={muscle} update={(exercise) => { handleUpdate(exercise); }} />
@@ -117,6 +119,9 @@ export default function ScheduleViewer({id, trigger, muscle, update}) {
               update();
             }}>
             edit
+          </DialogClose>
+          <DialogClose onClick={() => delWorkout(id).then(() => { update() })} className='flex'>
+            Delete Workout
           </DialogClose>
         </div>
 
