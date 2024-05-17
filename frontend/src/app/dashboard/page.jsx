@@ -48,8 +48,8 @@ function Dashboard() {
                 <div className="flex flex-col gap-4">
                     <p className="text-white uppercase font-medium text-lg">My Routines</p>
                     <div className="flex flex-wrap mb-8">
-                        {routines.map((exercise) => {
-                           return  <button className="flex text-white w-[300px] border-4 bg-black 
+                        {routines.map((exercise, i) => {
+                           return  <button key={i} className="flex text-white w-[300px] border-4 bg-black 
                            border-indigo-600 rounded-md font-satoshi h-[200px] uppercase font-medium items-center 
                            justify-center cursor-pointer">
                                 {exercise.workoutName}

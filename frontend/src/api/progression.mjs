@@ -21,3 +21,7 @@ export function getProgress(id) {
 export function getSummary(){
     return send("GET", `/api/summary/${offset}/`, null);
 }
+
+export function getSummaryDate(date){
+    return send("GET", `/api/summary/date/${date}/`, null);
+}

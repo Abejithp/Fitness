@@ -13,7 +13,7 @@ import { subDays } from "date-fns";
 
 dotenv.config();
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 5000;
 const app = express();
 const SESSION_TIME = 60 * 60 * 24;
 
@@ -323,8 +323,8 @@ app.post("/api/routine/", isAuthenticated, async function (req, res) {
 
 app.get("/api/routine/:id/", isAuthenticated, async function (req, res) {
     try {
-        if(!req.params.id){
-            return res.status(200).json({data: []})
+        if (!req.params.id) {
+            return res.status(200).json({ data: [] })
         }
 
         const routine = await WorkOut.findOne({
@@ -332,7 +332,7 @@ app.get("/api/routine/:id/", isAuthenticated, async function (req, res) {
             _id: req.params.id
         }).populate('workout.exercise')
 
-    
+
 
         return res.status(200).json({ data: routine.workout[0].exercise })
 
@@ -346,7 +346,7 @@ app.get("/api/routine/", isAuthenticated, async function (req, res) {
 
         const data = await WorkOut.find({
             routine: true,
-        }, {workoutName: 1})
+        }, { workoutName: 1 })
 
         return res.status(200).json({ data: data })
 
@@ -408,9 +408,15 @@ app.post("/api/progress/", isAuthenticated, async function (req, res) {
 
     try {
         const { id, offset } = req.body;
+
         const date = new Date(Date.now() - (offset * 60 * 1000)).toJSON().split('T')[0];
 
+
+        console.log(date)
+
         let progress = await Progress.findOne({ exerciseRef: id, date: date })
+
+        console.log(progress)
 
         if (progress) {
             return res.status(200).json({ data: progress.sets })
@@ -420,6 +426,14 @@ app.post("/api/progress/", isAuthenticated, async function (req, res) {
 
         progress = await Progress.findOne({ exerciseRef: id });
         if (progress) {
+
+            progress = await Progress.create({
+                exerciseRef: id,
+                userRef: req.session.user._id,
+                date: date,
+                sets: progress.sets
+            })
+
             return res.status(200).json({ data: progress.sets });
         }
 
@@ -430,6 +444,8 @@ app.post("/api/progress/", isAuthenticated, async function (req, res) {
             sets: [{ reps: 0, weight: 0 }]
         });
 
+
+        console.log("HELLLO")
         return res.status(200).json({ data: progress.sets });
 
     } catch (err) {
@@ -458,6 +474,7 @@ app.get("/api/summary/:offset/", isAuthenticated, async function (req, res) {
 
     try {
         const offset = req.params.offset;
+
         const date = new Date(Date.now() - (offset * 60 * 1000)).toJSON().split('T')[0];
         const [year, month, day] = date.split('-');
 
@@ -492,7 +509,24 @@ app.get("/api/summary/:offset/", isAuthenticated, async function (req, res) {
     } catch (err) {
         return res.sendStatus(500)
     }
+});
+
+app.get("/api/summary/date/:date/", isAuthenticated, async function (req, res) {
+    try {
+        const date = req.params.date;
+
+        const progress = await Progress.find({
+            date: date,
+            userRef: req.session.user._id
+        }).populate('exerciseRef');
+
+        return res.status(200).json({ data: progress })
+
+    } catch (err) {
+        return res.sendStatus(500);
+    }
 })
+
 
 
 const server = createServer(app).listen(PORT, function (err) {

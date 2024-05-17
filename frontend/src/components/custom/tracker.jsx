@@ -25,8 +25,7 @@ export function Tracker({routineId, isRoutine}) {
     if(isRoutine) {
     
       getRoutine(routineId).then((res) => {
- 
-        setData({loaded: true, data: res.data});
+        setData({loaded: true, data: res ? res.data : []});
       })
 
       return;

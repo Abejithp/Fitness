@@ -18,7 +18,7 @@ export default function Summary() {
     }, [])
 
     return (
-        <div className="flex h-[300px] mt-4 bg-indigo-400 rounded-sm">
+        <div className="flex h-[300px] mt-4 bg-neutral-950 rounded-sm">
             <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={data}>
                     <Tooltip />
