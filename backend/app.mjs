@@ -228,9 +228,18 @@ app.post("/api/workout/", isAuthenticated, async function (req, res, next) {
 app.get("/api/workout/", isAuthenticated, async function (req, res) {
     try {
         const workout = await WorkOut.find({ userRef: req.session.user._id }, { workoutName: 1 });
-        res.status(200).json({ data: workout, success: true });
+        return res.status(200).json({ data: workout, success: true });
     } catch (err) {
-        res.status(500).json({ success: false, msg: err.message });
+        return res.status(500).json({ success: false, msg: err.message });
+    }
+})
+
+app.get("/api/workout/:id/", isAuthenticated, async function (req, res){
+    try {
+        const workout = await WorkOut.findOne({_id: req.params.id}).populate('workout.exercise');
+        return res.status(200).json({data: workout})
+    } catch (err) {
+        return res.sendStatus(500);
     }
 })
 
@@ -255,7 +264,7 @@ app.delete("/api/workout/:id/", isAuthenticated, async function (req, res) {
 
 });
 
-app.patch("/api/workout/", isAuthenticated, async function (req, res) {
+app.patch("/api/workout/active/", isAuthenticated, async function (req, res) {
     const workout = await WorkOut.findOne({ _id: req.body.id })
     if (!workout) {
         return res.sendStatus(404);
@@ -267,15 +276,18 @@ app.patch("/api/workout/", isAuthenticated, async function (req, res) {
     return res.status(200).json({ success: true })
 });
 
-app.get("/api/workout/:id/", isAuthenticated, async function (req, res) {
+app.patch("/api/workout/", isAuthenticated, async function (req, res){
     try {
-        const workout = await WorkOut.findOne({ _id: req.params.id }).populate('workout.exercise');
-        res.status(200).json({ data: workout, success: true });
+        const {workout, workoutName, id } = req.body;
+        const schedule = await WorkOut.updateOne({_id: id}, { $set : {workout: workout, workoutName: workoutName}})
+
+        return res.status(200).json({data: schedule})
 
     } catch (err) {
-        res.status(500).json({ success: false, msg: err.message });
+        res.sendStatus(500);
     }
-});
+})
+
 
 app.get("/api/schedule/", isAuthenticated, async function (req, res) {
     const user = req.session.user

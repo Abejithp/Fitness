@@ -44,24 +44,30 @@ function Progression() {
         <div className="flex min-h-screen bg-neutral-950">
             <Navbar />
             <div className="flex flex-col text-white font-satoshi pt-32 px-16 max-tablet:px-8 w-full">
-
-                <p className="font-medium uppercase text-lg">Weekly Summary</p>
-                <Summary />
-
-                <p className="font-medium uppercase text-lg mt-8 mb-4">Calendar</p>
-                <Calendar
-                    mode="single"
-                    selected={date}
-                    onSelect={setDate}
-                    className={"rounded-md max-tablet:w-full w-fit border-indigo-600 border-2"}
-                />
-
-
-                <div className="flex flex-col mt-4">
-                    {progresses.length > 0 ? progresses.map((progress, i) => {
-                        return <SummaryDate progress={progress} key={i} />
-                    }) : <div className="flex uppercase font-medium text-2xl text-white justify-center w-full py-4">No Workout on this day</div> }
+                <div className="flex w-full max-laptop:flex-col gap-16 max-tablet:gap-6 items-baseline">
+                    <div className="flex flex-col w-full laptop:w-[50%]">
+                        <p className="font-medium uppercase text-lg">Weekly Summary</p>
+                        <Summary />
+                    </div>
+                    <div className="flex flex-col max-tablet:w-full ">
+                      
+                        <Calendar
+                            mode="single"
+                            selected={date}
+                            onSelect={setDate}
+                            className={"rounded-md max-tablet:w-full w-fit border-indigo-600 border-2"}
+                        />
+                    </div>
+                    <div className="flex flex-col laptop:w-[25%] w-full">
+                        {progresses.length > 0 ? progresses.map((progress, i) => {
+                            return <SummaryDate progress={progress} key={i} />
+                        }) : <div className="flex uppercase font-medium text-2xl text-white h-full w-full py-4  justify-center">No Workout on this day</div>}
+                    </div>
                 </div>
+
+
+
+
 
                 <p className="font-medium uppercase text-lg mt-8">My Progress</p>
                 <div className="flex flex-wrap max-tablet:flex-col w-full max-tablet:gap-4 max-tablet:mt-4 mt-8 gap-4">

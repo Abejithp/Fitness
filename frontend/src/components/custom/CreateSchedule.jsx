@@ -16,8 +16,9 @@ import { addRoutine, addWorkout } from '@/api/workout.mjs';
 import { toast } from 'sonner';
 
 import { TiDelete } from 'react-icons/ti';
+import { MdAddBox } from "react-icons/md";
 
-export default function CreateSchedule({ muscle, update }) {
+export default function CreateSchedule({ muscle, update}) {
 
   const [schedule, setSchedule] = useState([
     { day: 'Sunday', exercise: [] },
@@ -103,12 +104,10 @@ export default function CreateSchedule({ muscle, update }) {
 
   }
 
-  console.log(routine)
-
   return (
     <Dialog>
-      <DialogTrigger className='uppercase text-indigo-500'>
-        Create
+      <DialogTrigger className='uppercase text-indigo-600'>
+        <MdAddBox className='text-3xl'/>
       </DialogTrigger>
 
       <DialogContent className='w-[75vw] h-[70vh] rounded-lg p-0 border-0 text-white bg-neutral-950 

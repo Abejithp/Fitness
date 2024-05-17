@@ -7,6 +7,8 @@ import { Toaster } from "@/components/ui/sonner";
 
 import { HiLightningBolt } from "react-icons/hi";
 import { TiDelete } from "react-icons/ti";
+import { MdModeEditOutline } from "react-icons/md";
+import { BsBoxArrowUpRight } from "react-icons/bs";
 
 
 import {
@@ -19,7 +21,7 @@ import {
 } from "@/components/ui/table"
 import { useEffect, useState } from "react";
 import { getMuscles } from "@/api/exercise.mjs";
-import { delWorkout, getSchedule, getWorkout, updateActiveWorkout } from "@/api/workout.mjs";
+import { delWorkout, getSchedule, getAllWorkout, updateActiveWorkout } from "@/api/workout.mjs";
 import Navbar from "@/components/custom/Navbar";
 import ScheduleViewer from "@/components/custom/ScheduleViewer";
 import CreateSchedule from "@/components/custom/CreateSchedule";
@@ -30,9 +32,8 @@ function Workout() {
 
     const [muscleGroups, setGroups] = useState([])
     const [workouts, setWorkouts] = useState([])
-    const [schedule, setSchedule] = useState([]);
-    const [scheduleName, setName] = useState('');
 
+    const [schedule, setSchedule] = useState({workout: [], workoutName: '', id: ''})
 
     const updateSchedule = () => {
         getSchedule().then((res) => {
@@ -43,12 +44,12 @@ function Workout() {
                 return;
             }
 
-            const { workoutName, workout } = res.data
-            setSchedule(workout);
-            setName(workoutName);
+            const { workoutName, workout, _id} = res.data
+            setSchedule({workout: workout, workoutName: workoutName, id: _id})
+            
         });
 
-        getWorkout().then((res) => {
+        getAllWorkout().then((res) => {
             setWorkouts(res.data)
         })
     }
@@ -58,13 +59,13 @@ function Workout() {
             setGroups(res.data)
         })
 
-        getWorkout().then((res) => {
+        getAllWorkout().then((res) => {
             setWorkouts(res.data)
         })
 
         updateSchedule();
 
-    }, [])
+    }, [schedule.workoutName])
 
     return (
         <div className="flex min-h-dvh bg-neutral-950 w-full font-satoshi flex-col z-20 relative">
@@ -73,33 +74,33 @@ function Workout() {
             <div className="flex p-16 pt-32 flex-col max-laptop:p-8 max-laptop:pt-36">
                 <div className="flex text-white uppercase font-bold text-lg w-full mb-4 justify-between">
                     My Schedules
-                    <CreateSchedule muscle={muscleGroups} update={updateSchedule}/>
+                    <CreateSchedule muscle={muscleGroups} update={updateSchedule} />
                 </div>
                 <div className={`flex w-full gap-8 h-[40vh] max-laptop:flex-col items-end z-20 max-laptop:h-fit`}>
                     <div className="flex w-[65%] h-full max-laptop:hidden ">
-                        <ActiveWorkout schedule={schedule} />
+                        <ActiveWorkout schedule={schedule.workout} />
                     </div>
                     <div className="text-white hidden max-laptop:flex w-full bg-indigo-600 p-4 font-medium rounded-sm justify-between items-center">
-                        {scheduleName == '' ? <p className="text-[1.2rem] text-center w-full font-normal">
+                        {schedule.workoutName == '' ? <p className="text-[1.2rem] text-center w-full font-normal">
                             create a schedule
                         </p> : <>
                             <p className="text-[1.2rem] uppercase">
-                                {scheduleName}
+                                {schedule.workoutName}
                             </p>
-                            <ScheduleViewer name={scheduleName} schedule={schedule} />
+                            <ScheduleViewer id={schedule._id} trigger={<BsBoxArrowUpRight />} muscle={muscleGroups} update={updateSchedule}/>
                         </>
                         }
 
 
                     </div>
-                    <div className={`flex w-[40%] h-full overflow-y-hidden max-laptop:w-full max-laptop:${scheduleName == ''? 'hidden': ''}`}>
+                    <div className={`flex w-[40%] h-full overflow-y-hidden max-laptop:w-full max-laptop:${schedule.workoutName == '' ? 'hidden' : ''}`}>
                         <Table>
                             <TableHeader>
                                 <TableRow>
                                     <TableHead>Schedule</TableHead>
                                     <TableHead className="max-laptop:text-right">Activate</TableHead>
-
-                                    <TableHead className="max-laptop:hidden">Delete</TableHead>
+                                    <TableHead className="max-laptop:hidden text-center">Edit</TableHead>
+                                    <TableHead className="max-laptop:hidden text-right">Delete</TableHead>
                                 </TableRow>
                             </TableHeader>
                             <TableBody className=" overflow-hidden">
@@ -115,9 +116,12 @@ function Workout() {
                                             </button>
 
                                         </TableCell>
-                                        <TableCell className="text-indigo-500 text-2xl  max-laptop:hidden">
-                                            <button onClick={() => delWorkout(data._id).then(() => {updateSchedule()})}>
-                                                <TiDelete className=" hover:cursor-pointer ml-2" />
+                                        <TableCell className="text-center text-xl text-indigo-500 max-laptop:hidden">
+                                            <ScheduleViewer id={data._id} trigger={<MdModeEditOutline/>} muscle={muscleGroups} update={updateSchedule}/>
+                                        </TableCell>
+                                        <TableCell className="text-indigo-500 text-2xl  max-laptop:hidden text-right">
+                                            <button onClick={() => delWorkout(data._id).then(() => { updateSchedule() })}>
+                                                <TiDelete className=" hover:cursor-pointer mr-2" />
                                             </button>
                                         </TableCell>
                                     </TableRow>
