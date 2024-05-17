@@ -31,10 +31,12 @@ function Progression() {
     }, [])
 
     useEffect(() => {
-        getSummaryDate(currentDate).then((res) => {
+        const findDate = date ? date.toJSON().split('T')[0] : currentDate;
+
+        getSummaryDate(findDate).then((res) => {
             setProgress(res.data)
         })
-    }, [date.toJSON()])
+    }, [date ? date.toJSON() : ''])
 
 
 
