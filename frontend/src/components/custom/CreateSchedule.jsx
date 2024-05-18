@@ -115,7 +115,7 @@ export default function CreateSchedule({ muscle, update}) {
         <div className="flex w-full bg-indigo-600 p-4 py-8 max-tablet:py-6 tablet:rounded-t-lg">
           <input type="text"
             className='bg-indigo-600 text-[2rem] font-satoshi uppercase w-[50%] pl-4 font-medium max-tablet:w-[80%] max-tablet:text-[1.3rem]'
-            placeholder='Enter Schedule Name'
+            placeholder={scheduleCreation ? 'Enter Schedule Name' : 'Enter Routine Name'}
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
@@ -139,7 +139,8 @@ export default function CreateSchedule({ muscle, update}) {
           </div>}
 
 
-          <Switch checked={scheduleCreation} onCheckedChange={() => setCreation(!scheduleCreation)} className="absolute top-10 right-8" />
+          <Switch checked={scheduleCreation} onCheckedChange={() => setCreation(!scheduleCreation)} 
+            className="absolute top-10 right-8 max-tablet:left-8 max-tablet:top-24" />
 
           <div className="flex w-full h-full justify-center items-start pt-20">
 

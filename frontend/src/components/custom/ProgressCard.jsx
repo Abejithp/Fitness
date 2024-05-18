@@ -11,6 +11,7 @@ import { LineChart } from '@mui/x-charts';
 import { BsBoxArrowUpRight } from "react-icons/bs";
 import { getActiveMuscle } from '@/api/exercise.mjs';
 import { getProgress } from '@/api/progression.mjs';
+import ProgressTable from './ProgressTable';
 
 export default function ProgressCard({ muscle }) {
 
@@ -38,32 +39,28 @@ export default function ProgressCard({ muscle }) {
                 <BsBoxArrowUpRight className='text-[1.5rem] tablet:hidden' />
             </DialogTrigger>
 
-            <DialogContent className='w-[75vw] h-[60vh] rounded-lg p-0 border-0 text-white bg-neutral-950 flex flex-col gap-0 max-tablet:h-dvh max-tablet:w-dvw max-tablet:rounded-none'>
+            <DialogContent className='w-[75vw] h-[70vh] rounded-lg p-0 border-0 text-white bg-neutral-950 flex flex-col gap-0 max-tablet:h-dvh max-tablet:w-dvw max-tablet:rounded-none'>
                 <p className='text-white bg-indigo-600 p-8 uppercase font-medium'>
                     {muscle.group}
                 </p>
 
-                <div className="flex flex-col gap-4 p-8">
-                    <div className="flex text-white flex-col h-[35%] overflow-auto gap-2">
-                        {exercises.map((exercise) => {
-                            return <div className="flex text-white uppercase bg-indigo-600 rounded-sm p-4 font-medium w-fit" onClick={() => handleActive(exercise._id)}>
-                                {exercise.name}
-                            </div>
-                        })}
-                    </div>
-
-                    <div className="flex text-white bg-indigo-500">
+                <div className="flex flex-col gap-8 p-8 tablet:flex-row w-full ">
+                    <div className="flex text-white bg-indigo-500 rounded-md h-[200px] justify-center items-center tablet:w-[80%] tablet:h-full">
                         <LineChart
 
                             series={[
                                 {
-                                    data: active ? active : [] ,
+                                    data: active ? active : [],
                                 },
                             ]}
                             width={500}
                             height={300}
                         />
                     </div>
+
+                    <ProgressTable data={exercises} update={(id) => handleActive(id)} />
+
+
                 </div>
 
 

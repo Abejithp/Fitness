@@ -408,7 +408,7 @@ app.get("/api/progress/:id/", isAuthenticated, async function (req, res) {
         const data = progressions.map((progress) => {
             return calulate(progress.sets)
         });
-
+        
         return res.status(200).json({ data: data })
 
     } catch (err) {

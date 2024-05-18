@@ -60,7 +60,7 @@ export default function ScheduleViewer({ id, trigger, muscle, update }) {
 
   return (
     <Dialog>
-      <DialogTrigger className='uppercase text-indigo-500' onClick={() => getSchedule()}>
+      <DialogTrigger className='uppercase text-indigo-500 flex max-laptop:text-white max-laptop:text-xl' onClick={() => getSchedule()}>
         {trigger}
       </DialogTrigger>
 

@@ -26,8 +26,8 @@ export default function WorkoutCard({ muscle, id }) {
     return (
         <Dialog>
             <DialogTrigger onClick={() => handleEx(id)}>
-                <div className='min-w-[300px] w-[300px] hover:cursor-pointer relative hover:scale-105 
-                                transition-transform ease-out duration-300 max-tablet:w-fit max-tablet:h-[70px]
+                <div className='min-w-[335px] w-[300px] flex-wrap hover:cursor-pointer relative hover:scale-105 
+                                transition-transform ease-out duration-300 max-tablet:w-[325px] max-laptop:h-[70px]
                                 bg-black border-2 border-indigo-600 h-[200px] rounded-lg max-tablet:rounded-sm '>
                     <p className='text-white absolute z-10 top-0 flex w-full justify-center items-center h-full font-bold text-[1.5rem] max-tablet:font-medium uppercase'>{muscle}</p>
                 </div>
