@@ -50,7 +50,7 @@ export function Tracker({routineId, isRoutine}) {
       (workout.data.length) === 0 ?
         <div className="flex justify-center h-[300px] text-[5rem]  text-center items-center font-satoshi uppercase font-semibold text-neutral-600 
                         max-laptop:text-[4rem] max-tablet:text-[2rem] max-tablet:h-[200px]">
-          {isRoutine ? "No Routines" : "No Workout today"}
+          {isRoutine ? "No Routines" : "No Scheduled Workouts Today"}
 
         </div> :
         <Table className="z-0">

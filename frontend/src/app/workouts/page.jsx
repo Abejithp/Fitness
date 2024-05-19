@@ -9,6 +9,7 @@ import { HiLightningBolt } from "react-icons/hi";
 import { TiDelete } from "react-icons/ti";
 import { MdModeEditOutline } from "react-icons/md";
 import { BsBoxArrowUpRight } from "react-icons/bs";
+import { PiArrowElbowRightUpBold, PiArrowUpRightBold } from "react-icons/pi";
 
 
 import {
@@ -83,8 +84,9 @@ function Workout() {
                         <ActiveWorkout schedule={schedule.workout} />
                     </div>
                     <div className="text-white hidden max-laptop:flex w-full bg-indigo-600 p-4 font-medium rounded-sm justify-between items-center">
-                        {schedule.workoutName == '' ? <p className="text-[1.2rem] text-center w-full font-normal">
-                            create a schedule
+                        {schedule.workoutName == '' ? <p className="flex justify-center gap-8 text-[1.2rem] items-center text-center w-full font-normal">
+                            create a new schedule 
+                            <PiArrowUpRightBold className=" text-white" />
                         </p> : <>
                             <p className="text-[1.2rem] uppercase">
                                 {schedule.workoutName}

@@ -17,6 +17,7 @@ import { toast } from 'sonner';
 
 import { TiDelete } from 'react-icons/ti';
 import { MdAddBox } from "react-icons/md";
+import { IoAdd } from 'react-icons/io5';
 
 export default function CreateSchedule({ muscle, update}) {
 
@@ -99,14 +100,17 @@ export default function CreateSchedule({ muscle, update}) {
       { day: 'Saturday', exercise: [] },
     ])
 
+    
     setSelected(schedule[0])
 
+    setRoutine([{ day: "", exercise: [] }])
   }
 
   return (
     <Dialog>
-      <DialogTrigger className='uppercase text-indigo-600'>
-        <MdAddBox className='text-3xl'/>
+      <DialogTrigger className='bg-indigo-600 w-[30px] tablet:px-4 tablet:w-fit tablet:h-fit gap-2 tablet:p-2 max-tablet:aspect-square flex justify-center rounded-md items-center'>
+        <p className='text-xl max-tablet:hidden font-normal lowercase'>Create</p>
+        <IoAdd className='text-xl text-white'/>
       </DialogTrigger>
 
       <DialogContent className='w-[75vw] h-[70vh] rounded-lg p-0 border-0 text-white bg-neutral-950 

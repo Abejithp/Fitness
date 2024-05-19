@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 import Navbar from "@/components/custom/Navbar";
 import { getAllRoutines } from "@/api/workout.mjs";
+import { HiLightningBolt } from "react-icons/hi";
 
 function Dashboard() {
 
@@ -23,7 +24,7 @@ function Dashboard() {
 
         getAllRoutines().then((res) => {
             setRoutines(res.data)
-            if(res.data.length == 0){
+            if (res.data.length == 0) {
                 return;
             }
 
@@ -44,21 +45,27 @@ function Dashboard() {
                         {date}
                     </div>
                 </div>
-                {routines.length != 0 && 
-                <div className="flex flex-col gap-4">
-                    <p className="text-white uppercase font-medium text-lg">My Routines</p>
-                    <div className="flex flex-wrap mb-8">
-                        {routines.map((exercise, i) => {
-                           return  <button key={i} className="flex text-white w-[300px] border-4 bg-black 
-                           border-indigo-600 rounded-md font-satoshi h-[200px] uppercase font-medium items-center 
-                           justify-center cursor-pointer">
-                                {exercise.workoutName}
-                            </button>
-                        })}
-                    </div>
-                </div> }
-                <Tracker routineId={routineId} isRoutine={true} />
-         
+                {routines.length != 0 &&
+                    <div className="flex flex-col gap-4 mb-8">
+                        <p className="text-white uppercase font-medium text-lg">My Routines</p>
+                        <div className="flex gap-8 max-tablet:flex-col max-tablet:gap-2">
+                            <div className="flex flex-col w-[50%] gap-4 max-tablet:w-full">
+                                {routines.map((exercise, i) => {
+                                    return <button key={i} className="flex text-white w-full bg-indigo-600 justify-between
+                                    rounded-sm font-satoshi p-4 uppercase font-medium items-center cursor-pointer" 
+                                    
+                                    onClick={() => setRoutineId(exercise._id)} >
+                                        {exercise.workoutName}
+                                        <HiLightningBolt />
+                                    </button>
+                                })}
+                            </div>
+                            <Tracker routineId={routineId} isRoutine={true} />
+                        </div>
+
+                    </div>}
+
+
 
                 <p className="text-white uppercase font-medium text-lg">My Schedule</p>
                 <Tracker routineId={null} isRoutine={false} />

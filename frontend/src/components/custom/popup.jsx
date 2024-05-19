@@ -56,7 +56,9 @@ function Popup({ data }) {
 
     return (
         <Sheet onOpenChange={() => updateProgress(data._id, sets)}>
-            <SheetTrigger onClick={() => populateData()} >TRACK</SheetTrigger>
+            <SheetTrigger onClick={() => populateData()} >
+                <IoAdd className="text-xl text-white" />
+            </SheetTrigger>
             <SheetContent side={'bottom'} className=" p-0 border-0 flex w-full flex-col h-[60dvh] max-tablet:h-[70dvh] bg-neutral-950">
                 <p className="text-white w-full bg-indigo-600 px-8 p-6 uppercase font-medium text-xl">
                     {data.name}
