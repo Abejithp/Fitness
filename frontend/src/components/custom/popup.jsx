@@ -19,7 +19,7 @@ import { useState } from "react";
 function Popup({ data }) {
 
     const [sets, updateSets] = useState([])
-    const [progress, updateProgress] = useState(null)
+    const [progress, setProgress] = useState(null)
 
     const populateData = () => {
         addProgress(data._id).then((res) => {
@@ -27,7 +27,7 @@ function Popup({ data }) {
         })
 
         getProgress(data._id).then((res) => {
-            updateProgress(res.data)
+            setProgress(res.data)
         })
         
     }
