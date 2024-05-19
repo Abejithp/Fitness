@@ -10,7 +10,8 @@ import {
 import { TiDelete } from 'react-icons/ti';
 
 import WorkoutSelection from './WorkoutSelection';
-import { getWorkout, updateWorkout, delWorkout} from '@/api/workout.mjs';
+import { getWorkout, updateWorkout, delWorkout } from '@/api/workout.mjs';
+import { Prompt } from './Prompt';
 
 
 export default function ScheduleViewer({ id, trigger, muscle, update }) {
@@ -35,9 +36,7 @@ export default function ScheduleViewer({ id, trigger, muscle, update }) {
   }
 
   const handleEdit = () => {
-    updateWorkout(id, schedule, name).then((res) => {
-      console.log(res)
-    })
+    updateWorkout(id, schedule, name);
   }
 
   const handleRemove = (name) => {
@@ -60,7 +59,7 @@ export default function ScheduleViewer({ id, trigger, muscle, update }) {
 
   return (
     <Dialog>
-      <DialogTrigger className='uppercase text-indigo-500 flex max-laptop:text-white max-laptop:text-xl' onClick={() => getSchedule()}>
+      <DialogTrigger className='uppercase text-indigo-500 max-laptop:text-white max-laptop:text-xl' onClick={() => getSchedule()}>
         {trigger}
       </DialogTrigger>
 
@@ -120,9 +119,12 @@ export default function ScheduleViewer({ id, trigger, muscle, update }) {
             }}>
             edit
           </DialogClose>
-          <DialogClose onClick={() => delWorkout(id).then(() => { update() })} className='flex'>
-            Delete Workout
-          </DialogClose>
+
+          <Prompt
+            trigger={<TiDelete className='text-3xl' />}
+            update={() => delWorkout(id).then(() => { update() })}
+          />
+
         </div>
 
       </DialogContent>

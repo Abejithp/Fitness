@@ -26,6 +26,7 @@ import { delWorkout, getSchedule, getAllWorkout, updateActiveWorkout } from "@/a
 import Navbar from "@/components/custom/Navbar";
 import ScheduleViewer from "@/components/custom/ScheduleViewer";
 import CreateSchedule from "@/components/custom/CreateSchedule";
+import { Prompt } from "@/components/custom/Prompt";
 
 
 
@@ -34,7 +35,7 @@ function Workout() {
     const [muscleGroups, setGroups] = useState([])
     const [workouts, setWorkouts] = useState([])
 
-    const [schedule, setSchedule] = useState({workout: [], workoutName: '', id: ''})
+    const [schedule, setSchedule] = useState({ workout: [], workoutName: '', id: '' })
 
     const updateSchedule = () => {
         getSchedule().then((res) => {
@@ -45,11 +46,9 @@ function Workout() {
                 return;
             }
 
-            const { workoutName, workout, _id} = res.data;
+            const { workoutName, workout, _id } = res.data;
+            setSchedule({ workout: workout, workoutName: workoutName, id: _id })
 
-            console.log(_id);
-            setSchedule({workout: workout, workoutName: workoutName, id: _id})
-            
         });
 
         getAllWorkout().then((res) => {
@@ -90,7 +89,7 @@ function Workout() {
                             <p className="text-[1.2rem] uppercase">
                                 {schedule.workoutName}
                             </p>
-                            <ScheduleViewer id={schedule.id} trigger={<BsBoxArrowUpRight />} muscle={muscleGroups} update={updateSchedule}/>
+                            <ScheduleViewer id={schedule.id} trigger={<BsBoxArrowUpRight />} muscle={muscleGroups} update={updateSchedule} />
                         </>
                         }
 
@@ -119,13 +118,14 @@ function Workout() {
                                             </button>
 
                                         </TableCell>
-                                        <TableCell className="text-center text-xl text-indigo-500 max-laptop:hidden">
-                                            <ScheduleViewer id={data._id} trigger={<MdModeEditOutline/>} muscle={muscleGroups} update={updateSchedule}/>
+                                        <TableCell className="text-xl text-indigo-500 max-laptop:hidden text-center ">
+                                            <ScheduleViewer id={data._id} trigger={<MdModeEditOutline />} muscle={muscleGroups} update={updateSchedule} />
                                         </TableCell>
-                                        <TableCell className="text-indigo-500 text-2xl  max-laptop:hidden text-right">
-                                            <button onClick={() => delWorkout(data._id).then(() => { updateSchedule() })}>
-                                                <TiDelete className=" hover:cursor-pointer mr-2" />
-                                            </button>
+                                        <TableCell className="text-indigo-500 text-2xl  max-laptop:hidden flex justify-end">
+                                            <Prompt
+                                                trigger={<TiDelete />}
+                                                update={() => delWorkout(data._id).then(() => { updateSchedule() })}
+                                            />
                                         </TableCell>
                                     </TableRow>
                                 ))}

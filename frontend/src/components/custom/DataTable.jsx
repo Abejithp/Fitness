@@ -19,6 +19,7 @@ import {
 
 
 import { TiDelete } from 'react-icons/ti'
+import { Prompt } from './Prompt';
 
 
 export default function DataTable({ data, deletion, add }) {
@@ -67,25 +68,26 @@ export default function DataTable({ data, deletion, add }) {
                     {exercises.map((el, i) => (
                         <TableRow key={i} className="text-white">
                             <TableCell>{el.name}</TableCell>
-                            <TableCell className="text-indigo-500 text-2xl text-right">
-                                <button onClick={() => deletion(el._id)}>
-                                    <TiDelete className=" hover:cursor-pointer mr-2" />
-                                </button>
+                            <TableCell className="text-indigo-500 text-2xl flex justify-end">
+                                <Prompt 
+                                    trigger={<TiDelete />} 
+                                    update={() => deletion(el._id).then(() => {setExercises(data.slice(page * limit, (page + 1) * limit))})}
+                                />
                             </TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
             </Table>
             <Pagination >
-                <PaginationContent>
-                    <PaginationItem>
+                <PaginationContent className="flex w-full justify-evenly">
+                    <PaginationItem className="cursor-pointer">
                         <PaginationPrevious onClick={() => {
                             if (page - 1 >= 0)
                                 setPage(page - 1)
                         }} />
                     </PaginationItem>
             
-                    <PaginationItem>
+                    <PaginationItem className="cursor-pointer">
                         <PaginationNext onClick={() => {
                             if ((page + 1) * limit < maxLen)
                                 setPage(page + 1)

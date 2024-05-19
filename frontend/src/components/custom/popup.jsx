@@ -32,7 +32,6 @@ function Popup({ data }) {
         
     }
 
-    console.log(progress)
     const handleUpdate = (index, reps, weight) => {
         const update = [...sets]
         update[index] = { reps: reps, weight: weight }
