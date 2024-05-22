@@ -70,14 +70,15 @@ function Popup({ data }) {
                             <div className="flex flex-col gap-3 ">
                                 {sets.map((set, i) => {
                                     return <div key={i} className="flex text-white gap-2 w-full bg-indigo-600 rounded-full justify-evenly py-2">
+                                        
                                         <div className="flex">
-                                            <input type="number" min={0} className="bg-inherit w-[4ch] text-center" value={set.reps} onChange={(e) => handleUpdate(i, e.target.value, set.weight)} />
-                                            <p>reps</p>
-                                        </div>
-
-                                        <div className="flex">
-                                            <input type="number" className="bg-inherit w-[4ch] text-center" value={set.weight} onChange={(e) => handleUpdate(i, set.reps, e.target.value)} />
+                                            <input type="number" inputMode="numeric" min={"0"} pattern="[0-9]*" className="bg-inherit w-[4ch] text-center" value={set.weight} onChange={(e) => handleUpdate(i, set.reps, e.target.value)} />
                                             <p>lbs</p>
+                                        </div>
+                                        
+                                        <div className="flex">
+                                            <input type="number" inputMode="numeric" min={"0"} pattern="[0-9]*" className="bg-inherit w-[4ch] text-center" value={set.reps} onChange={(e) => handleUpdate(i, e.target.value, set.weight)} />
+                                            <p>reps</p>
                                         </div>
 
                                         <button onClick={() => removeSet(i)} >
