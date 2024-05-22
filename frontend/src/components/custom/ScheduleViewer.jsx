@@ -85,7 +85,7 @@ export default function ScheduleViewer({ id, trigger, muscle, update }) {
             {schedule.map((workout, index) => {
               return (
                 <button className={`flex text-white border-2 font-normal border-indigo-600 w-12 aspect-square rounded-full
-                            justify-center items-center font-satoshi ${selected.day == workout.day ? 'bg-indigo-600' : 'bg-black'} 
+                            justify-center items-center font-satoshi ${workout.day == '' ? 'hidden' : ''} ${selected.day == workout.day ? 'bg-indigo-600' : 'bg-black'} 
                             transition-colors duration-300 ease-out`} key={index}
                   onClick={() => { setSelected(workout); setIndex(index) }}>
                   {workout.day[0]}
@@ -121,7 +121,7 @@ export default function ScheduleViewer({ id, trigger, muscle, update }) {
           </DialogClose>
 
           <Prompt
-            trigger={<TiDelete className='text-3xl' />}
+            trigger={<TiDelete className='text-[4rem] text-indigo-600' />}
             update={() => delWorkout(id).then(() => { update() })}
           />
 

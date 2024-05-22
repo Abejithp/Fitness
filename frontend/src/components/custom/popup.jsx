@@ -96,7 +96,7 @@ function Popup({ data }) {
                     </div>
                     <div className="flex w-[50%] min-h-[100%] max-tablet:hidden">
                         <div className="flex flex-col gap-4 p-8 w-full h-full">
-                            <div className="flex text-white bg-indigo-500 rounded-sm">
+                            <div className="flex text-white bg-indigo-500 rounded-sm" autoFocus>
                                 <LineChart
                                     series={[
                                         {

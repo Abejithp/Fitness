@@ -76,7 +76,7 @@ export default function WorkoutSelection({ muscle, update }) {
                 animate={open ? 'open' : 'closed'}
                 variants={variants}
                 transition={{ duration: 0.7, ease: [0.75, 0, 0.24, 1] }}
-                className={`absolute bg-black flex flex-col  text-white -z-10 rounded-md`}
+                className={`absolute bg-indigo-700 flex flex-col  text-white -z-10 rounded-md`}
             >
                 <motion.div className={`flex h-full  ${!open ? 'hidden' : 'flex'}`}
                     variants={variantsMenu}
@@ -99,14 +99,9 @@ export default function WorkoutSelection({ muscle, update }) {
                             <p className=' text-[2rem] uppercase absolute top-3 left-[25%]'>
                                 {active.group}
                             </p>
-
+                            
                             <div className="flex-col flex absolute top-[17%] h-[80%] overflow-hidden w-[85%] px-1">
                                 <MuscleTable data={exercises} update={(exercise) => update(exercise)}/>
-                                {/* {exercises.map((exercise, i) => {
-                                    return <button className="flex text-white text-lg uppercase" onClick={() => update(exercise)} key={i}>
-                                        {exercise.name}
-                                    </button>
-                                })} */}
                             </div>
                             <button className="flex absolute top-4 right-4" onClick={() => setActive(null)}>
                                 <TbArrowBackUp className='text-[2rem]' />

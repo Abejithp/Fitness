@@ -8,6 +8,8 @@ import {
 
 export default function ActiveWorkout({ schedule }) {
 
+    const limit = 4;
+
     return (
         <div className='flex w-full relative py-6 px-4 gap-2 rounded-sm bg-indigo-100 z-0'>
             <img src="/card/bg2.png" alt="background" className=' absolute right-0 bottom-0 -z-10 rounded-br-sm ' />
@@ -20,7 +22,7 @@ export default function ActiveWorkout({ schedule }) {
                 schedule.map((workout, index) =>
                     <div className='w-full flex flex-col text-center font-bold font-satoshi gap-4  overflow-hidden' key={index}>
                         <p>{workout.day[0]}</p>
-                        {workout.exercise.map((el, i) => {
+                        {workout.exercise.slice(0, limit).map((el, i) => {
                             return (
 
                                 <TooltipProvider key={i} >
@@ -40,6 +42,23 @@ export default function ActiveWorkout({ schedule }) {
                                 </TooltipProvider>
                             )
                         })}
+                        {workout.exercise.slice(limit).length > 0 &&
+                            <TooltipProvider>
+                                <Tooltip >
+                                    <TooltipTrigger>
+                                        <div className="border-2 h-[2.5rem] bg-indigo-600 border-indigo-600 shadow-lg justify-center items-center p-2 text-white 
+                                                         truncate ... overflow-hidden w-full font-normal rounded-sm" >
+                                            <span>{workout.exercise.slice(limit).length} exercises</span>
+                                        </div>
+                                    </TooltipTrigger>
+                                    <TooltipContent >
+                                        <div className=" text-black rounded-md">
+                                            <p>View Exercises</p>
+                                        </div>
+                                    </TooltipContent>
+                                </Tooltip>
+                            </TooltipProvider>
+                        }
                     </div>)}
 
         </div>

@@ -6,7 +6,6 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 
-import { TiDelete } from "react-icons/ti";
 
 import { addExercise, delExercise, getActiveMuscle } from '@/api/exercise.mjs'
 import DataTable from './DataTable';
@@ -14,8 +13,7 @@ import DataTable from './DataTable';
 
 export default function WorkoutCard({ muscle, id }) {
 
-    const [exercises, setExercises] = useState([])
-    const [creation, setCreation] = useState('');
+    const [exercises, setExercises] = useState([]);
 
     const handleEx = (id) => {
         getActiveMuscle(id).then((res) => {

@@ -9,7 +9,7 @@ import { HiLightningBolt } from "react-icons/hi";
 import { TiDelete } from "react-icons/ti";
 import { MdModeEditOutline } from "react-icons/md";
 import { BsBoxArrowUpRight } from "react-icons/bs";
-import { PiArrowElbowRightUpBold, PiArrowUpRightBold } from "react-icons/pi";
+import { PiArrowUpRightBold } from "react-icons/pi";
 
 
 import {
