@@ -4,11 +4,23 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip"
+import ScheduleViewer from "./ScheduleViewer";
 
 
-export default function ActiveWorkout({ schedule }) {
+export default function ActiveWorkout({ schedule, id, muscle, update }) {
 
     const limit = 4;
+
+
+    const trigger = (count) => {
+        return (
+            <div className="border-2 h-[2.5rem] bg-white border-indigo-600 shadow-lg 
+            justify-center items-center p-2 text-indigo-600 font-semibold truncate ... overflow-hidden rounded-sm lowercase w-full" >
+                <span>{count} exercises</span>
+
+            </div>
+        )
+    }
 
     return (
         <div className='flex w-full relative py-6 px-4 gap-2 rounded-sm bg-indigo-100 z-0'>
@@ -46,10 +58,13 @@ export default function ActiveWorkout({ schedule }) {
                             <TooltipProvider>
                                 <Tooltip >
                                     <TooltipTrigger>
-                                        <div className="border-2 h-[2.5rem] bg-indigo-600 border-indigo-600 shadow-lg justify-center items-center p-2 text-white 
-                                                         truncate ... overflow-hidden w-full font-normal rounded-sm" >
-                                            <span>{workout.exercise.slice(limit).length} exercises</span>
-                                        </div>
+                                        <ScheduleViewer
+                                            id={id}
+                                            trigger={trigger(workout.exercise.slice(limit).length)}
+                                            muscle={muscle}
+                                            update={update}
+                                            day={index}
+                                        />
                                     </TooltipTrigger>
                                     <TooltipContent >
                                         <div className=" text-black rounded-md">

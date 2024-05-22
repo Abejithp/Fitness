@@ -14,11 +14,11 @@ import { getWorkout, updateWorkout, delWorkout } from '@/api/workout.mjs';
 import { Prompt } from './Prompt';
 
 
-export default function ScheduleViewer({ id, trigger, muscle, update }) {
+export default function ScheduleViewer({ id, trigger, muscle, update, day }) {
 
   const [schedule, setSchedule] = useState([]);
   const [name, setName] = useState("")
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState(day ? day : 0);
   const [selected, setSelected] = useState({ day: '', exercise: [] })
 
   const getSchedule = () => {
@@ -30,7 +30,7 @@ export default function ScheduleViewer({ id, trigger, muscle, update }) {
 
       const { workout, workoutName } = res.data;
       setSchedule(workout);
-      setSelected(workout[0])
+      setSelected(workout[index])
       setName(workoutName);
     })
   }
@@ -59,7 +59,7 @@ export default function ScheduleViewer({ id, trigger, muscle, update }) {
 
   return (
     <Dialog>
-      <DialogTrigger className='uppercase text-indigo-500 max-laptop:text-white max-laptop:text-xl' onClick={() => getSchedule()}>
+      <DialogTrigger className='uppercase text-indigo-500 max-laptop:text-white max-laptop:text-xl w-full flex justify-end laptop:justify-center' onClick={() => getSchedule()}>
         {trigger}
       </DialogTrigger>
 
@@ -93,12 +93,8 @@ export default function ScheduleViewer({ id, trigger, muscle, update }) {
               )
             })}
           </div>
-
-
-
           <div className="flex w-full h-full justify-center items-start pt-20">
-
-            <div className="flex w-[40%] flex-wrap gap-2 justify-center max-tablet:w-full ">
+            <div className="flex w-[40%] laptop:w-[60%] flex-wrap gap-2 justify-center max-tablet:w-full">
               {selected.exercise.map((el, i) => {
                 return <div className="flex bg-indigo-600 p-4 rounded-full cursor-default uppercase gap-2 items-center " key={i}>
                   {el.name}
@@ -112,21 +108,21 @@ export default function ScheduleViewer({ id, trigger, muscle, update }) {
 
           </div>
 
-          <DialogClose className='absolute bottom-8 right-8 bg-black border-2 border-indigo-600 rounded-sm p-2'
-            onClick={() => {
-              handleEdit();
-              update();
-            }}>
-            edit
-          </DialogClose>
 
-          <Prompt
-            trigger={<TiDelete className='text-[4rem] text-indigo-600' />}
-            update={() => delWorkout(id).then(() => { update() })}
-          />
 
         </div>
+        <DialogClose className='absolute bottom-8 right-8 bg-black border-2 border-indigo-600 rounded-sm p-2'
+          onClick={() => {
+            handleEdit();
+            update();
+          }}>
+          edit
+        </DialogClose>
 
+        <Prompt
+          trigger={<TiDelete className='text-[4rem] text-indigo-600 absolute bottom-5 left-5' />}
+          update={() => delWorkout(id).then(() => { update() })}
+        />
       </DialogContent>
 
 

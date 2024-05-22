@@ -81,7 +81,7 @@ function Workout() {
                 </div>
                 <div className={`flex w-full gap-8 h-[40vh] max-laptop:flex-col items-end z-20 max-laptop:h-fit`}>
                     <div className="flex w-[65%] h-full max-laptop:hidden ">
-                        <ActiveWorkout schedule={schedule.workout} />
+                        <ActiveWorkout schedule={schedule.workout} id={schedule.id} muscle={muscleGroups} update={updateSchedule}/>
                     </div>
                     <div className="text-white hidden max-laptop:flex w-full bg-indigo-600 p-4 font-medium rounded-sm justify-between items-center">
                         {schedule.workoutName == '' ? <p className="flex justify-center gap-8 text-[1.2rem] items-center text-center w-full font-normal">

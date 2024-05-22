@@ -1,10 +1,15 @@
 # Inspire
-
 Inspire is a web application designed to efficiently track your gym workouts. The app provides users with tools to create and manage their personal schedules, routines, and exercises. With these customized schedules, you can quickly list your workouts each time you log in. Inspire aims to simplify the process of tracking your fitness progress, making it easier to stay organized and motivated.
+
+**Check out the website [here](https://fitness.abejith.dev/)**
 
 # Screenshots
 
-# Technologies Used
+### Mobile
+
+### Desktop
+
+# Technology Stack
 
 The technology stack chosen to develop Inspire is fairly simple, as the app does not need to meet any strict requirements and is comparable to the needs of a note-taking app. This simplicity allows for a more organized development process and easier maintenance. The chosen stack ensures that the app remains lightweight and accessible while still providing all the necessary functionalities to efficiently track gym workouts and manage personal schedules, routines, and exercises.
 
