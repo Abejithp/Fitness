@@ -5,15 +5,18 @@ import { useState } from "react";
 
 import Lenis from 'lenis';
 
-const lenis = new Lenis({ wheelMultiplier: 1.5 })
+if (typeof window !== 'undefined') {
 
-function raf(time) {
-	lenis.raf(time)
+	const lenis = new Lenis({ wheelMultiplier: 1.5 })
+
+	function raf(time) {
+		lenis.raf(time)
+		requestAnimationFrame(raf)
+	}
+
 	requestAnimationFrame(raf)
+
 }
-
-requestAnimationFrame(raf)
-
 
 export default function Home() {
 
@@ -47,7 +50,7 @@ export default function Home() {
 			</div>
 
 			<div className="flex min-h-screen w-full items-center justify-center" id='features'>
-			<div className="flex w-full justify-center relative">
+				<div className="flex w-full justify-center relative">
 					<p className='text-white uppercase font-panchang text-[1rem] font-bold max-tablet:text-[3rem] z-30 bg-neutral-950 px-6'>Features</p>
 					<div className="flex bg-white h-2 absolute w-[80vw] top-2"></div>
 				</div>
