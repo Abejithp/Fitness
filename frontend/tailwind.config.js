@@ -40,6 +40,7 @@ module.exports = {
       fontFamily: {
         inter: ["Inter", "sans-serif"],
         satoshi: ["Satoshi", "sans-serif"],
+        panchang: ["Panchang", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",

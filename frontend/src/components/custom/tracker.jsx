@@ -61,7 +61,7 @@ export function Tracker({routineId, isRoutine}) {
           </TableHeader>
           <TableBody>
             {workout.data.map((data, i) => (
-              <TableRow key={i} className="text-white">
+              <TableRow key={i} className="text-white hover:bg-muted/50">
                 <TableCell className="">{data.name}</TableCell>
                 <TableCell className="text-right">
                   <Popup data={data} />
