@@ -161,9 +161,9 @@ export default function CreateSchedule({ muscle, update}) {
               </div>}
 
 
-            {!scheduleCreation && <div className="flex h-full w-full justify-center items-center">
+            {!scheduleCreation && <div className="flex flex-wrap  w-[60%] justify-center items-center gap-3 max-tablet:w-[80%] self-center">
               {routine[0].exercise.map((el, i) => {
-                return <div className="flex bg-indigo-600 p-4 rounded-full cursor-default uppercase gap-2 items-center " key={i}>
+                return <div className="flex bg-indigo-600 p-4 rounded-full cursor-default uppercase gap-2 items-center flex-shrink-0" key={i}>
                   {el.name}
                   <button onClick={() => handleRemove(el.name)}>
                     <TiDelete className='text-3xl' />

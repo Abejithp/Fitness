@@ -14,16 +14,15 @@ export default function ActiveWorkout({ schedule, id, muscle, update }) {
 
     const trigger = (count) => {
         return (
-            <div className="border-2 h-[2.5rem] bg-white border-indigo-600 shadow-lg 
-            justify-center items-center p-2 text-indigo-600 font-semibold truncate ... overflow-hidden rounded-sm lowercase w-full" >
-                <span>{count} exercises</span>
-
+            <div className="flex w-full bg-white p-2 rounded-md font-bold lowercase border-2 border-indigo-600 shadow-lg justify-around">
+                <p className=" truncate ... overflow-hidden">view more</p>
+                <span className="text-white bg-indigo-600 rounded-full justify-center items-center flex flex-shrink-0 w-6 h-6 text-sm font-medium">{count}</span>
             </div>
         )
     }
 
     return (
-        <div className='flex w-full relative py-6 px-4 gap-2 rounded-sm bg-indigo-100 z-0'>
+        <div className='flex w-full justify-evenly relative py-6 px-4 gap-2 rounded-sm bg-indigo-100 z-0'>
             <img src="/card/bg2.png" alt="background" className=' absolute right-0 bottom-0 -z-10 rounded-br-sm ' />
             <img src="/card/bg3.png" alt="background" className=' absolute -left-[59px] -bottom-12 -z-10 rounded-bl-sm scale-75' />
 
@@ -68,7 +67,7 @@ export default function ActiveWorkout({ schedule, id, muscle, update }) {
                                     </TooltipTrigger>
                                     <TooltipContent >
                                         <div className=" text-black rounded-md">
-                                            <p>View Exercises</p>
+                                            <p>View All Exercises</p>
                                         </div>
                                     </TooltipContent>
                                 </Tooltip>
