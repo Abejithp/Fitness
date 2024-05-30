@@ -5,11 +5,11 @@ Inspire is a web application designed to efficiently track your gym workouts. Th
 
 # Screenshots
 ![landing](./screenshots/Landing.PNG)
-![dashboard](./screenshots/Dashboard.png)
-![workout](./screenshots/workout.png)
-![creation](./screenshots/Exercise_creation.png)
-![summary](./screenshots/summary.png)
-![graph](./screenshots/graph.png)
+![dashboard](./screenshots/Dashboard.PNG)
+![workout](./screenshots/workout.PNG)
+![creation](./screenshots/Exercise_creation.PNG)
+![summary](./screenshots/summary.PNG)
+![graph](./screenshots/graph.PNG)
 
 
 
