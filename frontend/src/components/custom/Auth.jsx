@@ -98,7 +98,7 @@ export function Register() {
                         </FormItem>
                     )}
                 />
-                <Button type="submit" className=" bg-slate-600 w-full">Sign Up</Button>
+                <Button type="submit" className=" bg-slate-600 w-full">Register</Button>
             </form>
         </Form>
     </>)
