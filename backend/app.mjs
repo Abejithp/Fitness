@@ -82,11 +82,6 @@ function setUserCookie(req, res) {
 
 app.post("/api/register/", body(['username', 'password']).notEmpty(), async function (req, res, next) {
 
-    if (req.session.user) {
-        return res.status(409).end("Already logged in!");
-    }
-
-
     let user = await User.findOne({ username: req.body.username })
 
     if (user) {
